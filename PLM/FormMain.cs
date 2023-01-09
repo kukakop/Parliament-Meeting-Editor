@@ -3225,7 +3225,6 @@ namespace PLM
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
                     if (V_WordText != WordApp.Selection.Text)
 
-                    //if (WordApp.Selection.End != oEnd - 1)
                     {
 
                         V_WordText = WordApp.Selection.Text;
