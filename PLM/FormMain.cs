@@ -1108,10 +1108,12 @@ namespace PLM
 
 
 
-        private void InitialAll()
+        private void ControllInitial()
         {
-            //GRPEdit.Visible = true;
-            //GRPaudit.Visible = false;
+
+            GrpEdit.Visible = false;
+            GrpAudit.Visible = false;
+            GrpSum.Visible = false;
             //GRPsum.Visible = false;
             GRPsumList.Visible = false;
             //GRPproof.Visible = false;
@@ -1136,6 +1138,7 @@ namespace PLM
         }
         private void InitialForedit()
         {
+            GrpEdit.Visible = true;
             BTEditSendReport.Visible = true;
             BTEditSaveDB.Visible = true;
 
@@ -1178,8 +1181,8 @@ namespace PLM
             GrpSum.Visible = true;
             //BTSumRefresh.Visible = true;
             //BTSumShow.Visible = true;
-            //BTsumSave.Visible = true;
-            //BTsumApprove.Visible = true;
+            BTsumSave.Visible = true;
+            BTsumApprove.Visible = true;
             //BTsumNoApprove.Visible = true;
             //if (!(StatusID == 3) )
             //{
@@ -1502,7 +1505,7 @@ namespace PLM
                 int vRecNo;
                 byte[] data;
                 //check version1 is new
-                if ((files.data.current_process == "1" && files.data.section_status == 0 && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
+                if ((files.data.current_process == "1" && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
                 {
 
                     fileName = WorkPath + Appname + "Template.docx";
@@ -1964,7 +1967,8 @@ namespace PLM
                 if (mode == ""  || mode == "SAVE")
                 {
                     //resultBox = MessageBox.Show("ต้องการบันทึกฉบับร่าง", "ต้องการบันทึก", MessageBoxButtons.YesNo);
-                    resultBox =  NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก" , "ต้องการบันทึกฉบับร่าง");
+                    //resultBox =  NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก" , "ต้องการบันทึกฉบับร่าง");
+                    resultBox = NewMessageConfirm("ต้องการบันทึกฉบับร่าง");
                 }
                 else
                 {
@@ -2041,7 +2045,9 @@ namespace PLM
             {
                 vMessageVersion = LastVersion + 1;
                 //var resultBox = MessageBox.Show("ต้องการบันทึกฉบับร่าง", "ต้องการบันทึก", MessageBoxButtons.YesNo);
-                var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก", "ต้องการบันทึกฉบับร่าง");
+                //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก", "ต้องการบันทึกฉบับร่าง");
+
+                var resultBox = NewMessageConfirm("ต้องการบันทึกฉบับร่าง");
                 if (resultBox == System.Windows.Forms.DialogResult.Yes)
                 {
                     SaveData(appinfo, files);
@@ -2415,6 +2421,7 @@ namespace PLM
             else
             {
 
+                ControllInitial();
                 if (args.Length > 1)
                 {
                     try
@@ -2484,43 +2491,6 @@ namespace PLM
 
                 RequestSeqInfo(appinfo, ref contentInfoAll);
 
-                InitialAll();
-                this.Text = Apptitle + "-" + room.data[0].meeting_title;
-                switch (appinfo.mode)
-                {
-                    case "edit":
-                        InitialForedit();
-                        break;
-                    case "new":
-                        InitialForedit();
-                        break;
-                    case "view":
-                        InitialForview();
-                        P_NonEditMode = true;
-                        break;
-                    case "audit":
-                        InitialForaudit();
-                        break;
-                    case "merge":
-                        InitialForeMerge();
-                        break; ;
-                    case "mergeNew":
-                        InitialForeMerge();
-                        break;
-                    case "sum":
-                        InitialForesum();
-                        P_NonEditMode = true;
-                        break;
-                    case "proof":
-                        InitialForproof();
-                        break;
-                    case "admin":
-                        InitialForAdmin();
-                        break;
-
-                }
-
-
                 
 
                 switch (appinfo.mode)
@@ -2573,6 +2543,43 @@ namespace PLM
                 this.Activate();
                 CTN.Panel1.Focus();
                 WmPlayerTimer.Start();
+
+
+                this.Text = Apptitle + "-" + room.data[0].meeting_title;
+                switch (appinfo.mode)
+                {
+                    case "edit":
+                        InitialForedit();
+                        break;
+                    case "new":
+                        InitialForedit();
+                        break;
+                    case "view":
+                        InitialForview();
+                        P_NonEditMode = true;
+                        break;
+                    case "audit":
+                        InitialForaudit();
+                        break;
+                    case "merge":
+                        InitialForeMerge();
+                        break; ;
+                    case "mergeNew":
+                        InitialForeMerge();
+                        break;
+                    case "sum":
+                        InitialForesum();
+                        P_NonEditMode = true;
+                        break;
+                    case "proof":
+                        InitialForproof();
+                        break;
+                    case "admin":
+                        InitialForAdmin();
+                        break;
+
+                }
+
 
 
                 //if (GetActiveWindowsTitle().Contains("Partii") == true)
@@ -2646,7 +2653,9 @@ namespace PLM
         {
 
             //var resultBox = MessageBox.Show("ต้องการส่งรายงาน", "ส่งรายงาน", MessageBoxButtons.YesNo);
-            var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการส่งรายงาน", "ต้องการส่งรายงาน");
+            //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการส่งรายงาน", "ต้องการส่งรายงาน");
+
+            var resultBox = NewMessageConfirm("ต้องการส่งรายงาน");
             if (resultBox == System.Windows.Forms.DialogResult.Yes)
             {
                 WordDirty = false; //not check change
@@ -2697,7 +2706,8 @@ namespace PLM
             if (fileinfo.data.section_status >= 6)
             {
                 //var resultBox = MessageBox.Show("ต้องการไม่อนุมัติ", "ไม่อนุมัติ", MessageBoxButtons.YesNo);
-                var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการไม่อนุมัติ", "ต้องการไม่อนุมัติ");
+                //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการไม่อนุมัติ", "ต้องการไม่อนุมัติ");
+                var resultBox = NewMessageConfirm("ต้องการไม่อนุมัติ");
                 if (resultBox == System.Windows.Forms.DialogResult.Yes)
                 {
                     SubmitWebAPisStatus(appinfo);
@@ -2725,7 +2735,8 @@ namespace PLM
         {
 
             //var resultBox = MessageBox.Show("ยืนยันการรวบรวม", "ดำเนินการรวบรวมเสร็จสิ้น", MessageBoxButtons.YesNo);
-            var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการรวบรวม", "ต้องการรวบรวม");
+            //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการรวบรวม", "ต้องการรวบรวม");
+            var resultBox = NewMessageConfirm("ต้องการรวบรวม");
             if (resultBox == System.Windows.Forms.DialogResult.Yes)
             {
 
@@ -3045,7 +3056,9 @@ namespace PLM
         {
 
             //var resultBox = MessageBox.Show("ต้องการส่งรายงาน", "ส่งรายงาน", MessageBoxButtons.YesNo);
-            var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการส่งรายงาน", "ต้องการส่งรายงาน");
+            //
+            //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการส่งรายงาน", "ต้องการส่งรายงาน");
+            var resultBox = NewMessageConfirm("ต้องการส่งรายงาน");
             if (resultBox == System.Windows.Forms.DialogResult.Yes)
             {
                 WordSave(appinfo, fileinfo, "SEND");
@@ -3060,7 +3073,8 @@ namespace PLM
         {
 
             //var resultBox = MessageBox.Show("ไม่อนุมัติ", "ไม่อนุมัติ", MessageBoxButtons.YesNo);
-            var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการไม่อนุมัติ", "ต้องการไม่อนุมัติ");
+            //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการไม่อนุมัติ", "ต้องการไม่อนุมัติ");
+            var resultBox = NewMessageConfirm("ต้องการไม่อนุมัติ");
             if (resultBox == System.Windows.Forms.DialogResult.Yes)
             {
                 WordDirty = false; //not check change
@@ -3144,10 +3158,23 @@ namespace PLM
         }
         private void NewMessage(string message)
         {
-            NewMessageBox msgResized = new NewMessageBox("", message);
-            msgResized.StartPosition = FormStartPosition.CenterScreen;
-            //msgResized.Show();
-            msgResized.ShowDialog();
+            FlexibleMessageBox.Show(message);
+            
+
+            //    NewMessageBox msgResized = new NewMessageBox("", message);
+            //msgResized.StartPosition = FormStartPosition.CenterScreen;
+            ////msgResized.Show();
+            //msgResized.ShowDialog();
+        }
+        private DialogResult NewMessageConfirm(string message)
+        {
+            //FlexibleMessageBox.Show(message);
+
+            return FlexibleMessageBox.Show(message, this.Text, MessageBoxButtons.YesNo);
+            //    NewMessageBox msgResized = new NewMessageBox("", message);
+            //msgResized.StartPosition = FormStartPosition.CenterScreen;
+            ////msgResized.Show();
+            //msgResized.ShowDialog();
         }
         private void SearchText()
         {
@@ -3225,6 +3252,7 @@ namespace PLM
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
                     if (V_WordText != WordApp.Selection.Text)
 
+                    //if (WordApp.Selection.End != oEnd - 1)
                     {
 
                         V_WordText = WordApp.Selection.Text;
@@ -3245,7 +3273,8 @@ namespace PLM
                     if (WordChang)
                     {
                         //DialogResult dialogResult = MessageBox.Show("ต้องการบันทึกข้อมูลที่แก้ไข", "ยืนยันการแก้ไข", MessageBoxButtons.YesNo);
-                        DialogResult dialogResult = NewConfirmBox.ShowDialog(this,"ต้องการบันทึกข้อมูลที่แก้ไข", "ยืนยันการแก้ไข");
+                        //DialogResult dialogResult = NewConfirmBox.ShowDialog(this,"ต้องการบันทึกข้อมูลที่แก้ไข", "ยืนยันการแก้ไข");
+                        var dialogResult = NewMessageConfirm("ยืนยันการแก้ไข");
                         //var resultBox = NewConfirmBox.ShowDialog(this, "ยืนยันการไม่อนุมัติ", "ต้องการไม่อนุมัติ");
                         if (dialogResult == DialogResult.Yes)
                         {

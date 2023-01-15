@@ -58,7 +58,6 @@ namespace PLM
             this.SplitCtnLEft = new System.Windows.Forms.SplitContainer();
             this.SplitWM = new System.Windows.Forms.SplitContainer();
             this.ScreenShot = new System.Windows.Forms.PictureBox();
-            this.WmPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.GrpWM = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -82,6 +81,7 @@ namespace PLM
             this.GrpAudit = new System.Windows.Forms.GroupBox();
             this.GrpEdit = new System.Windows.Forms.GroupBox();
             this.WmPlayerTimer = new System.Windows.Forms.Timer(this.components);
+            this.WmPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.BT40X = new PLM.RJControls.RJButton();
             this.BT20X = new PLM.RJControls.RJButton();
             this.BT10X = new PLM.RJControls.RJButton();
@@ -113,7 +113,6 @@ namespace PLM
             this.SplitWM.Panel2.SuspendLayout();
             this.SplitWM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WmPlayer)).BeginInit();
             this.GrpWM.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitCtnList)).BeginInit();
             this.SplitCtnList.Panel1.SuspendLayout();
@@ -133,6 +132,7 @@ namespace PLM
             this.GrpSum.SuspendLayout();
             this.GrpAudit.SuspendLayout();
             this.GrpEdit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WmPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // CTN
@@ -470,7 +470,7 @@ namespace PLM
             this.SplitWM.Panel2.Controls.Add(this.GrpWM);
             this.SplitWM.Panel2MinSize = 60;
             this.SplitWM.Size = new System.Drawing.Size(279, 330);
-            this.SplitWM.SplitterDistance = 250;
+            this.SplitWM.SplitterDistance = 251;
             this.SplitWM.SplitterWidth = 3;
             this.SplitWM.TabIndex = 0;
             this.SplitWM.SizeChanged += new System.EventHandler(this.SplitWM_SizeChanged);
@@ -483,22 +483,10 @@ namespace PLM
             this.ScreenShot.InitialImage = ((System.Drawing.Image)(resources.GetObject("ScreenShot.InitialImage")));
             this.ScreenShot.Location = new System.Drawing.Point(0, 0);
             this.ScreenShot.Name = "ScreenShot";
-            this.ScreenShot.Size = new System.Drawing.Size(279, 250);
+            this.ScreenShot.Size = new System.Drawing.Size(279, 251);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenShot.TabIndex = 2;
             this.ScreenShot.TabStop = false;
-            // 
-            // WmPlayer
-            // 
-            this.WmPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WmPlayer.Enabled = true;
-            this.WmPlayer.Location = new System.Drawing.Point(0, 0);
-            this.WmPlayer.Name = "WmPlayer";
-            this.WmPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WmPlayer.OcxState")));
-            this.WmPlayer.Size = new System.Drawing.Size(279, 250);
-            this.WmPlayer.TabIndex = 1;
-            this.WmPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.WmPlayer_PlayStateChange);
-            this.WmPlayer.Enter += new System.EventHandler(this.WmPlayer_Enter);
             // 
             // GrpWM
             // 
@@ -589,7 +577,7 @@ namespace PLM
             this.SplitCtnList.Panel2.Controls.Add(this.BTSumRefresh);
             this.SplitCtnList.Panel2MinSize = 40;
             this.SplitCtnList.Size = new System.Drawing.Size(279, 375);
-            this.SplitCtnList.SplitterDistance = 315;
+            this.SplitCtnList.SplitterDistance = 316;
             this.SplitCtnList.SplitterWidth = 3;
             this.SplitCtnList.TabIndex = 0;
             // 
@@ -610,7 +598,7 @@ namespace PLM
             // 
             this.SplitCtnListApp.Panel2.Controls.Add(this.GRPsumList);
             this.SplitCtnListApp.Panel2MinSize = 0;
-            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 315);
+            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 316);
             this.SplitCtnListApp.SplitterDistance = 57;
             this.SplitCtnListApp.SplitterWidth = 3;
             this.SplitCtnListApp.TabIndex = 0;
@@ -690,7 +678,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 648;
+            this.SplitCtnWord.SplitterDistance = 649;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.Resize += new System.EventHandler(this.SplitCtnWord_Resize);
@@ -702,7 +690,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 648);
+            this.PNWord.Size = new System.Drawing.Size(982, 649);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
@@ -714,7 +702,7 @@ namespace PLM
             this.toolStripStatusLabel1,
             this.StripProgressStatus,
             this.StripProgress});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 35);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 34);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(982, 22);
             this.StatusStrip.TabIndex = 18;
@@ -722,8 +710,7 @@ namespace PLM
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(69, 17);
-            this.toolStripStatusLabel1.Text = "StripUname";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // StripProgressStatus
             // 
@@ -737,6 +724,7 @@ namespace PLM
             // 
             // GrpSum
             // 
+            this.GrpSum.BackColor = System.Drawing.SystemColors.Control;
             this.GrpSum.Controls.Add(this.BTsumApprove);
             this.GrpSum.Controls.Add(this.BTsumSave);
             this.GrpSum.Location = new System.Drawing.Point(705, 7);
@@ -773,6 +761,18 @@ namespace PLM
             // WmPlayerTimer
             // 
             this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick_1);
+            // 
+            // WmPlayer
+            // 
+            this.WmPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WmPlayer.Enabled = true;
+            this.WmPlayer.Location = new System.Drawing.Point(0, 0);
+            this.WmPlayer.Name = "WmPlayer";
+            this.WmPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WmPlayer.OcxState")));
+            this.WmPlayer.Size = new System.Drawing.Size(279, 251);
+            this.WmPlayer.TabIndex = 1;
+            this.WmPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.WmPlayer_PlayStateChange);
+            this.WmPlayer.Enter += new System.EventHandler(this.WmPlayer_Enter);
             // 
             // BT40X
             // 
@@ -1016,7 +1016,6 @@ namespace PLM
             ((System.ComponentModel.ISupportInitialize)(this.SplitWM)).EndInit();
             this.SplitWM.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WmPlayer)).EndInit();
             this.GrpWM.ResumeLayout(false);
             this.GrpWM.PerformLayout();
             this.SplitCtnList.Panel1.ResumeLayout(false);
@@ -1041,6 +1040,7 @@ namespace PLM
             this.GrpSum.ResumeLayout(false);
             this.GrpAudit.ResumeLayout(false);
             this.GrpEdit.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.WmPlayer)).EndInit();
             this.ResumeLayout(false);
 
         }

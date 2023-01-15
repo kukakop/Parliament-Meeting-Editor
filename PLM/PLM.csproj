@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlexibleMessageBox.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,9 +97,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NewMessageBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NewMessageBox2.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Vbe.Interop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PLM
 {
-    public partial  class NewConfirmBox : Form
+    public partial  class NewConfirmBoxXXX : Form
     {
         private TextBox textBoxMessage;
         private Button buttonYes;
@@ -17,13 +18,13 @@ namespace PLM
         {
             // Setting the DialogResult does not close the form, it just hides it. 
             // This is why I'm disposing it. see the link at the end of my answer for details.
-            using (var NewConfirmBox = new NewConfirmBox(caption, text))
+            using (var NewConfirmBoxXXX = new NewConfirmBoxXXX(caption, text))
             {
                 //NewConfirmBox.Location = new System.Drawing.Point(0, 0);
-                return NewConfirmBox.ShowDialog(owner);
+                return NewConfirmBoxXXX.ShowDialog(owner);
             }
         }
-        public  NewConfirmBox(string caption, string text)
+        public  NewConfirmBoxXXX(string caption, string text)
         {
             InitializeComponent();
             this.Text = caption;
@@ -36,7 +37,15 @@ namespace PLM
             this.textBoxMessage.ReadOnly = true;
         }
 
-
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
         private void InitializeComponent()
         {
             this.buttonYes = new System.Windows.Forms.Button();
@@ -87,10 +96,14 @@ namespace PLM
             this.Controls.Add(this.buttonYes);
             this.Controls.Add(this.buttonNo);
 
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.ShowIcon = false;
             this.Name = "NewMessageBox";
             this.StartPosition =  FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.NewMessageBox_Load);
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.ResumeLayout(false);
             this.PerformLayout();
 
