@@ -1218,9 +1218,15 @@ namespace PLM
         //private void InitialForproof(int StatusID)
         private void InitialForproof()
         {
-            GRPsumList.Visible = true;
-            BTSumRefresh.Visible = true;
-            BTSumShow.Visible = true;
+
+            GrpAudit.Visible = true;
+            BTauditSave.Visible = true;
+            //BTauditApprove.Visible = true;
+            BTauditNoApprove.Visible = true;
+
+            //GRPsumList.Visible = true;
+            //BTSumRefresh.Visible = true;
+            //BTSumShow.Visible = true;
             //BTCombine.Visible = true;
             //BTCombineSave.Visible = true;
             //BTCombineComplete.Visible = true;
@@ -2319,31 +2325,30 @@ namespace PLM
             try
             {
                 WordChang = false;
-
-                foreach (TRANSCRIPTION transcription in files.transcription)
-                {
-                    vBookmark = "P" + transcription.utt;
-                    WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
-                    V_WordText = WordApp.Selection.Text;
-                    last_result = transcription.text;
-                    last_utt = transcription.utt;
-                    if (V_WordText != transcription.text)
+                
+                    foreach (TRANSCRIPTION transcription in files.transcription)
                     {
-                        WordChang = true;
-                        V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
-                        V_WordText = V_WordText.Replace("\r", ""); //Carriage return
-                        V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
-                        V_WordText = V_WordText.Replace("\n", ""); //New line
-                        V_WordText = V_WordText.Replace("\t", ""); //Tab
-                        V_WordText = V_WordText.Replace("\"", ""); //Double quote
-                        V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                        vBookmark = "P" + transcription.utt;
+                        WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
+                        V_WordText = WordApp.Selection.Text;
+                        last_result = transcription.text;
+                        last_utt = transcription.utt;
+                        if (V_WordText != transcription.text)
+                        {
+                            WordChang = true;
+                            V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
+                            V_WordText = V_WordText.Replace("\r", ""); //Carriage return
+                            V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
+                            V_WordText = V_WordText.Replace("\n", ""); //New line
+                            V_WordText = V_WordText.Replace("\t", ""); //Tab
+                            V_WordText = V_WordText.Replace("\"", ""); //Double quote
+                            V_WordText = V_WordText.Replace("\\", ""); //Backslash
 
 
-                        V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
-                        transcription.text = V_WordText; ;
+                            V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
+                            transcription.text = V_WordText; ;
+                        }
                     }
-                }
- 
                 //// Check user insert over bookmark
                 oStart = WordApp.Selection.Start;
                 oEnd = WordApp.Selection.StoryLength;
@@ -2534,6 +2539,9 @@ namespace PLM
                         OpenMedia(appinfo, fileinfo);
                         break;
                     case "proof":
+                        OpenWord(appinfo, fileinfo);
+                        OpenMedia(appinfo, fileinfo);
+                        UpdateReportStatus();
                         break;
                     case "admin":
                         break;
