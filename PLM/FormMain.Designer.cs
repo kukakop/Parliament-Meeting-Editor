@@ -470,7 +470,7 @@ namespace PLM
             this.SplitWM.Panel2.Controls.Add(this.GrpWM);
             this.SplitWM.Panel2MinSize = 60;
             this.SplitWM.Size = new System.Drawing.Size(279, 330);
-            this.SplitWM.SplitterDistance = 251;
+            this.SplitWM.SplitterDistance = 252;
             this.SplitWM.SplitterWidth = 3;
             this.SplitWM.TabIndex = 0;
             this.SplitWM.SizeChanged += new System.EventHandler(this.SplitWM_SizeChanged);
@@ -483,7 +483,7 @@ namespace PLM
             this.ScreenShot.InitialImage = ((System.Drawing.Image)(resources.GetObject("ScreenShot.InitialImage")));
             this.ScreenShot.Location = new System.Drawing.Point(0, 0);
             this.ScreenShot.Name = "ScreenShot";
-            this.ScreenShot.Size = new System.Drawing.Size(279, 251);
+            this.ScreenShot.Size = new System.Drawing.Size(279, 252);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenShot.TabIndex = 2;
             this.ScreenShot.TabStop = false;
@@ -577,7 +577,7 @@ namespace PLM
             this.SplitCtnList.Panel2.Controls.Add(this.BTSumRefresh);
             this.SplitCtnList.Panel2MinSize = 40;
             this.SplitCtnList.Size = new System.Drawing.Size(279, 375);
-            this.SplitCtnList.SplitterDistance = 316;
+            this.SplitCtnList.SplitterDistance = 317;
             this.SplitCtnList.SplitterWidth = 3;
             this.SplitCtnList.TabIndex = 0;
             // 
@@ -598,7 +598,7 @@ namespace PLM
             // 
             this.SplitCtnListApp.Panel2.Controls.Add(this.GRPsumList);
             this.SplitCtnListApp.Panel2MinSize = 0;
-            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 316);
+            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 317);
             this.SplitCtnListApp.SplitterDistance = 57;
             this.SplitCtnListApp.SplitterWidth = 3;
             this.SplitCtnListApp.TabIndex = 0;
@@ -678,7 +678,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 649;
+            this.SplitCtnWord.SplitterDistance = 650;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.Resize += new System.EventHandler(this.SplitCtnWord_Resize);
@@ -690,7 +690,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 649);
+            this.PNWord.Size = new System.Drawing.Size(982, 650);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
@@ -702,7 +702,7 @@ namespace PLM
             this.toolStripStatusLabel1,
             this.StripProgressStatus,
             this.StripProgress});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 34);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 33);
             this.StatusStrip.Name = "StatusStrip";
             this.StatusStrip.Size = new System.Drawing.Size(982, 22);
             this.StatusStrip.TabIndex = 18;
@@ -769,7 +769,7 @@ namespace PLM
             this.WmPlayer.Location = new System.Drawing.Point(0, 0);
             this.WmPlayer.Name = "WmPlayer";
             this.WmPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WmPlayer.OcxState")));
-            this.WmPlayer.Size = new System.Drawing.Size(279, 251);
+            this.WmPlayer.Size = new System.Drawing.Size(279, 252);
             this.WmPlayer.TabIndex = 1;
             this.WmPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.WmPlayer_PlayStateChange);
             this.WmPlayer.Enter += new System.EventHandler(this.WmPlayer_Enter);

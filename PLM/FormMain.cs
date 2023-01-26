@@ -1110,7 +1110,6 @@ namespace PLM
 
         private void ControllInitial()
         {
-
             GrpEdit.Visible = false;
             GrpAudit.Visible = false;
             GrpSum.Visible = false;
@@ -1823,6 +1822,7 @@ namespace PLM
                 });
                 thread3.Start();
                 thread3.Join();
+
             }
             catch (Exception e)
             {
@@ -2324,6 +2324,7 @@ namespace PLM
             object rng = WordApp.Selection.Range;
             try
             {
+                WordApp.Visible = false;
                 WordChang = false;
                 
                     foreach (TRANSCRIPTION transcription in files.transcription)
@@ -2349,6 +2350,8 @@ namespace PLM
                             transcription.text = V_WordText; ;
                         }
                     }
+
+                WordApp.Visible = true;
                 //// Check user insert over bookmark
                 oStart = WordApp.Selection.Start;
                 oEnd = WordApp.Selection.StoryLength;
