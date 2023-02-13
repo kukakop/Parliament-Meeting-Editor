@@ -161,6 +161,7 @@ namespace PLM
         {
             ////start key
 
+            TopMost = true;
             //kh.KeyDown += Kh_KeyDown;
             kh.KeyUp += Kh_KeyUp;
 
@@ -2402,7 +2403,6 @@ namespace PLM
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            TopMost = true;
             string[] args = Environment.GetCommandLineArgs();
             //default
             //MessageBox.Show(args[0]+","+ args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
@@ -3191,20 +3191,31 @@ namespace PLM
         {
             Thread thread = new Thread(() =>
             {
+
                 string textin;
                 string textout = "";
                 textin = WordApp.Selection.Text;
+                if ((appinfo.mode == "view" ) || (appinfo.mode == "sum") )
+                {
 
-                SearchBox msgResized = new SearchBox(textin, suggestinfo);
-                if (msgResized.IsAccessible == false)
-                { 
+                }
+                else
+                {
+
+                    SearchBox msgResized = new SearchBox(textin, suggestinfo);
+                    if (msgResized.IsAccessible == false)
+                    {
 
 
-                    msgResized.StartPosition = FormStartPosition.CenterScreen;
-                    msgResized.ShowDialog();
+                        msgResized.StartPosition = FormStartPosition.CenterScreen;
+                        msgResized.ShowDialog();
 
+                        if (msgResized.result_search != "")
+                        {
+                            WordApp.Selection.Text = msgResized.result_search;
 
-                    WordApp.Selection.Text = msgResized.result_search;
+                        }
+                    }
                 }
             });
             thread.Start();
