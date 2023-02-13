@@ -26,6 +26,7 @@ namespace PLM
         public NewMessageBox(string title, string message)
         {
             InitializeComponent();
+            //TopMost = true;
             this.Text = title;
             this.textBoxMessage.AppendText(Environment.NewLine);
             this.textBoxMessage.AppendText(Environment.NewLine);

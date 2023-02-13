@@ -446,6 +446,7 @@ namespace PLM
             {
                 InitializeComponent();
 
+                //TopMost = true;
                 //Try to evaluate the language. If this fails, the fallback language English will be used
                 Enum.TryParse<TwoLetterISOLanguageID>(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, out this.languageID);
 

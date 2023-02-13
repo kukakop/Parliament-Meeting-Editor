@@ -2402,10 +2402,10 @@ namespace PLM
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            
+            TopMost = true;
             string[] args = Environment.GetCommandLineArgs();
             //default
-
+            //MessageBox.Show(args[0]+","+ args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
             foreach (var proc in Process.GetProcessesByName("WINWORD"))
             {
                 if (proc.MainWindowTitle == "")
@@ -3315,6 +3315,12 @@ namespace PLM
             {
                 //MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
+        }
+
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+
+            TopMost = false;
         }
     }
 }

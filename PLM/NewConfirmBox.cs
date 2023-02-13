@@ -27,6 +27,8 @@ namespace PLM
         public  NewConfirmBoxXXX(string caption, string text)
         {
             InitializeComponent();
+
+            //TopMost = true;
             this.Text = caption;
             this.textBoxMessage.AppendText(Environment.NewLine);
             this.textBoxMessage.AppendText(Environment.NewLine);

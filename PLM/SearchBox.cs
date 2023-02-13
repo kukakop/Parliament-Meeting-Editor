@@ -47,6 +47,7 @@ namespace PLM
         public SearchBox(string textsearch,SUGGEST suggestinfo)
         {
             InitializeComponent();
+            //TopMost = true;
             this.Text = "Search";
             searchtext(textsearch, suggestinfo);
             //this.SerachComboBox.Text = message;
