@@ -15,6 +15,7 @@ using Microsoft.Office.Interop.Word;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Configuration;
 using System.Runtime.InteropServices.ComTypes;
 using System.Data.SqlTypes;
@@ -160,6 +161,7 @@ namespace PLM
         public FormMain()
         {
             ////start key
+
 
             TopMost = true;
             //kh.KeyDown += Kh_KeyDown;
@@ -2493,13 +2495,17 @@ namespace PLM
                 }
 
 
+                Thread t = new Thread(new ThreadStart(StartForm));
+                t.Start();
+                Thread.Sleep(5000);
+
                 RequestVersionInfo(appinfo, ref versioninfo);
                 RequestContentInfo(appinfo, ref contentInfo);
                 RequestFileInfo(appinfo, ref fileinfo);
 
                 RequestSeqInfo(appinfo, ref contentInfoAll);
 
-                
+
 
                 switch (appinfo.mode)
                 {
@@ -2593,6 +2599,7 @@ namespace PLM
 
 
 
+                t.Abort();
                 //if (GetActiveWindowsTitle().Contains("Partii") == true)
                 if (GetActiveWindowsTitle().Contains(Appname) == true)
                 {
@@ -3332,6 +3339,10 @@ namespace PLM
         {
 
             TopMost = false;
+        }
+        public void StartForm()
+        {
+            System.Windows.Forms.Application.Run(new SplashScreen());
         }
     }
 }
