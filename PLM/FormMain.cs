@@ -158,10 +158,11 @@ namespace PLM
         const string STATUS13 = "สามารถเผยแพร่ได้";
 
         KeyboardHook kh = new KeyboardHook(true);
+        SplashScreen splashScreen;
+
         public FormMain()
         {
             ////start key
-
 
             TopMost = true;
             //kh.KeyDown += Kh_KeyDown;
@@ -2405,6 +2406,9 @@ namespace PLM
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
+            splashScreen = new SplashScreen();
+            splashScreen.Show();
+
             string[] args = Environment.GetCommandLineArgs();
             //default
             //MessageBox.Show(args[0]+","+ args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
@@ -2493,11 +2497,6 @@ namespace PLM
                     System.Windows.Forms.Application.Exit();
                     return;
                 }
-
-
-                Thread t = new Thread(new ThreadStart(StartForm));
-                t.Start();
-                Thread.Sleep(5000);
 
                 RequestVersionInfo(appinfo, ref versioninfo);
                 RequestContentInfo(appinfo, ref contentInfo);
@@ -2597,9 +2596,6 @@ namespace PLM
 
                 }
 
-
-
-                t.Abort();
                 //if (GetActiveWindowsTitle().Contains("Partii") == true)
                 if (GetActiveWindowsTitle().Contains(Appname) == true)
                 {
@@ -3337,7 +3333,7 @@ namespace PLM
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-
+            splashScreen.Close();
             TopMost = false;
         }
         public void StartForm()
