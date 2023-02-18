@@ -158,6 +158,7 @@ namespace PLM
         const string STATUS13 = "สามารถเผยแพร่ได้";
 
         KeyboardHook kh = new KeyboardHook(true);
+        Thread tSplashScreen;
         SplashScreen splashScreen;
 
         public FormMain()
@@ -2406,8 +2407,11 @@ namespace PLM
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            splashScreen = new SplashScreen();
-            splashScreen.Show();
+            //splashScreen = new SplashScreen();
+            //splashScreen.Show();
+            tSplashScreen = new Thread(new ThreadStart(StartForm));
+            tSplashScreen.Start();
+            //Thread.Sleep(5000);
 
             string[] args = Environment.GetCommandLineArgs();
             //default
@@ -3333,12 +3337,15 @@ namespace PLM
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            splashScreen.Close();
+            //splashScreen.Hide();
+            tSplashScreen.Abort();
             TopMost = false;
         }
         public void StartForm()
         {
-            System.Windows.Forms.Application.Run(new SplashScreen());
+            splashScreen = new SplashScreen();
+            System.Windows.Forms.Application.Run(splashScreen);
+            splashScreen.Show();
         }
     }
 }
