@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
@@ -15,19 +13,10 @@ using Microsoft.Office.Interop.Word;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Configuration;
-using System.Runtime.InteropServices.ComTypes;
-using System.Data.SqlTypes;
-using static System.Net.WebRequestMethods;
 using System.Globalization;
 using RestSharp;
-using File = System.Net.WebRequestMethods.File;
 using MimeTypes;
-using System.Net.Http.Headers;
-using System.Security.Policy;
-using RestSharp.Extensions;
-using System.Collections;
 
 namespace PLM
 {
@@ -158,14 +147,16 @@ namespace PLM
         const string STATUS13 = "สามารถเผยแพร่ได้";
 
         KeyboardHook kh = new KeyboardHook(true);
-        Thread tSplashScreen;
-        SplashScreen splashScreen;
+        //Thread tSplashScreen;
+        SplashScreen startForm;
 
-        public FormMain()
+        public FormMain(SplashScreen startForm)
         {
+            this.startForm = startForm;
+
             ////start key
 
-            TopMost = true;
+            //TopMost = true;
             //kh.KeyDown += Kh_KeyDown;
             kh.KeyUp += Kh_KeyUp;
 
@@ -2407,11 +2398,10 @@ namespace PLM
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //splashScreen = new SplashScreen();
-            //splashScreen.Show();
-            tSplashScreen = new Thread(new ThreadStart(StartForm));
-            tSplashScreen.Start();
-            //Thread.Sleep(5000);
+            this.Hide();
+            startForm.Show();
+            //tSplashScreen = new Thread(new ThreadStart(StartForm));
+            //tSplashScreen.Start();
 
             string[] args = Environment.GetCommandLineArgs();
             //default
@@ -3337,15 +3327,24 @@ namespace PLM
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            //splashScreen.Hide();
-            tSplashScreen.Abort();
+            startForm.Hide();
+            //TopMost = false;
+            //tSplashScreen.Abort();
+            TopMost = true;
+            Thread.Sleep(500);
             TopMost = false;
+            this.Show();
         }
         public void StartForm()
         {
-            splashScreen = new SplashScreen();
+            SplashScreen splashScreen = new SplashScreen();
             System.Windows.Forms.Application.Run(splashScreen);
             splashScreen.Show();
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            startForm.Close();
         }
     }
 }
