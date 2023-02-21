@@ -331,7 +331,7 @@ namespace PLM
                             break;
                         case Keys.F6: // dec volume
 
-                            SearchText(); 
+                            SearchText();
                             //WmPlayer.settings.volume = WmPlayer.settings.volume - 10;
                             break;
                         //case Keys.Space: //for edit
@@ -821,7 +821,7 @@ namespace PLM
                 myRequest.Headers.Add("Authorization", appinfo.accessKey);
                 using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
                 {
-                   
+
 
                     string json = "{";
                     json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\",";
@@ -866,7 +866,7 @@ namespace PLM
                 myRequest.Headers.Add("Authorization", appinfo.accessKey);
                 using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
                 {
-                    
+
 
                     string json = "{";
                     json += "\"page\":\"" + 1 + "\",";
@@ -939,9 +939,10 @@ namespace PLM
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
 
-            
 
-                TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
+
+                //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
+                TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
                 TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
                 //obj = contentInfo;
@@ -969,7 +970,7 @@ namespace PLM
                 myRequest.Headers.Add("Authorization", appinfo.accessKey);
                 using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
                 {
-                    
+
 
                     string json = "{";
                     json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\"}";
@@ -1462,7 +1463,7 @@ namespace PLM
 
 
                 String UrlPhP;
- 
+
 
                 UrlPhP = URL + "api/reportsection/addtranscription";
                 WebRequest myRequest = WebRequest.Create(UrlPhP);
@@ -1492,7 +1493,7 @@ namespace PLM
             }
         }
 
-       
+
         private void OpenWord(APPINFO appinfo, FILE_CONTENT files)
         {
             IntPtr r;
@@ -1583,7 +1584,7 @@ namespace PLM
                         if (response.StatusCode != HttpStatusCode.OK)
                         {
                             WordActive = false;
-                            NewMessage( "ไม่พบ File ใน Server");
+                            NewMessage("ไม่พบ File ใน Server");
 
                             var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
                                                                     System.Reflection.BindingFlags.NonPublic |
@@ -1715,30 +1716,30 @@ namespace PLM
                 string UrlPHP;
                 //if (contentInfo.data[0].section_status == 0)
                 //{
-                    report_status = 1;
-                    string UrlPhP = URL + "api/reportsection/updatereportsection";
-                    WebRequest myRequest = WebRequest.Create(UrlPhP);
-                    myRequest.ContentType = "application/json";
-                    myRequest.Method = "POST";
-                    myRequest.Headers.Add("Authorization", appinfo.accessKey);
+                report_status = 1;
+                string UrlPhP = URL + "api/reportsection/updatereportsection";
+                WebRequest myRequest = WebRequest.Create(UrlPhP);
+                myRequest.ContentType = "application/json";
+                myRequest.Method = "POST";
+                myRequest.Headers.Add("Authorization", appinfo.accessKey);
 
-                    using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
-                    {
+                using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
+                {
 
-                        string json = "{";
-                        json += "\"meeting_id\":" + appinfo.meeting_id + ",";
-                        json += "\"seq\":" + appinfo.seq + ",";
-                        json += "\"section_status\":" + report_status + "";
-                        json += "}";
+                    string json = "{";
+                    json += "\"meeting_id\":" + appinfo.meeting_id + ",";
+                    json += "\"seq\":" + appinfo.seq + ",";
+                    json += "\"section_status\":" + report_status + "";
+                    json += "}";
 
-                        streamWriter.Write(json);
-                    }
+                    streamWriter.Write(json);
+                }
 
-                    WebResponse myResponse = myRequest.GetResponse();
+                WebResponse myResponse = myRequest.GetResponse();
 
 
 
-                    myResponse.Close();
+                myResponse.Close();
                 //}
 
             }
@@ -1903,7 +1904,7 @@ namespace PLM
                 MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
-       
+
         private void OpenMedia(APPINFO appinfo, FILE_CONTENT files)
         {
             WmPlayer.uiMode = "full";
@@ -1951,7 +1952,7 @@ namespace PLM
                 OpenWord(appinfo, fileinfo);
                 OpenMedia(appinfo, fileinfo);
             }
-           
+
             catch (Exception e2)
             {
 
@@ -1959,14 +1960,14 @@ namespace PLM
             }
         }
 
-        private void WordSave(APPINFO appinfo, FILE_CONTENT files,string mode)
+        private void WordSave(APPINFO appinfo, FILE_CONTENT files, string mode)
         {
             int vMessageVersion;
             try
             {
                 var resultBox = System.Windows.Forms.DialogResult.Yes;
                 vMessageVersion = LastVersion + 1;
-                if (mode == ""  || mode == "SAVE")
+                if (mode == "" || mode == "SAVE")
                 {
                     //resultBox = MessageBox.Show("ต้องการบันทึกฉบับร่าง", "ต้องการบันทึก", MessageBoxButtons.YesNo);
                     //resultBox =  NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก" , "ต้องการบันทึกฉบับร่าง");
@@ -1974,7 +1975,7 @@ namespace PLM
                 }
                 else
                 {
-                     resultBox = System.Windows.Forms.DialogResult.Yes;
+                    resultBox = System.Windows.Forms.DialogResult.Yes;
                 }
                 if (resultBox == System.Windows.Forms.DialogResult.Yes)
                 {
@@ -2007,7 +2008,7 @@ namespace PLM
                         }
                         // goto last position
                         if (LastUtt > 0)
-                            //if (LastUtt !=  "")
+                        //if (LastUtt !=  "")
                         {
                             //var content = files.transcription.Where(w => w.utt == LastUtt);
                             var content = files.transcription.Where(w => int.Parse(w.utt) > LastUtt);
@@ -2080,7 +2081,7 @@ namespace PLM
                 Cursor.Current = Cursors.Default;
             }
         }
-     
+
         private void MergeToNewWordFile()
         {
 
@@ -2180,7 +2181,7 @@ namespace PLM
                                         //wait file download completed
                                     }
 
-                                  
+
                                 }
                                 catch (Exception e)
                                 {
@@ -2189,7 +2190,7 @@ namespace PLM
                             thread.Start();
                             thread.Join();
                             //System.Threading.Thread.Sleep(500);
-                            StripProgressStatus.Text = "Download Completed "+ seqInfo.seq + "/" + (contentInfoAll.data.Count());
+                            StripProgressStatus.Text = "Download Completed " + seqInfo.seq + "/" + (contentInfoAll.data.Count());
                         }
                         StripProgress.PerformStep();
                     }
@@ -2258,7 +2259,7 @@ namespace PLM
 
                         vcnt++;
                         StripProgress.PerformStep();
-                        StripProgressStatus.Text = "Merge Completed " + vcnt + "/" + (filesmerge.Count() );
+                        StripProgressStatus.Text = "Merge Completed " + vcnt + "/" + (filesmerge.Count());
 
                     }
 
@@ -2276,7 +2277,7 @@ namespace PLM
 
 
                     //WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
-                    WordApp.Selection.GoTo(WdGoToItem.wdGoToPage,1);
+                    WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                 }
                 else
                 {
@@ -2322,30 +2323,30 @@ namespace PLM
             {
                 WordApp.Visible = false;
                 WordChang = false;
-                
-                    foreach (TRANSCRIPTION transcription in files.transcription)
+
+                foreach (TRANSCRIPTION transcription in files.transcription)
+                {
+                    vBookmark = "P" + transcription.utt;
+                    WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
+                    V_WordText = WordApp.Selection.Text;
+                    last_result = transcription.text;
+                    last_utt = transcription.utt;
+                    if (V_WordText != transcription.text)
                     {
-                        vBookmark = "P" + transcription.utt;
-                        WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
-                        V_WordText = WordApp.Selection.Text;
-                        last_result = transcription.text;
-                        last_utt = transcription.utt;
-                        if (V_WordText != transcription.text)
-                        {
-                            WordChang = true;
-                            V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
-                            V_WordText = V_WordText.Replace("\r", ""); //Carriage return
-                            V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
-                            V_WordText = V_WordText.Replace("\n", ""); //New line
-                            V_WordText = V_WordText.Replace("\t", ""); //Tab
-                            V_WordText = V_WordText.Replace("\"", ""); //Double quote
-                            V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                        WordChang = true;
+                        V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
+                        V_WordText = V_WordText.Replace("\r", ""); //Carriage return
+                        V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
+                        V_WordText = V_WordText.Replace("\n", ""); //New line
+                        V_WordText = V_WordText.Replace("\t", ""); //Tab
+                        V_WordText = V_WordText.Replace("\"", ""); //Double quote
+                        V_WordText = V_WordText.Replace("\\", ""); //Backslash
 
 
-                            V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
-                            transcription.text = V_WordText; ;
-                        }
+                        V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
+                        transcription.text = V_WordText; ;
                     }
+                }
 
                 WordApp.Visible = true;
                 //// Check user insert over bookmark
@@ -2379,7 +2380,7 @@ namespace PLM
                     LastVersion++;
                     TxtRoomVersion.Text = LastVersion.ToString();
 
-                    
+
                     fileName = WorkPath + WordFileName;
 
                     WordApp.ActiveDocument.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault); //save old version
@@ -2446,7 +2447,7 @@ namespace PLM
                         {
                             appinfo.seq = 1;
                         }
-                        appinfo.token =  ConfigurationSettings.AppSettings["Token"];
+                        appinfo.token = ConfigurationSettings.AppSettings["Token"];
                     }
                     catch (Exception e2)
                     {
@@ -2630,7 +2631,7 @@ namespace PLM
         private void BTShowVersion_Click(object sender, EventArgs e)
         {
 
-            ShowVersion(appinfo,fileinfo);
+            ShowVersion(appinfo, fileinfo);
         }
 
         private void BTSumRefresh_Click(object sender, EventArgs e)
@@ -2648,7 +2649,7 @@ namespace PLM
         private void BTCombineSave_Click(object sender, EventArgs e)
         {
 
-            WordSave(appinfo, fileinfo,"SAVE");
+            WordSave(appinfo, fileinfo, "SAVE");
         }
 
         private void BTEditSaveDB_Click(object sender, EventArgs e)
@@ -2917,7 +2918,7 @@ namespace PLM
         private void WmPlayerTimer_Tick(object sender, EventArgs e)
         {
 
-            WordHighlight(appinfo,fileinfo);
+            WordHighlight(appinfo, fileinfo);
 
         }
 
@@ -3023,7 +3024,7 @@ namespace PLM
 
         private void SplitCtnLEft_SizeChanged(object sender, EventArgs e)
         {
-            
+
             //SplitWM.Panel1.Size = new Size(SplitCtnLEft.Width, SplitCtnLEft.Height - 50);
             //SplitWM.Panel1.Size.Height = 50;
             SplitWM.Panel2.Size = new Size(SplitCtnLEft.Width, 80);
@@ -3088,7 +3089,7 @@ namespace PLM
                 WordDirty = false; //not check change
                 SubmitRejectStatus(appinfo);
                 //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
-                NewMessage("ดำเนินการเสร็จเรียบร้อย" );
+                NewMessage("ดำเนินการเสร็จเรียบร้อย");
                 var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
                                                                     System.Reflection.BindingFlags.NonPublic |
                                                                     System.Reflection.BindingFlags.Static);
@@ -3127,7 +3128,7 @@ namespace PLM
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ( WordActive == true && (WordDirty == true || appinfo.mode != "view" ))
+            if (WordActive == true && (WordDirty == true || appinfo.mode != "view"))
             {
                 ////CheckDataChange(appinfo, fileinfo);
             }
@@ -3167,7 +3168,7 @@ namespace PLM
         private void NewMessage(string message)
         {
             FlexibleMessageBox.Show(message);
-            
+
 
             //    NewMessageBox msgResized = new NewMessageBox("", message);
             //msgResized.StartPosition = FormStartPosition.CenterScreen;
@@ -3192,7 +3193,7 @@ namespace PLM
                 string textin;
                 string textout = "";
                 textin = WordApp.Selection.Text;
-                if ((appinfo.mode == "view" ) || (appinfo.mode == "sum") )
+                if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
                 {
 
                 }
@@ -3218,7 +3219,7 @@ namespace PLM
             thread.Start();
             thread.Join();
 
-    
+
 
 
         }
@@ -3261,7 +3262,7 @@ namespace PLM
                             WordChang = true;
                         }
                     }
-                    
+
 
                     // Check user insert over bookmark
                     oStart = WordApp.Selection.Start;
