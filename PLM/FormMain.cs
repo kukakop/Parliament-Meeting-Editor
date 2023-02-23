@@ -637,7 +637,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -672,7 +672,7 @@ namespace PLM
                 catch (Exception e)
                 {
 
-                    MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                    handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 }
 
             }
@@ -775,8 +775,7 @@ namespace PLM
                 }
                 WebResponse myResponse = myRequest.GetResponse();
 
-                StreamReader sr = new StreamReader(myResponse.GetResponseStream(),
-    System.Text.Encoding.UTF8);
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
                 string result = sr.ReadToEnd();
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
@@ -788,10 +787,10 @@ namespace PLM
                 {
 
                 }
-                TxtRoomGroup.Text = room.data[0].meeting_group.ToString();
-                TxtRoomYear.Text = room.data[0].meeting_year.ToString();
-                TxtRoomNo.Text = room.data[0].meeting_number.ToString();
-                TxtRoomType.Text = room.data[0].episode_name.ToString();
+                TxtRoomGroup.Text = (room.data[0].meeting_group.ToString() != "") ? room.data[0].meeting_group.ToString() : "-";
+                TxtRoomYear.Text = (room.data[0].meeting_year.ToString() != "") ? room.data[0].meeting_year.ToString() : "-";
+                TxtRoomNo.Text = (room.data[0].meeting_number.ToString() != "") ? room.data[0].meeting_number.ToString() : "-";
+                TxtRoomType.Text = (room.data[0].episode_name.ToString() != "") ? room.data[0].episode_name.ToString() : "-";
                 //CultureInfo provider = CultureInfo.GetCultureInfo("th-TH");
                 //DateTime date = DateTime.Parse(room.data[0].start_timestamp.ToString(), provider);
                 DateTime meetingDate = Convert.ToDateTime(room.data[0].start_timestamp.ToString(), CultureInfo.CreateSpecificCulture("en-US"));
@@ -807,7 +806,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -853,7 +852,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -906,7 +905,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void RequestContentInfo(APPINFO appinfo, ref CONTENTINFO obj)
@@ -948,11 +947,7 @@ namespace PLM
                 //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
                 TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
-                if (contentInfo.data[0].start_time.ToString() != "")
-                {
-                    TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
-
-                }
+                TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
                 //obj = contentInfo;
                 CBVersion.Text = contentInfo.data[0].version.ToString();
                 ///
@@ -962,7 +957,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void RequestSeqInfo(APPINFO appinfo, ref CONTENTINFO obj)
@@ -988,13 +983,12 @@ namespace PLM
                 }
                 WebResponse myResponse = myRequest.GetResponse();
 
-                StreamReader sr = new StreamReader(myResponse.GetResponseStream(),
-    System.Text.Encoding.UTF8);
+                StreamReader sr = new StreamReader(myResponse.GetResponseStream(), System.Text.Encoding.UTF8);
                 string result = sr.ReadToEnd();
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
-
+                /*
                 ListViewItem listV = default(ListViewItem);
                 foreach (var contentinfodata in contentInfo.data)
                 {
@@ -1016,6 +1010,7 @@ namespace PLM
                 }
                 //obj = contentInfo;
                 CBVersion.Text = contentInfo.data[0].version.ToString();
+                */
                 ///
                 obj = contentInfo;
                 sr.Close();
@@ -1023,7 +1018,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         public string GetStatusFromID(int StatusID)
@@ -1061,7 +1056,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1111,7 +1106,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1226,11 +1221,13 @@ namespace PLM
         //private void InitialForproof(int StatusID)
         private void InitialForproof()
         {
-
+            ScreenShot.Visible = true;
+            GrpWM.Visible = false;
+            WmPlayer.Visible = false;
             GrpAudit.Visible = true;
             BTauditSave.Visible = true;
             //BTauditApprove.Visible = true;
-            BTauditNoApprove.Visible = true;
+            //BTauditNoApprove.Visible = true;
 
             //GRPsumList.Visible = true;
             //BTSumRefresh.Visible = true;
@@ -1304,7 +1301,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1339,7 +1336,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void SubmitWebAPisStatusFinal(APPINFO appinfo, CONTENTINFO contentinfo, string BTinfo)
@@ -1427,7 +1424,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void SubmitWebAPisMeetingStatus(APPINFO appinfo, ROOM room, string BTinfo)
@@ -1501,7 +1498,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1641,8 +1638,8 @@ namespace PLM
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
-                        System.Windows.Forms.Application.Exit();
+                        handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                        //System.Windows.Forms.Application.Exit();
                         return;
 
                     }
@@ -1678,7 +1675,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1714,7 +1711,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
         }
@@ -1757,7 +1754,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
         }
@@ -1835,7 +1832,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
         }
@@ -1877,7 +1874,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void UploadToServerPost_temp()
@@ -1913,7 +1910,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
 
@@ -1944,7 +1941,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
             }
             files.data.version = int.Parse(CBVersion.SelectedItem.ToString());
             ////RequestVideoInfo(appinfo, room, ref video);
@@ -2047,7 +2044,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
         }
@@ -2089,7 +2086,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
         }
@@ -2122,7 +2119,7 @@ namespace PLM
                 // Set the Step property to a value of 1 to represent each file being copied.
                 StripProgress.Step = 1;
 
-                if ((fileinfo.data.current_process == "3" && fileinfo.data.section_status == 0 && fileinfo.data.version == 1) || (appinfo.mode == "mergeNew"))
+                if ((fileinfo.data.current_process == "3" && (fileinfo.data.section_status == 0 || fileinfo.data.section_status == 1) && fileinfo.data.version == 1) || (appinfo.mode == "mergeNew"))
                 {
 
                     DeletePath = WorkPath + @"Merge\";
@@ -2278,6 +2275,7 @@ namespace PLM
                     //ReviseDoc.Paragraphs.Last.Range.Select();
 
                     //WordApp.Selection.Delete();
+                    TopMost = false;
 
                     ReviseDoc.SaveAs2(ReviseFile, WdSaveFormat.wdFormatDocumentDefault);
                     Cursor.Current = Cursors.Default;
@@ -2309,7 +2307,7 @@ namespace PLM
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                        handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                         Cursor.Current = Cursors.Default;
                     }
 
@@ -2317,7 +2315,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 Cursor.Current = Cursors.Default;
             }
         }
@@ -2390,7 +2388,7 @@ namespace PLM
                 {
                     WordApp.ActiveDocument.Save(); //save old version
                     LastVersion++;
-                    TxtRoomVersion.Text = LastVersion.ToString();
+                    TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
 
 
                     fileName = WorkPath + WordFileName;
@@ -2406,7 +2404,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void FormMain_Load(object sender, EventArgs e)
@@ -2463,7 +2461,7 @@ namespace PLM
                     }
                     catch (Exception e2)
                     {
-                        MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                        handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                         System.Windows.Forms.Application.Exit();
                         return;
                     }
@@ -2568,7 +2566,7 @@ namespace PLM
                 WmPlayerTimer.Start();
 
 
-                this.Text = Apptitle + "-" + room.data[0].meeting_title;
+                //this.Text = Apptitle + "-" + room.data[0].meeting_title;
                 switch (appinfo.mode)
                 {
                     case "edit":
@@ -2967,7 +2965,7 @@ namespace PLM
 
                         catch (Exception e3)
                         {
-                            MessageBox.Show(e3.Message);
+                            handleException(e3.Message);
                         }
 
                     }
@@ -3115,7 +3113,7 @@ namespace PLM
 
         private void BTShowVersion_Click_1(object sender, EventArgs e)
         {
-            //ShowVersion();
+            ShowVersion();
 
 
         }
@@ -3132,7 +3130,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
             }
             //RequestVideoInfo(appinfo, room, ref video);
             //OpenWord(appinfo, room, ref video);
@@ -3312,7 +3310,7 @@ namespace PLM
                         {
                             WordApp.ActiveDocument.Save(); //save old version
                             LastVersion++;
-                            TxtRoomVersion.Text = LastVersion.ToString();
+                            TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
                             //fileName = WorkPath + appinfo.part.ToString("00000") + "-" + LastVersion.ToString() + ".docx";
                             //WordFileName = appinfo.part.ToString("00000") + "-" + LastVersion.ToString() + ".docx";
                             fileName = WorkPath + WordFileName;
@@ -3358,6 +3356,14 @@ namespace PLM
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             startForm.Close();
+        }
+
+        private void handleException(String msg)
+        {
+            TopMost = false;
+            startForm.TopMost = false;
+            MessageBox.Show(msg);
+            //System.Environment.Exit(1);
         }
     }
 }
