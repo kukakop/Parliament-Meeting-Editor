@@ -76,20 +76,20 @@ namespace PLM
     }
     public class dataROOM
     {
-        public int meeting_id { get; set; }
-        public int council_type_id { get; set; }
-        public int episode_id { get; set; }
-        public int room_id { get; set; }
-        public int meeting_type_id { get; set; }
+        public int? meeting_id { get; set; }
+        public int? council_type_id { get; set; }
+        public int? episode_id { get; set; }
+        public int? room_id { get; set; }
+        public int? meeting_type_id { get; set; }
         //public string no { get; set; }
-        public int meeting_number { get; set; }
+        public int? meeting_number { get; set; }
         //public string year { get; set; }
-        public int meeting_year { get; set; }
+        public int? meeting_year { get; set; }
         //public string group { get; set; }
-        public int meeting_group { get; set; }
-        public string meeting_title { get; set; }
+        public int? meeting_group { get; set; }
+        public string    meeting_title { get; set; }
         //public string time { get; set; }
-        public string start_timestamp { get; set; }
+        public string    start_timestamp { get; set; }
         public string end_timestamp { get; set; }
         public int section_time { get; set; }
         public int overlap_time { get; set; }
@@ -141,9 +141,9 @@ namespace PLM
         public int seq { get; set; }
         public int meeting_id { get; set; }
         public int user_id { get; set; }
-        public string fullname { get; set; }
-        public string start_time { get; set; }
-        public string end_time { get; set; }
+        public string fullname { get; set; } 
+        public string start_time { get; set; } = string.Empty;
+        public string end_time { get; set; } = string.Empty;
         public int current_process { get; set; }
         public string current_process_desc { get; set; }
         //public string status_id { get; set; }

@@ -784,6 +784,10 @@ namespace PLM
                 //string sysFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
                 //string sysUIFormat = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
                 TxtRoomSection.Text = room.data[0].council_type.ToString();
+                if (room.data[0].meeting_group.ToString() == "")
+                {
+
+                }
                 TxtRoomGroup.Text = room.data[0].meeting_group.ToString();
                 TxtRoomYear.Text = room.data[0].meeting_year.ToString();
                 TxtRoomNo.Text = room.data[0].meeting_number.ToString();
@@ -944,7 +948,11 @@ namespace PLM
                 //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
                 TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
-                TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
+                if (contentInfo.data[0].start_time.ToString() != "")
+                {
+                    TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
+
+                }
                 //obj = contentInfo;
                 CBVersion.Text = contentInfo.data[0].version.ToString();
                 ///
@@ -1001,7 +1009,11 @@ namespace PLM
 
                 TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
-                TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
+                if (contentInfo.data[0].start_time.ToString() != "")
+                {
+                    TxtRoomPeriod.Text = Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm");
+
+                }
                 //obj = contentInfo;
                 CBVersion.Text = contentInfo.data[0].version.ToString();
                 ///
