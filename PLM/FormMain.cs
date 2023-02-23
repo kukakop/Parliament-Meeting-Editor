@@ -1226,7 +1226,7 @@ namespace PLM
             WmPlayer.Visible = false;
             GrpAudit.Visible = true;
             BTauditSave.Visible = true;
-            //BTauditApprove.Visible = true;
+            BTauditApprove.Visible = true;
             //BTauditNoApprove.Visible = true;
 
             //GRPsumList.Visible = true;
