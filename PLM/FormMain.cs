@@ -637,7 +637,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -673,7 +672,6 @@ namespace PLM
                 catch (Exception e)
                 {
 
-                    startForm.Hide();
                     handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 }
 
@@ -808,7 +806,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -855,7 +852,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -909,7 +905,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -950,7 +945,7 @@ namespace PLM
 
 
                 //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
-                TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
+                //TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
                 TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
                 //obj = contentInfo;
@@ -962,8 +957,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1025,7 +1018,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1064,7 +1056,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1115,7 +1106,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1149,7 +1139,7 @@ namespace PLM
             //BTCombineComplete.Visible = false;
 
         }
-        private void InitialForedit()
+        private void InitialForEdit()
         {
             GrpEdit.Visible = true;
             BTEditSendReport.Visible = true;
@@ -1164,7 +1154,7 @@ namespace PLM
             LVPartRefresh();
 
         }
-        private void InitialForview()
+        private void InitialForView()
         {
             BTEditSendReport.Visible = false;
             BTEditSaveDB.Visible = false;
@@ -1177,15 +1167,15 @@ namespace PLM
             }
 
         }
-        private void InitialForaudit()
+        private void InitialForAudit()
         {
             GrpAudit.Visible = true;
             BTauditSave.Visible = true;
             BTauditApprove.Visible = true;
             BTauditNoApprove.Visible = true;
         }
-        //private void InitialForesum(int StatusID)
-        private void InitialForeMerge()
+        //private void InitialForSum(int StatusID)
+        private void InitialForMerge()
         {
             ScreenShot.Visible = true;
             GrpWM.Visible = false;
@@ -1208,7 +1198,7 @@ namespace PLM
 
 
         }
-        private void InitialForesum()
+        private void InitialForSum()
         {
 
             //GRPsumList.Visible = true;
@@ -1228,15 +1218,15 @@ namespace PLM
 
 
         }
-        //private void InitialForproof(int StatusID)
-        private void InitialForproof()
+        //private void InitialForProof(int StatusID)
+        private void InitialForProof()
         {
-            ScreenShot.Visible = true;
-            GrpWM.Visible = false;
-            WmPlayer.Visible = false;
+            //ScreenShot.Visible = true;
+            //GrpWM.Visible = false;
+            //WmPlayer.Visible = false;
             GrpAudit.Visible = true;
             BTauditSave.Visible = true;
-            BTauditApprove.Visible = true;
+            //BTauditApprove.Visible = true;
             //BTauditNoApprove.Visible = true;
 
             //GRPsumList.Visible = true;
@@ -1256,7 +1246,7 @@ namespace PLM
             //    BTCombineComplete.Enabled = false;
             //    WordAllowEdit = false;
             //}
-            LVPartRefresh();
+            //LVPartRefresh();
 
         }
         private void LVPartRefresh()
@@ -1311,7 +1301,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1347,7 +1336,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1436,7 +1424,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1511,7 +1498,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1661,6 +1647,7 @@ namespace PLM
 
 
                 Thread.Sleep(500); // Allow the process to open it's window
+                TxtRoomVersion.Text = contentInfo.data[0].process + "." + files.data.version.ToString();
 
                 WordApp.Visible = true;
                 if (P_NonEditMode == false)
@@ -1689,7 +1676,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1726,7 +1712,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1770,7 +1755,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1835,7 +1819,7 @@ namespace PLM
                 CBVersion.Items.Add(contentInfo.data[0].version);
                 CBVersion.Text = contentInfo.data[0].version.ToString();
 
-                TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
+                //TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
 
                 Thread thread3 = new Thread(() =>
                 {
@@ -1849,7 +1833,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1892,7 +1875,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1929,7 +1911,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -2064,7 +2045,6 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2107,7 +2087,6 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2298,11 +2277,13 @@ namespace PLM
 
                     //WordApp.Selection.Delete();
                     TopMost = false;
+                    startForm.Hide();
 
                     ReviseDoc.SaveAs2(ReviseFile, WdSaveFormat.wdFormatDocumentDefault);
                     Cursor.Current = Cursors.Default;
                     //MessageBox.Show("รวบรวมรายงานเรียบร้อย");
                     NewMessage("รวบรวมรายงานเรียบร้อย");
+                    //TopMost = false;
                     ////BTCombineComplete.Enabled = true;
                     BTsumSave.Visible = true;
                     BTsumApprove.Visible = true;
@@ -2337,7 +2318,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2411,7 +2391,7 @@ namespace PLM
                 {
                     WordApp.ActiveDocument.Save(); //save old version
                     LastVersion++;
-                    TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
+                    //TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
 
 
                     fileName = WorkPath + WordFileName;
@@ -2427,7 +2407,6 @@ namespace PLM
             }
             catch (Exception e)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -2594,30 +2573,30 @@ namespace PLM
                 switch (appinfo.mode)
                 {
                     case "edit":
-                        InitialForedit();
+                        InitialForEdit();
                         break;
                     case "new":
-                        InitialForedit();
+                        InitialForEdit();
                         break;
                     case "view":
-                        InitialForview();
+                        InitialForView();
                         P_NonEditMode = true;
                         break;
                     case "audit":
-                        InitialForaudit();
+                        InitialForAudit();
                         break;
                     case "merge":
-                        InitialForeMerge();
+                        InitialForMerge();
                         break; ;
                     case "mergeNew":
-                        InitialForeMerge();
+                        InitialForMerge();
                         break;
                     case "sum":
-                        InitialForesum();
+                        InitialForSum();
                         P_NonEditMode = true;
                         break;
                     case "proof":
-                        InitialForproof();
+                        InitialForProof();
                         break;
                     case "admin":
                         InitialForAdmin();
@@ -3154,7 +3133,6 @@ namespace PLM
             }
             catch (Exception e2)
             {
-                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
             }
             //RequestVideoInfo(appinfo, room, ref video);
@@ -3202,7 +3180,9 @@ namespace PLM
         }
         private void NewMessage(string message)
         {
-            FlexibleMessageBox.Show(message);
+            //FlexibleMessageBox.Show(message);
+            MessageBox.Show(new Form() { TopMost = true }, message);
+            TopMost = false;
 
 
             //    NewMessageBox msgResized = new NewMessageBox("", message);
@@ -3335,7 +3315,7 @@ namespace PLM
                         {
                             WordApp.ActiveDocument.Save(); //save old version
                             LastVersion++;
-                            TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
+                            //TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
                             //fileName = WorkPath + appinfo.part.ToString("00000") + "-" + LastVersion.ToString() + ".docx";
                             //WordFileName = appinfo.part.ToString("00000") + "-" + LastVersion.ToString() + ".docx";
                             fileName = WorkPath + WordFileName;
@@ -3387,8 +3367,9 @@ namespace PLM
         {
             TopMost = false;
             startForm.TopMost = false;
+            startForm.Hide();
             MessageBox.Show(msg);
-            //System.Environment.Exit(1);
+            System.Environment.Exit(1);
         }
     }
 }
