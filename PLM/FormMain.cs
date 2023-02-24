@@ -637,6 +637,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -672,6 +673,7 @@ namespace PLM
                 catch (Exception e)
                 {
 
+                    startForm.Hide();
                     handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 }
 
@@ -806,6 +808,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -852,6 +855,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -905,6 +909,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -957,6 +962,8 @@ namespace PLM
             }
             catch (Exception e)
             {
+
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1018,6 +1025,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1056,6 +1064,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1106,6 +1115,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1301,6 +1311,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1336,6 +1347,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1424,6 +1436,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1498,6 +1511,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1675,6 +1689,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1711,6 +1726,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1754,6 +1770,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1832,6 +1849,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
 
@@ -1874,6 +1892,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -1910,6 +1929,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -2044,6 +2064,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2086,6 +2107,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2315,6 +2337,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 Cursor.Current = Cursors.Default;
             }
@@ -2404,6 +2427,7 @@ namespace PLM
             }
             catch (Exception e)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -3130,6 +3154,7 @@ namespace PLM
             }
             catch (Exception e2)
             {
+                startForm.Hide();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
             }
             //RequestVideoInfo(appinfo, room, ref video);
