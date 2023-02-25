@@ -1635,6 +1635,9 @@ namespace PLM
                         thread3.Start();
                         thread3.Join();
                         //WordNonEdit();
+
+                        WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+
                     }
                     catch (Exception e)
                     {
@@ -2566,7 +2569,7 @@ namespace PLM
                 ////LastVersion = room.files[0].version;
                 this.Activate();
                 CTN.Panel1.Focus();
-                WmPlayerTimer.Start();
+                //WmPlayerTimer.Start();
 
 
                 //this.Text = Apptitle + "-" + room.data[0].meeting_title;
@@ -2613,7 +2616,7 @@ namespace PLM
                 {
                     Kh_KeyUp_Mode = 1;
                 }
-
+                
             }
         }
 
@@ -2925,7 +2928,7 @@ namespace PLM
         private void WmPlayer_Enter(object sender, EventArgs e)
         {
 
-            this.Activate();
+             //this.Activate();
         }
 
         private void WmPlayerTimer_Tick(object sender, EventArgs e)
@@ -3350,6 +3353,7 @@ namespace PLM
             Thread.Sleep(500);
             TopMost = false;
             this.Show();
+            WordApp.Activate();
         }
         public void StartForm()
         {
@@ -3370,6 +3374,15 @@ namespace PLM
             startForm.Hide();
             MessageBox.Show(msg);
             System.Environment.Exit(1);
+        }
+
+        private void ChkHighlight_CheckedChanged(object sender, EventArgs e)
+        {
+            WmPlayerTimer.Stop();
+            if (ChkHighlight.Checked == true)
+            {
+                WmPlayerTimer.Start();
+            }
         }
     }
 }
