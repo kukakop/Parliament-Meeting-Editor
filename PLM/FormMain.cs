@@ -331,7 +331,6 @@ namespace PLM
                             break;
                         case Keys.F6: // dec volume
 
-                            SearchText();
                             //WmPlayer.settings.volume = WmPlayer.settings.volume - 10;
                             break;
                         //case Keys.Space: //for edit
@@ -340,7 +339,8 @@ namespace PLM
                             WmplayerRePlay(appinfo, fileinfo);
                             break;
                         case Keys.F8:
-                            WmPlayerMovetoCurr(appinfo, fileinfo);
+                            SearchText();
+                            //WmPlayerMovetoCurr(appinfo, fileinfo);
                             break;
                         case Keys.F9: //play puase
                                       //if (loadingPlayer)
@@ -372,22 +372,23 @@ namespace PLM
 
                             break;
                         default:
+                            break;
 
-                            if (AllowEditKey.Contains(Key))
-                            {
-                                if (WordEditMode == false)
-                                {
-                                    WmPlayer.Ctlcontrols.pause();
-                                    WordEdit();
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                WordDirty = true;
-                                break;
+                            //if (AllowEditKey.Contains(Key))
+                            //{
+                            //    if (WordEditMode == false)
+                            //    {
+                            //        WmPlayer.Ctlcontrols.pause();
+                            //        WordEdit();
+                            //    }
+                            //    break;
+                            //}
+                            //else
+                            //{
+                            //    WordDirty = true;
+                            //    break;
 
-                            }
+                            //}
                     }
                 }
                 else
@@ -1822,7 +1823,7 @@ namespace PLM
                 CBVersion.Items.Add(contentInfo.data[0].version);
                 CBVersion.Text = contentInfo.data[0].version.ToString();
 
-                //TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
+                TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
 
                 Thread thread3 = new Thread(() =>
                 {
