@@ -358,9 +358,30 @@ namespace PLM
                         case Keys.F10: // play back
                             if (WordEditMode == false)
                             {
-                                WmplayerBack(appinfo, fileinfo);
+                                //WmplayerBack(appinfo, fileinfo);
+                                if (WmPlayer.settings.rate == 0.5)
+                                {
+
+                                    WmplayerPlay05();
+                                }
+                                if (WmPlayer.settings.rate == 1)
+                                {
+
+                                    WmplayerPlay10();
+                                }
+                                if (WmPlayer.settings.rate == 2)
+                                {
+
+                                    WmplayerPlay20();
+                                }
+                                if (WmPlayer.settings.rate == 4)
+                                {
+
+                                    WmplayerPlay40();
+                                }
                             }
                             break;
+                            
                         case Keys.F11: // stop
                             WmplayerStop(); ; break;
 
@@ -485,9 +506,22 @@ namespace PLM
 
         private void WmplayerPlay05()
         {
-            WmPlayer.settings.rate = 0.5;
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
+                WmPlayer.settings.rate = 0.5;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+                WmPlayer.settings.rate = 0.5;
+
                 WmPlayer.Ctlcontrols.play();
             }
             BT05X.Focus();
@@ -496,7 +530,6 @@ namespace PLM
         }
         private void WmplayerPlay10()
         {
-            WmPlayer.settings.rate = 1;
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
                 //if (TxtRewTime.Text != "")
@@ -507,6 +540,7 @@ namespace PLM
                 //    }
                 //}
 
+                WmPlayer.settings.rate = 1;
                 WmPlayer.Ctlcontrols.play();
             }
             else
@@ -519,6 +553,7 @@ namespace PLM
                     }
                 }
 
+                WmPlayer.settings.rate = 1;
                 WmPlayer.Ctlcontrols.play();
             }
             BT10X.Focus();
@@ -527,9 +562,22 @@ namespace PLM
         }
         private void WmplayerPlay20()
         {
-            WmPlayer.settings.rate = 2;
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
+                WmPlayer.settings.rate = 2;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+
+                WmPlayer.settings.rate = 2;
                 WmPlayer.Ctlcontrols.play();
             }
             BT20X.Focus();
@@ -537,10 +585,23 @@ namespace PLM
         }
         private void WmplayerPlay40()
         {
-            WmPlayer.settings.rate = 4;
 
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
+                WmPlayer.settings.rate = 4;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+
+                WmPlayer.settings.rate = 4;
                 WmPlayer.Ctlcontrols.play();
             }
             BT40X.Focus();
