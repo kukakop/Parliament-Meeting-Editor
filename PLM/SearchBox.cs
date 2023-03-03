@@ -48,7 +48,7 @@ namespace PLM
         {
             InitializeComponent();
             //TopMost = true;
-            this.Text = "Search";
+            this.Text = "การแนะนำรายชื่อ";
             searchtext(textsearch, suggestinfo);
             //this.SerachComboBox.Text = message;
 
@@ -168,7 +168,6 @@ System.Text.Encoding.UTF8);
 
         private void InitializeComponent()
         {
-
             this.buttonYes = new System.Windows.Forms.Button();
             this.buttonNo = new System.Windows.Forms.Button();
             this.SearchComboBox = new System.Windows.Forms.ComboBox();
@@ -176,63 +175,49 @@ System.Text.Encoding.UTF8);
             // 
             // buttonYes
             // 
-            this.buttonYes.Location = new System.Drawing.Point(100, 350);
+            this.buttonYes.Location = new System.Drawing.Point(107, 350);
             this.buttonYes.Name = "buttonYes";
             this.buttonYes.Size = new System.Drawing.Size(100, 40);
             this.buttonYes.TabIndex = 0;
             this.buttonYes.Text = "Yes";
             this.buttonYes.UseVisualStyleBackColor = true;
-            
             this.buttonYes.Click += new System.EventHandler(this.buttonYes_Click);
             // 
             // buttonNo
             // 
-            this.buttonNo.Location = new System.Drawing.Point(250, 350);
+            this.buttonNo.Location = new System.Drawing.Point(257, 350);
             this.buttonNo.Name = "buttonNo";
             this.buttonNo.Size = new System.Drawing.Size(100, 40);
             this.buttonNo.TabIndex = 0;
             this.buttonNo.Text = "No";
             this.buttonNo.UseVisualStyleBackColor = true;
             this.buttonNo.Click += new System.EventHandler(this.buttonNo_Click);
-
             // 
-            // textBoxMessage
+            // SearchComboBox
             // 
-            //this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //this.textBoxMessage.Location = new System.Drawing.Point(29, 36);
-            //this.textBoxMessage.Name = "textBoxMessage";
-            //this.textBoxMessage.ReadOnly = true;
-            //this.textBoxMessage.Size = new System.Drawing.Size(411, 38);
-            //this.textBoxMessage.TabIndex = 1;
-            // 
-            // SerachComboBox
-            // 
+            this.SearchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.SearchComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SearchComboBox.Location = new System.Drawing.Point(29, 36);
-            this.SearchComboBox.Name = "textBoxMessage";
-            //this.SearchComboBox.ReadOnly = true;
+            this.SearchComboBox.Name = "SearchComboBox";
             this.SearchComboBox.Size = new System.Drawing.Size(411, 300);
             this.SearchComboBox.TabIndex = 1;
-            this.SearchComboBox.DropDownStyle = ComboBoxStyle.Simple;
-            this.SearchComboBox.KeyUp += new KeyEventHandler(this.SearchComboBox_KeyUp);
-            this.SearchComboBox.MouseDoubleClick += new MouseEventHandler(this.SearchComboBox_Click);
+            this.SearchComboBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchComboBox_KeyUp);
+            this.SearchComboBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SearchComboBox_Click);
             // 
-            // NewMessageBox
+            // SearchBox
             // 
+            this.AcceptButton = this.buttonYes;
             this.ClientSize = new System.Drawing.Size(468, 400);
             this.Controls.Add(this.SearchComboBox);
             this.Controls.Add(this.buttonYes);
             this.Controls.Add(this.buttonNo);
-            this.Name = "NewMessageBox";
-            this.Load += new System.EventHandler(this.NewMessageBox_Load);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "SearchBox";
             this.ShowIcon = false;
-            this.ResumeLayout(false);
-            this.PerformLayout();
             this.TopMost = true;
-
-
-            this.AcceptButton = this.buttonYes;
-           
+            this.Load += new System.EventHandler(this.NewMessageBox_Load);
+            this.ResumeLayout(false);
 
         }
 
