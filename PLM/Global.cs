@@ -31,12 +31,14 @@ namespace PLM
         public int report_section_id { get; set; }
         public int report_section_actor_id { get; set; }
         public int seq { get; set; }
+        public string seq_desc { get; set; } //add 2030304
         public int meeting_id { get; set; }
         public int user_id { get; set; }
         public string fullname { get; set; }
         public string start_time { get; set; }
         public string end_time { get; set; }
-        public string current_process { get; set; }
+        //public string current_process { get; set; }
+        public int current_process { get; set; }
         public string current_process_desc { get; set; }
         public int section_status { get; set; }
         public string section_status_desc { get; set; }
@@ -45,8 +47,10 @@ namespace PLM
         public int process { get; set; }
         public int version { get; set; }
         public string version_desc { get; set; }
-        public string task_status { get; set; }
-        public int row_no { get; set; }
+        //public string report_status { get; set; }
+        public int report_status { get; set; }
+        //public int row_no { get; set; }
+        public string report_status_desc { get; set; }
         public string video { get; set; }
 
         //public string name { get; set; }
@@ -171,6 +175,12 @@ namespace PLM
         public string success { get; set; }
         public int version { get; set; }
         public int function { get; set; }
+    }
+    public class ADDTRANSCRIPTION_FILE
+    {
+        public string success { get; set; }
+        public int version { get; set; }
+        public string filepath { get; set; }
     }
 
 

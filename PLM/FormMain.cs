@@ -1578,7 +1578,9 @@ namespace PLM
                 int vRecNo;
                 byte[] data;
                 //check version1 is new
-                if ((files.data.current_process == "1" && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
+                //if ((files.data.current_process == "1" && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
+
+                if ((files.data.current_process == 1 && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
                 {
 
                     fileName = WorkPath + Appname + "Template.docx";
@@ -1909,7 +1911,7 @@ namespace PLM
             try
             {
 
-
+                                                            
                 string docFile = WorkPath + @"send/" + WordFileName;
                 System.IO.Directory.CreateDirectory(WorkPath + @"/send");
                 System.IO.File.Copy(WorkPath + WordFileName, docFile, true);
@@ -1943,36 +1945,57 @@ namespace PLM
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
-        private void UploadToServerPost_temp()
+
+
+        private void UpdateToServerAndUpload()
         {
-            string UrlPHP = URL + "api/reportsection/uploadreportsection";
-            //string user = appinfo.username;
-            //string key = appinfo.accessKey;
-            //string part = appinfo.part.ToString();
-            //string version = im_version.ToString();
-            string docFile = WorkPath + @"send\" + WordFileName;
-            string filename = Path.GetFileName(docFile);
             try
             {
-                WordApp.ActiveDocument.SaveAs2(docFile, WdSaveFormat.wdFormatDocumentDefault);//save to send folder
-                FileStream stream = new FileStream(WorkPath + WordFileName, FileMode.Open);
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("Authorization", appinfo.accessKey);
-                //client.DefaultRequestHeaders.Authorization =   new  System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", "=" + appinfo.accessKey);
 
-                using (MultipartFormDataContent formData = new MultipartFormDataContent())
+
+                string v_transcription = "";
+
+                foreach (var transcription in fileinfo.transcription)
                 {
-                    //formData.Headers.h . Add("Authorization", appinfo.accessKey);
-                    //formData.Headers.Add("Content-Type", "application/json");
-                    formData.Add(new StringContent(appinfo.meeting_id.ToString()), "meeting_id");
-                    formData.Add(new StringContent(appinfo.seq.ToString()), "seq");
-                    formData.Add(new StringContent(contentInfo.data[0].process.ToString()), "process");
-                    formData.Add(new StringContent(contentInfo.data[0].version.ToString()), "version");
-                    formData.Add(new StreamContent(stream), "file", filename + "s");
-                    var response = client.PostAsync(UrlPHP, formData).Result;
+
+                    v_transcription += "{";
+                    v_transcription += "\"utt\":\"" + transcription.utt + "\",";
+                    v_transcription += "\"start\":" + transcription.start + ",";
+                    v_transcription += "\"stop\":" + transcription.stop + ",";
+                    v_transcription += "\"text\":\"" + transcription.text + "\"";
+                    v_transcription += "},";
+
                 }
+                v_transcription = "[" + v_transcription.Remove(v_transcription.Length - 1) + "]";
+                string docFile = WorkPath + @"send/" + WordFileName;
+                System.IO.Directory.CreateDirectory(WorkPath + @"/send");
+                System.IO.File.Copy(WorkPath + WordFileName, docFile, true);
+                byte[] bytes = System.IO.File.ReadAllBytes(docFile);
+                RestClient client = new RestClient(URL);
+                RestRequest request = new RestRequest("/api/reportsection/uploadreportsection", Method.Post);
+                request.AddHeader("Authorization", appinfo.accessKey);
+                request.AddFile("file", bytes, Path.GetFileName(WordFileName), MimeTypeMap.GetMimeType(Path.GetExtension(WordFileName)));
+                request.AddParameter("meeting_id", appinfo.meeting_id.ToString());
+                if (appinfo.mode == "merge")
+                {
+                    request.AddParameter("seq", "0");
+                }
+                else
+                {
+                    request.AddParameter("seq", appinfo.seq.ToString());
+                }
+                request.AddParameter("process", contentInfo.data[0].process.ToString());
+                request.AddParameter("transcription", v_transcription);
+                var response = client.Execute(request);
+
+                //JavaScriptSerializer jss = new JavaScriptSerializer();
+                //var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response);
+
+                //contentInfo.data[0].version = addtrans.Version.ToString();
+                CBVersion.Items.Add(contentInfo.data[0].version);
+                CBVersion.Text = contentInfo.data[0].version.ToString();
+
+                TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
             }
             catch (Exception e)
             {
@@ -2059,8 +2082,9 @@ namespace PLM
                     SaveData(appinfo, files);
                     if (WordChang)
                     {
-                        UpdateToServer(vMessageVersion);
-                        UploadToServerPost();
+                        //UpdateToServer(vMessageVersion);
+                        //UploadToServerPost();
+                        UpdateToServerAndUpload();
                         Cursor.Current = Cursors.Default;
                         //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
                         NewMessage("ดำเนินการเสร็จเรียบร้อย");
@@ -2131,8 +2155,10 @@ namespace PLM
                     SaveData(appinfo, files);
                     if (WordChang)
                     {
-                        UpdateToServer(vMessageVersion);
-                        UploadToServerPost();
+                        //UpdateToServer(vMessageVersion);
+                        //UploadToServerPost();
+
+                        UpdateToServerAndUpload();
                         Cursor.Current = Cursors.Default;
                         //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
                         NewMessage("ดำเนินการเสร็จเรียบร้อย");
@@ -2185,10 +2211,11 @@ namespace PLM
                 // Set the Step property to a value of 1 to represent each file being copied.
                 StripProgress.Step = 1;
 
-                if ((fileinfo.data.current_process == "3" && (fileinfo.data.section_status == 0 || fileinfo.data.section_status == 1) && fileinfo.data.version == 1) || (appinfo.mode == "mergeNew"))
+                //if ((fileinfo.data.current_process == "3" && (fileinfo.data.section_status == 0 || fileinfo.data.section_status == 1) && fileinfo.data.version == 1) || (appinfo.mode == "mergeNew"))
+                if ((fileinfo.data.current_process == 3 && (fileinfo.data.section_status == 0 || fileinfo.data.section_status == 1) && fileinfo.data.version == 1) || (appinfo.mode == "mergeNew"))
                 {
 
-                    DeletePath = WorkPath + @"Merge\";
+                        DeletePath = WorkPath + @"Merge\";
                     System.IO.Directory.CreateDirectory(WorkPath + @"\\merge");
                     string[] files = System.IO.Directory.GetFiles(DeletePath);
                     foreach (string file in files)
@@ -2361,7 +2388,8 @@ namespace PLM
                 {
                     try
                     {
-                        if (fileinfo.data.current_process == "3")
+                        //if (fileinfo.data.current_process == "3")
+                         if (fileinfo.data.current_process == 3)
                         {
 
                             OpenWord(appinfo, fileinfo);
@@ -3387,8 +3415,10 @@ namespace PLM
 
                             WordApp.ActiveDocument.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault); //save old version
                             int vMessageVersion = LastVersion;
-                            UpdateToServer(vMessageVersion);
-                            UploadToServerPost();
+
+                            UpdateToServerAndUpload();
+                            //UpdateToServer(vMessageVersion);
+                            //UploadToServerPost();
                         }
 
 
