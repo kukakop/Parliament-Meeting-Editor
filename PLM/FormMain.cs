@@ -3278,6 +3278,7 @@ namespace PLM
             TopMost = false;
 
 
+
             //    NewMessageBox msgResized = new NewMessageBox("", message);
             //msgResized.StartPosition = FormStartPosition.CenterScreen;
             ////msgResized.Show();
@@ -3285,7 +3286,6 @@ namespace PLM
         }
         private DialogResult NewMessageConfirm(string message)
         {
-            //return MessageBox.Show()
             return MessageBox.Show(new Form() { TopMost = true },  message, this.Text, MessageBoxButtons.YesNo);
             //return FlexibleMessageBox.Show(message, this.Text, MessageBoxButtons.YesNo);
             ////    NewMessageBox msgResized = new NewMessageBox("", message);
