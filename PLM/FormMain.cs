@@ -1988,9 +1988,9 @@ namespace PLM
                 request.AddParameter("transcription", v_transcription);
                 var response = client.Execute(request);
 
-                //JavaScriptSerializer jss = new JavaScriptSerializer();
+                JavaScriptSerializer jss = new JavaScriptSerializer();
                 //var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response);
-
+                
                 //contentInfo.data[0].version = addtrans.Version.ToString();
                 CBVersion.Items.Add(contentInfo.data[0].version);
                 CBVersion.Text = contentInfo.data[0].version.ToString();
@@ -2529,7 +2529,7 @@ namespace PLM
             if (proc_cnt > 1)
             {
                 //MessageBox.Show("มีการเปิด Program " + Appname + " อบู่แล้ว");
-                NewMessage("มีการเปิด Program " + Appname + " อบู่แล้ว");
+                NewMessage("มีการเปิด Program " + Appname + " อยู่แล้ว");
                 System.Windows.Forms.Application.Exit();
                 return;
             }
@@ -3285,13 +3285,16 @@ namespace PLM
         }
         private DialogResult NewMessageConfirm(string message)
         {
-            //FlexibleMessageBox.Show(message);
+            //return MessageBox.Show()
+            return MessageBox.Show(new Form() { TopMost = true },  message, this.Text, MessageBoxButtons.YesNo);
+            //return FlexibleMessageBox.Show(message, this.Text, MessageBoxButtons.YesNo);
+            ////    NewMessageBox msgResized = new NewMessageBox("", message);
+            ////msgResized.StartPosition = FormStartPosition.CenterScreen;
+            //////msgResized.Show();
+            ////msgResized.ShowDialog();
 
-            return FlexibleMessageBox.Show(message, this.Text, MessageBoxButtons.YesNo);
-            //    NewMessageBox msgResized = new NewMessageBox("", message);
-            //msgResized.StartPosition = FormStartPosition.CenterScreen;
-            ////msgResized.Show();
-            //msgResized.ShowDialog();
+
+            ////TopMost = false;
         }
         private void SearchText()
         {
