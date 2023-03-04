@@ -1631,86 +1631,88 @@ namespace PLM
                 }
                 else
                 {
-                    try
-                    {
 
-                        String UrlPhP;
+                        try
+                            {
+                                String UrlPhP;
 
-                        UrlPhP = URL + "api/reportsection/downloadreportsection";
+                                UrlPhP = URL + "api/reportsection/downloadreportsection";
+                                
+                                RestClient client = new RestClient(URL);
+                                RestRequest request = new RestRequest("api/reportsection/downloadreportsection", Method.Post);
+                                request.AddHeader("Authorization", appinfo.accessKey);
+                                var body = "{";
+                                body += "\"meeting_id\":\"" + appinfo.meeting_id + "\",";
+                                body += "\"seq\":" + appinfo.seq + ",";
+                                body += "\"process\":" + contentInfo.data[0].process + ",";
+                                body += "\"version\":" + files.data.version;
+                                body += "}";
+                                request.AddParameter("application/json", body, ParameterType.RequestBody);
+                                var response = client.Execute(request);
+                                //var response = await client.ExecuteAsync(request);
+                                if (response.StatusCode != HttpStatusCode.OK)
+                                {
+                                    WordActive = false;
+                                    NewMessage("ไม่พบ File ใน Server");
 
-                        RestClient client = new RestClient(URL);
+                                    var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
+                                                                            System.Reflection.BindingFlags.NonPublic |
+                                                                            System.Reflection.BindingFlags.Static);
+                                    exit.Invoke(null, null);
+                                }
+                                else
+                                {
 
+                                    WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
+                                    WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
 
-                        RestRequest request = new RestRequest("api/reportsection/downloadreportsection", Method.Post);
-                        request.AddHeader("Authorization", appinfo.accessKey);
-
-
-                        var body = "{";
-                        body += "\"meeting_id\":\"" + appinfo.meeting_id + "\",";
-                        body += "\"seq\":" + appinfo.seq + ",";
-                        body += "\"process\":" + contentInfo.data[0].process + ",";
-                        body += "\"version\":" + files.data.version;
-                        body += "}";
-                        request.AddParameter("application/json", body, ParameterType.RequestBody);
-                        var response = client.Execute(request);
-
-                        if (response.StatusCode != HttpStatusCode.OK)
-                        {
-                            WordActive = false;
-                            NewMessage("ไม่พบ File ใน Server");
-
-                            var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
-                                                                    System.Reflection.BindingFlags.NonPublic |
-                                                                    System.Reflection.BindingFlags.Static);
-                            exit.Invoke(null, null);
-                        }
-                        WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
-                        WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
-
-
-                        byte[] fileForDownload = client.DownloadData(request);
-                        System.IO.File.WriteAllBytes(WorkPath + WordFileName, fileForDownload);
+                               
+                                }
 
 
+                                //byte[] fileForDownload = client.DownloadData(request);
+                                byte[] fileForDownload = response.RawBytes;
+                                System.IO.File.WriteAllBytes(WorkPath + WordFileName, fileForDownload);
 
-                        fileName = WorkPath + WordFileName;
 
-                        while (System.IO.File.Exists(fileName.ToString()) == false)
-                        {
-                            //wait file download completed
-                        }
 
-                        Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
-                        aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
+                                fileName = WorkPath + WordFileName;
 
-                        Thread thread = new Thread(() =>
-                        {
+                                while (System.IO.File.Exists(fileName.ToString()) == false)
+                                {
+                                    //wait file download completed
+                                }
 
-                            WordApp.ActiveWindow.View.ReadingLayout = false;
-                        });
-                        thread.Start();
-                        thread.Join();
-                        Thread thread3 = new Thread(() =>
-                        {
-                            WordApp.Selection.Move(WdUnits.wdCharacter, 1);
-                            WordApp.Selection.Move(WdUnits.wdCharacter, -1);
+                                Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                                aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
 
-                        });
-                        thread3.Start();
-                        thread3.Join();
-                        //WordNonEdit();
+                            Thread thread = new Thread(() =>
+                            {
 
-                        WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+                                WordApp.ActiveWindow.View.ReadingLayout = false;
+                            });
+                            thread.Start();
+                            thread.Join();
+                            Thread thread3 = new Thread(() =>
+                            {
+                                WordApp.Selection.Move(WdUnits.wdCharacter, 1);
+                                WordApp.Selection.Move(WdUnits.wdCharacter, -1);
 
-                    }
-                    catch (Exception e)
-                    {
-                        handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
-                        //System.Windows.Forms.Application.Exit();
-                        return;
+                            });
+                            thread3.Start();
+                            thread3.Join();
 
-                    }
-                }
+                            WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+
+                            }
+                            catch (Exception e)
+                            {
+                                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                                //System.Windows.Forms.Application.Exit();
+                                return;
+
+                            }
+            }
 
 
                 Thread.Sleep(500); // Allow the process to open it's window
@@ -1947,7 +1949,7 @@ namespace PLM
         }
 
 
-        private void UpdateToServerAndUpload()
+        private Boolean UpdateToServerAndUpload()
         {
             try
             {
@@ -1972,7 +1974,7 @@ namespace PLM
                 System.IO.File.Copy(WorkPath + WordFileName, docFile, true);
                 byte[] bytes = System.IO.File.ReadAllBytes(docFile);
                 RestClient client = new RestClient(URL);
-                RestRequest request = new RestRequest("/api/reportsection/uploadreportsection", Method.Post);
+                RestRequest request = new RestRequest("/api/reportsection/uploadtranscription", Method.Post);
                 request.AddHeader("Authorization", appinfo.accessKey);
                 request.AddFile("file", bytes, Path.GetFileName(WordFileName), MimeTypeMap.GetMimeType(Path.GetExtension(WordFileName)));
                 request.AddParameter("meeting_id", appinfo.meeting_id.ToString());
@@ -1989,18 +1991,27 @@ namespace PLM
                 var response = client.Execute(request);
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
-                //var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response);
-                
-                //contentInfo.data[0].version = addtrans.Version.ToString();
-                CBVersion.Items.Add(contentInfo.data[0].version);
-                CBVersion.Text = contentInfo.data[0].version.ToString();
+                var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
+                if (addtrans.success== "True")
+                {
 
-                TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
+                    contentInfo.data[0].version = addtrans.version;
+                    CBVersion.Items.Add(contentInfo.data[0].version);
+                    CBVersion.Text = contentInfo.data[0].version.ToString();
+                    TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             catch (Exception e)
             {
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
+            return true;
         }
 
         private void OpenMedia(APPINFO appinfo, FILE_CONTENT files)
@@ -2061,6 +2072,7 @@ namespace PLM
         private void WordSave(APPINFO appinfo, FILE_CONTENT files, string mode)
         {
             int vMessageVersion;
+            
             try
             {
                 var resultBox = System.Windows.Forms.DialogResult.Yes;
@@ -2084,10 +2096,21 @@ namespace PLM
                     {
                         //UpdateToServer(vMessageVersion);
                         //UploadToServerPost();
-                        UpdateToServerAndUpload();
-                        Cursor.Current = Cursors.Default;
-                        //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
-                        NewMessage("ดำเนินการเสร็จเรียบร้อย");
+                        if (UpdateToServerAndUpload())
+                        {
+
+                            Cursor.Current = Cursors.Default;
+                            //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
+                            NewMessage("ดำเนินการเสร็จเรียบร้อย");
+
+                        }
+                        else
+                        {
+
+                            Cursor.Current = Cursors.Default;
+                            //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
+                            NewMessage("ไม่สามารถเชื่ิอมต่อ server ได้");
+                        }
 
 
                         if (P_NonEditMode == true)
@@ -2239,7 +2262,7 @@ namespace PLM
 
                             Cursor.Current = Cursors.WaitCursor;
 
-                            Thread thread = new Thread(() =>
+                            Thread thread = new Thread(async () =>
                             {
                                 try
                                 {
@@ -2264,15 +2287,15 @@ namespace PLM
                                     body += "\"version\":" + seqInfo.version;
                                     body += "}";
                                     request.AddParameter("application/json", body, ParameterType.RequestBody);
-                                    var response = client.Execute(request);
-
+                                    //var response = client.Execute(request);
+                                    var response = await client.ExecuteAsync(request);
 
                                     WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000") + ".docx";
                                     WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000");
 
 
-                                    byte[] fileForDownload = client.DownloadData(request);
-                                    System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
+                                    //byte[] fileForDownload = client.DownloadData(request);
+                                    //System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
 
 
 
@@ -2606,7 +2629,7 @@ namespace PLM
                 RequestSeqInfo(appinfo, ref contentInfoAll);
 
 
-
+                Delete_file_all();
                 switch (appinfo.mode)
                 {
                     case "edit":
@@ -3477,6 +3500,60 @@ namespace PLM
             if (ChkHighlight.Checked == true)
             {
                 WmPlayerTimer.Start();
+            }
+        }
+
+        private void FormMain_FormClosed_1(object sender, FormClosedEventArgs e)
+        {
+            Delete_file_all();
+        }
+        private void Delete_file_all()
+        {
+
+            string DeletePath = WorkPath;
+            string[] files = System.IO.Directory.GetFiles(DeletePath);
+            foreach (string file in files)
+            {
+                if (file.Contains("Template"))
+                {
+
+                }
+                else
+                {
+                    System.IO.File.Delete(file);
+
+                }
+            }
+
+            DeletePath = WorkPath + @"send/" ;
+            string[] filessend = System.IO.Directory.GetFiles(DeletePath);
+            foreach (string file in filessend)
+            {
+                if (file.Contains("Template"))
+                {
+
+                }
+                else
+                {
+                    System.IO.File.Delete(file);
+
+                }
+            }
+
+
+            DeletePath = WorkPath + @"merge/";
+            string[] filesmerge = System.IO.Directory.GetFiles(DeletePath);
+            foreach (string file in filesmerge)
+            {
+                if (file.Contains("Template"))
+                {
+
+                }
+                else
+                {
+                    System.IO.File.Delete(file);
+
+                }
             }
         }
     }
