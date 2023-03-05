@@ -3540,6 +3540,7 @@ namespace PLM
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Delete_file_all();
             startForm.Close();
         }
 
@@ -3561,9 +3562,6 @@ namespace PLM
             }
         }
 
-        private void FormMain_FormClosed_1(object sender, FormClosedEventArgs e)
-        {
-        }
         private void Delete_file_all()
         {
 
@@ -3614,9 +3612,5 @@ namespace PLM
             }
         }
 
-        private void FormMain_FormClosed_2(object sender, FormClosedEventArgs e)
-        {
-            Delete_file_all();
-        }
     }
 }
