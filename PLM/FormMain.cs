@@ -3323,7 +3323,65 @@ namespace PLM
         {
             Thread thread = new Thread(() =>
             {
+                string textin;
+                string textout = "";
+                textin = WordApp.Selection.Text;
+                if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
+                {
 
+                }
+                else
+                {
+                    string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
+                    if (result_search != "")
+                    {
+                        WordApp.Selection.Text = result_search;
+
+                    }
+                }
+            });
+            thread.Start();
+            thread.Join();
+                //Thread thread = new Thread(() =>
+                //{
+                //    string textin;
+                //    string textout = "";
+                //    textin = WordApp.Selection.Text;
+                //    if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
+                //    {
+
+                //    }
+                //    else
+                //    {
+
+                //        SearchBox msgResized = new SearchBox(textin, suggestinfo);
+                //        if (msgResized.IsAccessible == false)
+                //        {
+
+
+                //            msgResized.StartPosition = FormStartPosition.CenterScreen;
+                //            msgResized.ShowDialog();
+
+                //            if (msgResized.result_search != "")
+                //            {
+                //                WordApp.Selection.Text = msgResized.result_search;
+
+                //            }
+                //        }
+                //    }
+                //});
+                //thread.Start();
+                //thread.Join();
+
+
+
+
+            }
+         private void OldSearchText()
+        {
+
+            Thread thread = new Thread(() =>
+            {
                 string textin;
                 string textout = "";
                 textin = WordApp.Selection.Text;
