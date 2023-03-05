@@ -3563,7 +3563,6 @@ namespace PLM
 
         private void FormMain_FormClosed_1(object sender, FormClosedEventArgs e)
         {
-            Delete_file_all();
         }
         private void Delete_file_all()
         {
@@ -3572,7 +3571,7 @@ namespace PLM
             string[] files = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in files)
             {
-                if (file.Contains("Template"))
+                if (file.Contains("mplate.docx"))
                 {
 
                 }
@@ -3613,6 +3612,11 @@ namespace PLM
 
                 }
             }
+        }
+
+        private void FormMain_FormClosed_2(object sender, FormClosedEventArgs e)
+        {
+            Delete_file_all();
         }
     }
 }

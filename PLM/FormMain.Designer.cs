@@ -60,18 +60,25 @@ namespace PLM
             this.ScreenShot = new System.Windows.Forms.PictureBox();
             this.WmPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.GrpWM = new System.Windows.Forms.GroupBox();
+            this.BT40X = new PLM.RJControls.RJButton();
             this.label10 = new System.Windows.Forms.Label();
+            this.BT20X = new PLM.RJControls.RJButton();
             this.label12 = new System.Windows.Forms.Label();
+            this.BT10X = new PLM.RJControls.RJButton();
             this.label11 = new System.Windows.Forms.Label();
+            this.BT05X = new PLM.RJControls.RJButton();
             this.TxtRewTime = new System.Windows.Forms.TextBox();
             this.ChkHighlight = new System.Windows.Forms.CheckBox();
             this.SplitCtnList = new System.Windows.Forms.SplitContainer();
             this.SplitCtnListApp = new System.Windows.Forms.SplitContainer();
             this.GrpList = new System.Windows.Forms.GroupBox();
             this.CBVersion = new System.Windows.Forms.ComboBox();
+            this.BTShowVersion = new PLM.RJControls.RJButton();
             this.label13 = new System.Windows.Forms.Label();
             this.GRPsumList = new System.Windows.Forms.GroupBox();
             this.LVPart = new System.Windows.Forms.ListView();
+            this.BTSumShow = new PLM.RJControls.RJButton();
+            this.BTSumRefresh = new PLM.RJControls.RJButton();
             this.SplitCtnWord = new System.Windows.Forms.SplitContainer();
             this.PNWord = new System.Windows.Forms.Panel();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -79,23 +86,16 @@ namespace PLM
             this.StripProgressStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.StripProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.GrpSum = new System.Windows.Forms.GroupBox();
-            this.GrpAudit = new System.Windows.Forms.GroupBox();
-            this.GrpEdit = new System.Windows.Forms.GroupBox();
-            this.WmPlayerTimer = new System.Windows.Forms.Timer(this.components);
-            this.BT40X = new PLM.RJControls.RJButton();
-            this.BT20X = new PLM.RJControls.RJButton();
-            this.BT10X = new PLM.RJControls.RJButton();
-            this.BT05X = new PLM.RJControls.RJButton();
-            this.BTShowVersion = new PLM.RJControls.RJButton();
-            this.BTSumShow = new PLM.RJControls.RJButton();
-            this.BTSumRefresh = new PLM.RJControls.RJButton();
             this.BTsumApprove = new PLM.RJControls.RJButton();
             this.BTsumSave = new PLM.RJControls.RJButton();
+            this.GrpAudit = new System.Windows.Forms.GroupBox();
             this.BTauditNoApprove = new PLM.RJControls.RJButton();
             this.BTauditApprove = new PLM.RJControls.RJButton();
             this.BTauditSave = new PLM.RJControls.RJButton();
+            this.GrpEdit = new System.Windows.Forms.GroupBox();
             this.BTEditSendReport = new PLM.RJControls.RJButton();
             this.BTEditSaveDB = new PLM.RJControls.RJButton();
+            this.WmPlayerTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.CTN)).BeginInit();
             this.CTN.Panel1.SuspendLayout();
             this.CTN.Panel2.SuspendLayout();
@@ -493,7 +493,7 @@ namespace PLM
             this.SplitWM.Panel2.Controls.Add(this.GrpWM);
             this.SplitWM.Panel2MinSize = 60;
             this.SplitWM.Size = new System.Drawing.Size(279, 330);
-            this.SplitWM.SplitterDistance = 256;
+            this.SplitWM.SplitterDistance = 257;
             this.SplitWM.SplitterWidth = 3;
             this.SplitWM.TabIndex = 0;
             this.SplitWM.TabStop = false;
@@ -507,7 +507,7 @@ namespace PLM
             this.ScreenShot.InitialImage = ((System.Drawing.Image)(resources.GetObject("ScreenShot.InitialImage")));
             this.ScreenShot.Location = new System.Drawing.Point(0, 0);
             this.ScreenShot.Name = "ScreenShot";
-            this.ScreenShot.Size = new System.Drawing.Size(279, 256);
+            this.ScreenShot.Size = new System.Drawing.Size(279, 257);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenShot.TabIndex = 2;
             this.ScreenShot.TabStop = false;
@@ -519,7 +519,7 @@ namespace PLM
             this.WmPlayer.Location = new System.Drawing.Point(0, 0);
             this.WmPlayer.Name = "WmPlayer";
             this.WmPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WmPlayer.OcxState")));
-            this.WmPlayer.Size = new System.Drawing.Size(279, 256);
+            this.WmPlayer.Size = new System.Drawing.Size(279, 257);
             this.WmPlayer.TabIndex = 1;
             this.WmPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.WmPlayer_PlayStateChange);
             this.WmPlayer.Enter += new System.EventHandler(this.WmPlayer_Enter);
@@ -544,6 +544,22 @@ namespace PLM
             this.GrpWM.TabIndex = 8;
             this.GrpWM.TabStop = false;
             // 
+            // BT40X
+            // 
+            this.BT40X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
+            this.BT40X.FlatAppearance.BorderSize = 0;
+            this.BT40X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BT40X.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BT40X.ForeColor = System.Drawing.Color.White;
+            this.BT40X.Location = new System.Drawing.Point(223, 42);
+            this.BT40X.Name = "BT40X";
+            this.BT40X.Size = new System.Drawing.Size(44, 34);
+            this.BT40X.TabIndex = 8;
+            this.BT40X.TabStop = false;
+            this.BT40X.Text = "4.0 x";
+            this.BT40X.UseVisualStyleBackColor = false;
+            this.BT40X.Click += new System.EventHandler(this.BT40X_Click);
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -553,6 +569,22 @@ namespace PLM
             this.label10.Size = new System.Drawing.Size(70, 25);
             this.label10.TabIndex = 9;
             this.label10.Text = "ความเร็ว";
+            // 
+            // BT20X
+            // 
+            this.BT20X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
+            this.BT20X.FlatAppearance.BorderSize = 0;
+            this.BT20X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BT20X.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BT20X.ForeColor = System.Drawing.Color.White;
+            this.BT20X.Location = new System.Drawing.Point(173, 42);
+            this.BT20X.Name = "BT20X";
+            this.BT20X.Size = new System.Drawing.Size(44, 34);
+            this.BT20X.TabIndex = 7;
+            this.BT20X.TabStop = false;
+            this.BT20X.Text = "2.0 x";
+            this.BT20X.UseVisualStyleBackColor = false;
+            this.BT20X.Click += new System.EventHandler(this.BT20X_Click);
             // 
             // label12
             // 
@@ -564,6 +596,22 @@ namespace PLM
             this.label12.TabIndex = 11;
             this.label12.Text = "ย้อนกลับ";
             // 
+            // BT10X
+            // 
+            this.BT10X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
+            this.BT10X.FlatAppearance.BorderSize = 0;
+            this.BT10X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BT10X.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BT10X.ForeColor = System.Drawing.Color.White;
+            this.BT10X.Location = new System.Drawing.Point(123, 43);
+            this.BT10X.Name = "BT10X";
+            this.BT10X.Size = new System.Drawing.Size(44, 34);
+            this.BT10X.TabIndex = 6;
+            this.BT10X.TabStop = false;
+            this.BT10X.Text = "1.0 x";
+            this.BT10X.UseVisualStyleBackColor = false;
+            this.BT10X.Click += new System.EventHandler(this.BT10X_Click);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -573,6 +621,22 @@ namespace PLM
             this.label11.Size = new System.Drawing.Size(32, 17);
             this.label11.TabIndex = 10;
             this.label11.Text = "วินาที";
+            // 
+            // BT05X
+            // 
+            this.BT05X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
+            this.BT05X.FlatAppearance.BorderSize = 0;
+            this.BT05X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BT05X.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BT05X.ForeColor = System.Drawing.Color.White;
+            this.BT05X.Location = new System.Drawing.Point(73, 42);
+            this.BT05X.Name = "BT05X";
+            this.BT05X.Size = new System.Drawing.Size(44, 34);
+            this.BT05X.TabIndex = 5;
+            this.BT05X.TabStop = false;
+            this.BT05X.Text = "0.5 x";
+            this.BT05X.UseVisualStyleBackColor = false;
+            this.BT05X.Click += new System.EventHandler(this.BT05X_Click);
             // 
             // TxtRewTime
             // 
@@ -615,7 +679,7 @@ namespace PLM
             this.SplitCtnList.Panel2.Controls.Add(this.BTSumRefresh);
             this.SplitCtnList.Panel2MinSize = 40;
             this.SplitCtnList.Size = new System.Drawing.Size(279, 375);
-            this.SplitCtnList.SplitterDistance = 321;
+            this.SplitCtnList.SplitterDistance = 322;
             this.SplitCtnList.SplitterWidth = 3;
             this.SplitCtnList.TabIndex = 0;
             this.SplitCtnList.TabStop = false;
@@ -637,7 +701,7 @@ namespace PLM
             // 
             this.SplitCtnListApp.Panel2.Controls.Add(this.GRPsumList);
             this.SplitCtnListApp.Panel2MinSize = 0;
-            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 321);
+            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 322);
             this.SplitCtnListApp.SplitterDistance = 57;
             this.SplitCtnListApp.SplitterWidth = 3;
             this.SplitCtnListApp.TabIndex = 0;
@@ -665,6 +729,22 @@ namespace PLM
             this.CBVersion.Size = new System.Drawing.Size(82, 21);
             this.CBVersion.TabIndex = 13;
             this.CBVersion.TabStop = false;
+            // 
+            // BTShowVersion
+            // 
+            this.BTShowVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
+            this.BTShowVersion.FlatAppearance.BorderSize = 0;
+            this.BTShowVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTShowVersion.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BTShowVersion.ForeColor = System.Drawing.Color.White;
+            this.BTShowVersion.Location = new System.Drawing.Point(153, 12);
+            this.BTShowVersion.Name = "BTShowVersion";
+            this.BTShowVersion.Size = new System.Drawing.Size(65, 29);
+            this.BTShowVersion.TabIndex = 12;
+            this.BTShowVersion.TabStop = false;
+            this.BTShowVersion.Text = "เรียกข้อมูล";
+            this.BTShowVersion.UseVisualStyleBackColor = false;
+            this.BTShowVersion.Click += new System.EventHandler(this.BTShowVersion_Click_1);
             // 
             // label13
             // 
@@ -699,192 +779,6 @@ namespace PLM
             this.LVPart.TabStop = false;
             this.LVPart.UseCompatibleStateImageBehavior = false;
             // 
-            // SplitCtnWord
-            // 
-            this.SplitCtnWord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplitCtnWord.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.SplitCtnWord.IsSplitterFixed = true;
-            this.SplitCtnWord.Location = new System.Drawing.Point(0, 0);
-            this.SplitCtnWord.Name = "SplitCtnWord";
-            this.SplitCtnWord.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // SplitCtnWord.Panel1
-            // 
-            this.SplitCtnWord.Panel1.Controls.Add(this.PNWord);
-            this.SplitCtnWord.Panel1MinSize = 0;
-            // 
-            // SplitCtnWord.Panel2
-            // 
-            this.SplitCtnWord.Panel2.Controls.Add(this.StatusStrip);
-            this.SplitCtnWord.Panel2.Controls.Add(this.GrpSum);
-            this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
-            this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
-            this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 654;
-            this.SplitCtnWord.SplitterWidth = 3;
-            this.SplitCtnWord.TabIndex = 0;
-            this.SplitCtnWord.TabStop = false;
-            this.SplitCtnWord.Resize += new System.EventHandler(this.SplitCtnWord_Resize);
-            // 
-            // PNWord
-            // 
-            this.PNWord.AutoSize = true;
-            this.PNWord.BackColor = System.Drawing.Color.Black;
-            this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PNWord.Location = new System.Drawing.Point(0, 0);
-            this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 654);
-            this.PNWord.TabIndex = 1;
-            this.PNWord.TabStop = true;
-            this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
-            this.PNWord.Resize += new System.EventHandler(this.PNWord_Resize);
-            // 
-            // StatusStrip
-            // 
-            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.StripProgressStatus,
-            this.StripProgress});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 29);
-            this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Size = new System.Drawing.Size(982, 22);
-            this.StatusStrip.TabIndex = 18;
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
-            // 
-            // StripProgressStatus
-            // 
-            this.StripProgressStatus.Name = "StripProgressStatus";
-            this.StripProgressStatus.Size = new System.Drawing.Size(0, 17);
-            // 
-            // StripProgress
-            // 
-            this.StripProgress.Name = "StripProgress";
-            this.StripProgress.Size = new System.Drawing.Size(100, 16);
-            // 
-            // GrpSum
-            // 
-            this.GrpSum.BackColor = System.Drawing.SystemColors.Control;
-            this.GrpSum.Controls.Add(this.BTsumApprove);
-            this.GrpSum.Controls.Add(this.BTsumSave);
-            this.GrpSum.Location = new System.Drawing.Point(705, 7);
-            this.GrpSum.Name = "GrpSum";
-            this.GrpSum.Size = new System.Drawing.Size(274, 32);
-            this.GrpSum.TabIndex = 13;
-            this.GrpSum.TabStop = false;
-            this.GrpSum.Visible = false;
-            // 
-            // GrpAudit
-            // 
-            this.GrpAudit.Controls.Add(this.BTauditNoApprove);
-            this.GrpAudit.Controls.Add(this.BTauditApprove);
-            this.GrpAudit.Controls.Add(this.BTauditSave);
-            this.GrpAudit.Location = new System.Drawing.Point(305, 2);
-            this.GrpAudit.Name = "GrpAudit";
-            this.GrpAudit.Size = new System.Drawing.Size(394, 39);
-            this.GrpAudit.TabIndex = 14;
-            this.GrpAudit.TabStop = false;
-            this.GrpAudit.Visible = false;
-            // 
-            // GrpEdit
-            // 
-            this.GrpEdit.Controls.Add(this.BTEditSendReport);
-            this.GrpEdit.Controls.Add(this.BTEditSaveDB);
-            this.GrpEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GrpEdit.ForeColor = System.Drawing.SystemColors.Control;
-            this.GrpEdit.Location = new System.Drawing.Point(6, 3);
-            this.GrpEdit.Name = "GrpEdit";
-            this.GrpEdit.Size = new System.Drawing.Size(293, 40);
-            this.GrpEdit.TabIndex = 16;
-            this.GrpEdit.TabStop = false;
-            // 
-            // WmPlayerTimer
-            // 
-            this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick_1);
-            // 
-            // BT40X
-            // 
-            this.BT40X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
-            this.BT40X.FlatAppearance.BorderSize = 0;
-            this.BT40X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BT40X.Font = new System.Drawing.Font("Kanit", 8.25F);
-            this.BT40X.ForeColor = System.Drawing.Color.White;
-            this.BT40X.Location = new System.Drawing.Point(223, 42);
-            this.BT40X.Name = "BT40X";
-            this.BT40X.Size = new System.Drawing.Size(44, 34);
-            this.BT40X.TabIndex = 8;
-            this.BT40X.TabStop = false;
-            this.BT40X.Text = "4.0 x";
-            this.BT40X.UseVisualStyleBackColor = false;
-            this.BT40X.Click += new System.EventHandler(this.BT40X_Click);
-            // 
-            // BT20X
-            // 
-            this.BT20X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
-            this.BT20X.FlatAppearance.BorderSize = 0;
-            this.BT20X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BT20X.Font = new System.Drawing.Font("Kanit", 8.25F);
-            this.BT20X.ForeColor = System.Drawing.Color.White;
-            this.BT20X.Location = new System.Drawing.Point(173, 42);
-            this.BT20X.Name = "BT20X";
-            this.BT20X.Size = new System.Drawing.Size(44, 34);
-            this.BT20X.TabIndex = 7;
-            this.BT20X.TabStop = false;
-            this.BT20X.Text = "2.0 x";
-            this.BT20X.UseVisualStyleBackColor = false;
-            this.BT20X.Click += new System.EventHandler(this.BT20X_Click);
-            // 
-            // BT10X
-            // 
-            this.BT10X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
-            this.BT10X.FlatAppearance.BorderSize = 0;
-            this.BT10X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BT10X.Font = new System.Drawing.Font("Kanit", 8.25F);
-            this.BT10X.ForeColor = System.Drawing.Color.White;
-            this.BT10X.Location = new System.Drawing.Point(123, 43);
-            this.BT10X.Name = "BT10X";
-            this.BT10X.Size = new System.Drawing.Size(44, 34);
-            this.BT10X.TabIndex = 6;
-            this.BT10X.TabStop = false;
-            this.BT10X.Text = "1.0 x";
-            this.BT10X.UseVisualStyleBackColor = false;
-            this.BT10X.Click += new System.EventHandler(this.BT10X_Click);
-            // 
-            // BT05X
-            // 
-            this.BT05X.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(84)))), ((int)(((byte)(152)))));
-            this.BT05X.FlatAppearance.BorderSize = 0;
-            this.BT05X.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BT05X.Font = new System.Drawing.Font("Kanit", 8.25F);
-            this.BT05X.ForeColor = System.Drawing.Color.White;
-            this.BT05X.Location = new System.Drawing.Point(73, 42);
-            this.BT05X.Name = "BT05X";
-            this.BT05X.Size = new System.Drawing.Size(44, 34);
-            this.BT05X.TabIndex = 5;
-            this.BT05X.TabStop = false;
-            this.BT05X.Text = "0.5 x";
-            this.BT05X.UseVisualStyleBackColor = false;
-            this.BT05X.Click += new System.EventHandler(this.BT05X_Click);
-            // 
-            // BTShowVersion
-            // 
-            this.BTShowVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
-            this.BTShowVersion.FlatAppearance.BorderSize = 0;
-            this.BTShowVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTShowVersion.Font = new System.Drawing.Font("Kanit", 8.25F);
-            this.BTShowVersion.ForeColor = System.Drawing.Color.White;
-            this.BTShowVersion.Location = new System.Drawing.Point(153, 12);
-            this.BTShowVersion.Name = "BTShowVersion";
-            this.BTShowVersion.Size = new System.Drawing.Size(65, 29);
-            this.BTShowVersion.TabIndex = 12;
-            this.BTShowVersion.TabStop = false;
-            this.BTShowVersion.Text = "เรียกข้อมูล";
-            this.BTShowVersion.UseVisualStyleBackColor = false;
-            this.BTShowVersion.Click += new System.EventHandler(this.BTShowVersion_Click_1);
-            // 
             // BTSumShow
             // 
             this.BTSumShow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
@@ -917,6 +811,84 @@ namespace PLM
             this.BTSumRefresh.UseVisualStyleBackColor = false;
             this.BTSumRefresh.Click += new System.EventHandler(this.BTSumRefresh_Click);
             // 
+            // SplitCtnWord
+            // 
+            this.SplitCtnWord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SplitCtnWord.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.SplitCtnWord.IsSplitterFixed = true;
+            this.SplitCtnWord.Location = new System.Drawing.Point(0, 0);
+            this.SplitCtnWord.Name = "SplitCtnWord";
+            this.SplitCtnWord.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // SplitCtnWord.Panel1
+            // 
+            this.SplitCtnWord.Panel1.Controls.Add(this.PNWord);
+            this.SplitCtnWord.Panel1MinSize = 0;
+            // 
+            // SplitCtnWord.Panel2
+            // 
+            this.SplitCtnWord.Panel2.Controls.Add(this.StatusStrip);
+            this.SplitCtnWord.Panel2.Controls.Add(this.GrpSum);
+            this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
+            this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
+            this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
+            this.SplitCtnWord.SplitterDistance = 655;
+            this.SplitCtnWord.SplitterWidth = 3;
+            this.SplitCtnWord.TabIndex = 0;
+            this.SplitCtnWord.TabStop = false;
+            this.SplitCtnWord.Resize += new System.EventHandler(this.SplitCtnWord_Resize);
+            // 
+            // PNWord
+            // 
+            this.PNWord.AutoSize = true;
+            this.PNWord.BackColor = System.Drawing.Color.Black;
+            this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PNWord.Location = new System.Drawing.Point(0, 0);
+            this.PNWord.Name = "PNWord";
+            this.PNWord.Size = new System.Drawing.Size(982, 655);
+            this.PNWord.TabIndex = 1;
+            this.PNWord.TabStop = true;
+            this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
+            this.PNWord.Resize += new System.EventHandler(this.PNWord_Resize);
+            // 
+            // StatusStrip
+            // 
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.StripProgressStatus,
+            this.StripProgress});
+            this.StatusStrip.Location = new System.Drawing.Point(0, 28);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(982, 22);
+            this.StatusStrip.TabIndex = 18;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // StripProgressStatus
+            // 
+            this.StripProgressStatus.Name = "StripProgressStatus";
+            this.StripProgressStatus.Size = new System.Drawing.Size(0, 17);
+            // 
+            // StripProgress
+            // 
+            this.StripProgress.Name = "StripProgress";
+            this.StripProgress.Size = new System.Drawing.Size(100, 16);
+            // 
+            // GrpSum
+            // 
+            this.GrpSum.BackColor = System.Drawing.SystemColors.Control;
+            this.GrpSum.Controls.Add(this.BTsumApprove);
+            this.GrpSum.Controls.Add(this.BTsumSave);
+            this.GrpSum.Location = new System.Drawing.Point(705, 7);
+            this.GrpSum.Name = "GrpSum";
+            this.GrpSum.Size = new System.Drawing.Size(274, 32);
+            this.GrpSum.TabIndex = 13;
+            this.GrpSum.TabStop = false;
+            this.GrpSum.Visible = false;
+            // 
             // BTsumApprove
             // 
             this.BTsumApprove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
@@ -948,6 +920,18 @@ namespace PLM
             this.BTsumSave.Text = "บันทึกฉบับร่าง";
             this.BTsumSave.UseVisualStyleBackColor = false;
             this.BTsumSave.Click += new System.EventHandler(this.BTsumSave_Click);
+            // 
+            // GrpAudit
+            // 
+            this.GrpAudit.Controls.Add(this.BTauditNoApprove);
+            this.GrpAudit.Controls.Add(this.BTauditApprove);
+            this.GrpAudit.Controls.Add(this.BTauditSave);
+            this.GrpAudit.Location = new System.Drawing.Point(305, 2);
+            this.GrpAudit.Name = "GrpAudit";
+            this.GrpAudit.Size = new System.Drawing.Size(394, 39);
+            this.GrpAudit.TabIndex = 14;
+            this.GrpAudit.TabStop = false;
+            this.GrpAudit.Visible = false;
             // 
             // BTauditNoApprove
             // 
@@ -997,6 +981,18 @@ namespace PLM
             this.BTauditSave.UseVisualStyleBackColor = false;
             this.BTauditSave.Click += new System.EventHandler(this.BTauditSave_Click);
             // 
+            // GrpEdit
+            // 
+            this.GrpEdit.Controls.Add(this.BTEditSendReport);
+            this.GrpEdit.Controls.Add(this.BTEditSaveDB);
+            this.GrpEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GrpEdit.ForeColor = System.Drawing.SystemColors.Control;
+            this.GrpEdit.Location = new System.Drawing.Point(6, 3);
+            this.GrpEdit.Name = "GrpEdit";
+            this.GrpEdit.Size = new System.Drawing.Size(293, 40);
+            this.GrpEdit.TabIndex = 16;
+            this.GrpEdit.TabStop = false;
+            // 
             // BTEditSendReport
             // 
             this.BTEditSendReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
@@ -1029,18 +1025,22 @@ namespace PLM
             this.BTEditSaveDB.UseVisualStyleBackColor = false;
             this.BTEditSaveDB.Click += new System.EventHandler(this.BTEditSaveDB_Click);
             // 
+            // WmPlayerTimer
+            // 
+            this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick_1);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
             this.Controls.Add(this.CTN);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Parliament";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed_2);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.Resize += new System.EventHandler(this.FormMain_Resize);
