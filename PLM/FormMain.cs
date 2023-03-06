@@ -952,17 +952,15 @@ namespace PLM
                 var versionInfo = jss.Deserialize<VERSIONINFO>(result);
 
                 CBVersion.Items.Clear();
-                Dictionary<string, string> CBVersionItem = new Dictionary<string, string>();
+                List<KeyValuePair<String, String>> CBVersionItem = new List<KeyValuePair<string, string>>();
                 foreach (var versionInfodata in versionInfo.data)
                 {
                     if (versionInfodata.version > 0)
                     {
-                        //CBVersion.Items.Add(versionInfodata.version_desc);
-                        CBVersionItem.Add(versionInfodata.version.ToString(), versionInfodata.version_desc);
+                        CBVersionItem.Add(new KeyValuePair<string, string>(versionInfodata.version.ToString(), versionInfodata.version_desc));
                     }
-
                 }
-                CBVersion.DataSource = new BindingSource(CBVersionItem, null);
+                CBVersion.DataSource = CBVersionItem;
                 CBVersion.DisplayMember = "Value";
                 CBVersion.ValueMember = "Key";
 
@@ -1158,14 +1156,19 @@ namespace PLM
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
 
+                // update version list
+                List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
+                CBVersion.DataSource = null;
                 foreach (var contentinfodata in contentInfo.data)
                 {
                     if (contentinfodata.version > 0)
                     {
-                        CBVersion.Items.Add(contentinfodata.version);
+                        CBVersionItem.Add(new KeyValuePair<string, string>(contentinfodata.version.ToString(), contentinfodata.version_desc));
                     }
-
                 }
+                CBVersion.DataSource = CBVersionItem;
+                CBVersion.DisplayMember = "Value";
+                CBVersion.ValueMember = "Key";
 
                 obj = contentInfo;
                 sr.Close();
@@ -1887,9 +1890,14 @@ namespace PLM
 
                 sr.Close();
                 myResponse.Close();
-                CBVersion.Items.Add(contentInfo.data[0].version);
-                CBVersion.Text = contentInfo.data[0].version.ToString();
-
+                // update version list
+                List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
+                CBVersion.DataSource = null;
+                CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
+                CBVersion.DataSource = CBVersionItem;
+                CBVersion.DisplayMember = "Value";
+                CBVersion.ValueMember = "Key";
+                CBVersion.Text = contentInfo.data[0].version_desc;
                 TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
 
                 Thread thread3 = new Thread(() =>
@@ -1996,10 +2004,16 @@ namespace PLM
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
                 if (addtrans.success== "True")
                 {
-
                     contentInfo.data[0].version = addtrans.version;
-                    CBVersion.Items.Add(contentInfo.data[0].version);
-                    CBVersion.Text = contentInfo.data[0].version.ToString();
+                    contentInfo.data[0].version_desc = addtrans.version_desc;
+                    // update version list
+                    List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
+                    CBVersion.DataSource = null;
+                    CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
+                    CBVersion.DataSource = CBVersionItem;
+                    CBVersion.DisplayMember = "Value";
+                    CBVersion.ValueMember = "Key";
+                    CBVersion.Text = contentInfo.data[0].version_desc;
                     TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
                     return true;
                 }
@@ -3548,7 +3562,7 @@ namespace PLM
             startForm.TopMost = false;
             startForm.Hide();
             MessageBox.Show(msg);
-            System.Environment.Exit(1);
+            //System.Environment.Exit(1);
         }
 
         private void ChkHighlight_CheckedChanged(object sender, EventArgs e)

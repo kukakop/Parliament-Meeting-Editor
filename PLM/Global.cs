@@ -180,6 +180,7 @@ namespace PLM
     {
         public string success { get; set; }
         public int version { get; set; }
+        public string version_desc { get; set; }
         public string filepath { get; set; }
     }
 
