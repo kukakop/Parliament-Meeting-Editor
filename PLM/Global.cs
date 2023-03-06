@@ -143,6 +143,7 @@ namespace PLM
         public int report_section_id { get; set; }
         public int report_section_actor_id { get; set; }
         public int seq { get; set; }
+        public string seq_desc { get; set; }
         public int meeting_id { get; set; }
         public int user_id { get; set; }
         public string fullname { get; set; } 
