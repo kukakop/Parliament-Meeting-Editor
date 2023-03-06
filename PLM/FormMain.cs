@@ -92,7 +92,7 @@ namespace PLM
         //string URL = "http://XXXX203.185.132.221/parliament/";
 
         string URL = ConfigurationSettings.AppSettings["url"];
-        int LastVersion;
+        int LastVersion = 1;
         TimeSpan P_TimePlay;
         bool WordChang;
         int proc_cnt = 0;
@@ -952,14 +952,19 @@ namespace PLM
                 var versionInfo = jss.Deserialize<VERSIONINFO>(result);
 
                 CBVersion.Items.Clear();
+                Dictionary<string, string> CBVersionItem = new Dictionary<string, string>();
                 foreach (var versionInfodata in versionInfo.data)
                 {
                     if (versionInfodata.version > 0)
                     {
-                        CBVersion.Items.Add(versionInfodata.version);
+                        //CBVersion.Items.Add(versionInfodata.version_desc);
+                        CBVersionItem.Add(versionInfodata.version.ToString(), versionInfodata.version_desc);
                     }
 
                 }
+                CBVersion.DataSource = new BindingSource(CBVersionItem, null);
+                CBVersion.DisplayMember = "Value";
+                CBVersion.ValueMember = "Key";
 
                 obj = versionInfo;
                 sr.Close();
@@ -1011,7 +1016,7 @@ namespace PLM
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
                 TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
                 //obj = contentInfo;
-                CBVersion.Text = contentInfo.data[0].version.ToString();
+                //CBVersion.Text = contentInfo.data[0].version.ToString();
                 ///
                 obj = contentInfo;
                 sr.Close();
@@ -1634,10 +1639,6 @@ namespace PLM
 
                         try
                             {
-                                String UrlPhP;
-
-                                UrlPhP = URL + "api/reportsection/downloadreportsection";
-                                
                                 RestClient client = new RestClient(URL);
                                 RestRequest request = new RestRequest("api/reportsection/downloadreportsection", Method.Post);
                                 request.AddHeader("Authorization", appinfo.accessKey);
@@ -1717,6 +1718,7 @@ namespace PLM
 
                 Thread.Sleep(500); // Allow the process to open it's window
                 TxtRoomVersion.Text = contentInfo.data[0].process + "." + files.data.version.ToString();
+                CBVersion.Text = contentInfo.data[0].process + "." + files.data.version.ToString();
 
                 WordApp.Visible = true;
                 if (P_NonEditMode == false)
@@ -2268,11 +2270,6 @@ namespace PLM
                                 {
                                     //WordFileName = seqInfo.seq.ToString("00000") + "-" + file.version + ".docx";
 
-
-                                    String UrlPhP;
-
-                                    UrlPhP = URL + "api/reportsection/downloadreportsection";
-
                                     RestClient client = new RestClient(URL);
 
 
@@ -2622,14 +2619,14 @@ namespace PLM
                     return;
                 }
 
+                Delete_file_all();
+
                 RequestVersionInfo(appinfo, ref versioninfo);
                 RequestContentInfo(appinfo, ref contentInfo);
                 RequestFileInfo(appinfo, ref fileinfo);
-
                 RequestSeqInfo(appinfo, ref contentInfoAll);
 
 
-                Delete_file_all();
                 switch (appinfo.mode)
                 {
                     case "edit":
@@ -3243,7 +3240,8 @@ namespace PLM
             {
                 object doNotSaveChanges = Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges;
                 WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
-                contentInfo.data[0].version = int.Parse(CBVersion.SelectedItem.ToString());
+                //contentInfo.data[0].version = int.Parse(CBVersion.SelectedItem.ToString());
+                contentInfo.data[0].version = int.Parse(((KeyValuePair<string, string>)CBVersion.SelectedItem).Key);
                 RequestFileInfo(appinfo, ref fileinfo);
                 OpenWord(appinfo, fileinfo);
             }
@@ -3569,7 +3567,7 @@ namespace PLM
             string[] files = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in files)
             {
-                if (file.Contains("mplate.docx"))
+                if (file.Contains("mplate.doc"))
                 {
 
                 }
