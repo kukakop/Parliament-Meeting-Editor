@@ -2415,8 +2415,7 @@ namespace PLM
 
                     //WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
-
-                    WordSave(appinfo, fileinfo, "SAVE");
+                    UpdateToServerAndUpload();
                 }
                 else
                 {
