@@ -196,6 +196,7 @@ namespace PLM
         public int seq { get; set; }
         public int process { get; set; }
         public int version { get; set; }
+        public string version_desc { get; set; }
         public int report_section_id { get; set; }
         public int report_section_actor_id { get; set; }
         public int report_section_task_id { get; set; }
