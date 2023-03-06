@@ -2304,9 +2304,9 @@ namespace PLM
 
 
 
-                                    //byte[] fileForDownload = client.DownloadData(request);
-                                    byte[] fileForDownload = response.RawBytes;
-                                    System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
+                                //byte[] fileForDownload = client.DownloadData(request);
+                                byte[] fileForDownload = response.RawBytes;
+                                System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
 
 
 
@@ -2415,6 +2415,8 @@ namespace PLM
 
                     //WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+
+                    WordSave(appinfo, fileinfo, "SAVE");
                 }
                 else
                 {
