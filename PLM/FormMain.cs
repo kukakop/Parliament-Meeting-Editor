@@ -1690,33 +1690,33 @@ namespace PLM
                                 Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
                                 aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
 
-                            Thread thread = new Thread(() =>
-                            {
+                                Thread thread = new Thread(() =>
+                                {
 
-                                WordApp.ActiveWindow.View.ReadingLayout = false;
-                            });
-                            thread.Start();
-                            thread.Join();
-                            Thread thread3 = new Thread(() =>
-                            {
-                                WordApp.Selection.Move(WdUnits.wdCharacter, 1);
-                                WordApp.Selection.Move(WdUnits.wdCharacter, -1);
+                                    WordApp.ActiveWindow.View.ReadingLayout = false;
+                                });
+                                thread.Start();
+                                thread.Join();
+                                Thread thread3 = new Thread(() =>
+                                {
+                                    WordApp.Selection.Move(WdUnits.wdCharacter, 1);
+                                    WordApp.Selection.Move(WdUnits.wdCharacter, -1);
 
-                            });
-                            thread3.Start();
-                            thread3.Join();
+                                });
+                                thread3.Start();
+                                thread3.Join();
 
-                            WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+                                WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
 
-                            }
-                            catch (Exception e)
-                            {
-                                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
-                                //System.Windows.Forms.Application.Exit();
-                                return;
+                        }
+                        catch (Exception e)
+                        {
+                            handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                            //System.Windows.Forms.Application.Exit();
+                            return;
 
-                            }
-            }
+                        }
+                }
 
 
                 Thread.Sleep(500); // Allow the process to open it's window
@@ -2278,8 +2278,7 @@ namespace PLM
 
                             Cursor.Current = Cursors.WaitCursor;
 
-                            Thread thread = new Thread(async () =>
-                            {
+                            
                                 try
                                 {
                                     //WordFileName = seqInfo.seq.ToString("00000") + "-" + file.version + ".docx";
@@ -2298,15 +2297,16 @@ namespace PLM
                                     body += "\"version\":" + seqInfo.version;
                                     body += "}";
                                     request.AddParameter("application/json", body, ParameterType.RequestBody);
-                                    //var response = client.Execute(request);
-                                    var response = await client.ExecuteAsync(request);
+                                    var response = client.Execute(request);
 
                                     WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000") + ".docx";
                                     WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000");
 
 
+
                                     //byte[] fileForDownload = client.DownloadData(request);
-                                    //System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
+                                    byte[] fileForDownload = response.RawBytes;
+                                    System.IO.File.WriteAllBytes(DeletePath + WordFileName, fileForDownload);
 
 
 
@@ -2322,9 +2322,7 @@ namespace PLM
                                 catch (Exception e)
                                 {
                                 }
-                            });
-                            thread.Start();
-                            thread.Join();
+                            
                             //System.Threading.Thread.Sleep(500);
                             StripProgressStatus.Text = "Download Completed " + seqInfo.seq + "/" + (contentInfoAll.data.Count());
                         }
