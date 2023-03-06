@@ -858,7 +858,7 @@ namespace PLM
                 DateTime meetingDate = Convert.ToDateTime(room.data[0].start_timestamp.ToString(), CultureInfo.CreateSpecificCulture("en-US"));
                 TxtRoomTime.Text = meetingDate.ToString("D", CultureInfo.CreateSpecificCulture("th-TH"));
                 //TxtRoomTime.Text = meetingDate.ToString("g");
-                TxtRoomPart.Text = appinfo.seq.ToString();
+                //TxtRoomPart.Text = appinfo.seq.ToString();
                 TxtRoomStatus.Text = room.data[0].meeting_status_desc.ToString();
                 obj = room;
                 sr.Close();
@@ -1013,6 +1013,7 @@ namespace PLM
                 //TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
                 TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
+                TxtRoomPart.Text = contentInfo.data[0].seq_desc;
                 //obj = contentInfo;
                 //CBVersion.Text = contentInfo.data[0].version.ToString();
                 ///
@@ -1575,6 +1576,7 @@ namespace PLM
 
         private void OpenWord(APPINFO appinfo, FILE_CONTENT files)
         {
+            Console.WriteLine("OpenWord");
             IntPtr r;
             try
             {
@@ -2397,6 +2399,9 @@ namespace PLM
 
                     }
 
+                    TxtRoomPart.Text = "รายงานรวม";
+                    TxtRoomVersion.Text = fileinfo.data.current_process + "." + LastVersion;
+                    CBVersion.Text = fileinfo.data.current_process + "." + LastVersion;
                     //ReviseDoc.Paragraphs.Last.Range.Select();
 
                     //WordApp.Selection.Delete();
@@ -3594,7 +3599,7 @@ namespace PLM
             string[] filessend = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in filessend)
             {
-                if (file.Contains("Template"))
+                if (file.Contains("mplate.doc"))
                 {
 
                 }
@@ -3610,7 +3615,7 @@ namespace PLM
             string[] filesmerge = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in filesmerge)
             {
-                if (file.Contains("Template"))
+                if (file.Contains("mplate.doc"))
                 {
 
                 }
