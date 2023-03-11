@@ -151,6 +151,7 @@ namespace PLM
         KeyboardHook kh = new KeyboardHook(true);
         //Thread tSplashScreen;
         SplashScreen startForm;
+        NewSearchBox SearchBox;
 
         public FormMain(SplashScreen startForm)
         {
@@ -2012,6 +2013,7 @@ namespace PLM
                 var response = client.Execute(request);
 
                 append_log("request:" + request.ToString());
+                append_log("api" + request.Resource.ToString());
                 append_log("Authorization:" + appinfo.accessKey);
                 append_log("meeting_id:" + appinfo.seq.ToString());
                 append_log("seq:" + v_transcription);
@@ -2053,6 +2055,7 @@ namespace PLM
             WmPlayer.uiMode = "full";
             WmPlayer.URL = URL + "api/meetingmedia/downloadmediadirect?meeting_id=" + files.data.meeting_id + "&file=" + files.data.video;
             WmPlayer.Ctlcontrols.stop();
+            WmPlayer.settings.volume = 100;
 
         }
         private string GetActiveWindowsTitle()
@@ -3397,12 +3400,14 @@ namespace PLM
                     }
                     else
                     {
-                        string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
-                        if (result_search != "")
-                        {
-                            WordApp.Selection.Text = result_search;
+                        //this.Hide();
+                        SearchBox.Show();
+                        //string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
+                        //if (result_search != "")
+                        //{
+                        //    WordApp.Selection.Text = result_search;
 
-                        }
+                        //}
                     }
                 }
 
@@ -3597,7 +3602,7 @@ namespace PLM
             NewMessage(msg);
             //MessageBox.Show(this,msg);
             //System.Environment.Exit(1);
-            this.Close();
+            //this.Close();
         }
 
         private void ChkHighlight_CheckedChanged(object sender, EventArgs e)
