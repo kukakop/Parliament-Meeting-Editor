@@ -18,6 +18,7 @@ using System.Globalization;
 using RestSharp;
 using MimeTypes;
 using System.Security.Cryptography;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PLM
 {
@@ -1981,13 +1982,16 @@ namespace PLM
 
                 foreach (var transcription in fileinfo.transcription)
                 {
+                    if (transcription.text != "")
+                    {
 
-                    v_transcription += "{";
-                    v_transcription += "\"utt\":\"" + transcription.utt + "\",";
-                    v_transcription += "\"start\":" + transcription.start + ",";
-                    v_transcription += "\"stop\":" + transcription.stop + ",";
-                    v_transcription += "\"text\":\"" + transcription.text + "\"";
-                    v_transcription += "},";
+                        v_transcription += "{";
+                        v_transcription += "\"utt\":\"" + transcription.utt + "\",";
+                        v_transcription += "\"start\":" + transcription.start + ",";
+                        v_transcription += "\"stop\":" + transcription.stop + ",";
+                        v_transcription += "\"text\":\"" + transcription.text + "\"";
+                        v_transcription += "},";
+                    }
 
                 }
                 v_transcription = "[" + v_transcription.Remove(v_transcription.Length - 1) + "]";
@@ -2488,6 +2492,7 @@ namespace PLM
             string last_result = "";
             //int last_utt = 0;
             string last_utt = "";
+            string vBookmarkID = "";
             int oStart;
             int oEnd;
             object rng = WordApp.Selection.Range;
@@ -2495,30 +2500,34 @@ namespace PLM
             {
                 WordApp.Visible = false;
                 WordChang = false;
-
+                
                 foreach (TRANSCRIPTION transcription in files.transcription)
                 {
                     vBookmark = "P" + transcription.utt;
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
-                    V_WordText = WordApp.Selection.Text;
-                    last_result = transcription.text;
-                    last_utt = transcription.utt;
-                    if (V_WordText != transcription.text)
+                    V_WordText = "";
+                    if (WordApp.Selection.Bookmarks.Exists(vBookmark))
                     {
-                        WordChang = true;
-                        V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
-                        V_WordText = V_WordText.Replace("\r", ""); //Carriage return
-                        V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
-                        V_WordText = V_WordText.Replace("\n", ""); //New line
-                        V_WordText = V_WordText.Replace("\t", ""); //Tab
-                        V_WordText = V_WordText.Replace("\"", ""); //Double quote
-                        V_WordText = V_WordText.Replace("\'", ""); //Single quote
-                        V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                        V_WordText = WordApp.Selection.Text;
+                        last_result = transcription.text;
+                        last_utt = transcription.utt;
+                        if (V_WordText != transcription.text)
+                        {
+                            WordChang = true;
+                            V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
+                            V_WordText = V_WordText.Replace("\r", ""); //Carriage return
+                            V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
+                            V_WordText = V_WordText.Replace("\n", ""); //New line
+                            V_WordText = V_WordText.Replace("\t", ""); //Tab
+                            V_WordText = V_WordText.Replace("\"", ""); //Double quote
+                            V_WordText = V_WordText.Replace("\'", ""); //Single quote
+                            V_WordText = V_WordText.Replace("\\", ""); //Backslash
 
 
-                        V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
-                        transcription.text = V_WordText; ;
+                            V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
+                        }
                     }
+                    transcription.text = V_WordText; ;
                 }
 
                 WordApp.Visible = true;
