@@ -87,6 +87,8 @@ namespace PLM
         string WordFileNoExt;
         //string WordPathNew;
         int LastUtt = 1;
+        int LastPosition = 1;
+        String StringLastUtt = "";
         //string LastUtt = "";
         int FinalUtt;
         double LastUttStart;
@@ -2169,6 +2171,7 @@ namespace PLM
                             thread.Start();
                             thread.Join();
                         }
+                        WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
                         //// goto last position
                         //if (LastUtt > 0)
                         ////if (LastUtt !=  "")
@@ -2500,7 +2503,7 @@ namespace PLM
             {
                 WordApp.Visible = false;
                 WordChang = false;
-                
+                LastPosition = WordApp.Selection.Range.Start;
                 foreach (TRANSCRIPTION transcription in files.transcription)
                 {
                     vBookmark = "P" + transcription.utt;
@@ -2525,6 +2528,7 @@ namespace PLM
 
 
                             V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
+                            
                         }
                     }
                     transcription.text = V_WordText; ;
