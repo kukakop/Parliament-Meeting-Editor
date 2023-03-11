@@ -3598,6 +3598,7 @@ namespace PLM
             NewMessage(msg);
             //MessageBox.Show(this,msg);
             //System.Environment.Exit(1);
+            this.Close();
         }
 
         private void ChkHighlight_CheckedChanged(object sender, EventArgs e)
@@ -3627,6 +3628,7 @@ namespace PLM
                 }
             }
 
+            System.IO.Directory.CreateDirectory(WorkPath + @"/send");
             DeletePath = WorkPath + @"send/" ;
             string[] filessend = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in filessend)
@@ -3643,6 +3645,7 @@ namespace PLM
             }
 
 
+            System.IO.Directory.CreateDirectory(WorkPath + @"/merge");
             DeletePath = WorkPath + @"merge/";
             string[] filesmerge = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in filesmerge)
