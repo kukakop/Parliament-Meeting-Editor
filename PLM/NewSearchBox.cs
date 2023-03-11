@@ -224,6 +224,22 @@ namespace PLM
             //{
             this.SearchComboBox.Items.Clear();
             this.SearchComboBox.Items.Add(textsearch);
+            string searchvalue = textsearch;
+
+            if (searchvalue != "")
+            {
+                searchvalue = searchvalue.Replace("\b", ""); //Backspace(ascii code 08)
+                searchvalue = searchvalue.Replace("\r", ""); //Carriage return
+                searchvalue = searchvalue.Replace("\f", ""); //Form feed(ascii code 0C)
+                searchvalue = searchvalue.Replace("\n", ""); //New line
+                searchvalue = searchvalue.Replace("\t", ""); //Tab
+                searchvalue = searchvalue.Replace("\"", ""); //Double quote
+                searchvalue = searchvalue.Replace("\'", ""); //Single quote
+                searchvalue = searchvalue.Replace("\\", ""); //Backslash
+                searchvalue = searchvalue.Replace(" ", ""); //Space
+                searchvalue = searchvalue.Replace(System.Environment.NewLine, "");
+
+            }
 
             String UrlPhP;
             UrlPhP = URL + "suggester/api/v1/suggest";
@@ -236,7 +252,7 @@ namespace PLM
             {
                 //textsearch = "ประยุทธ";
                 string json = "{";
-                json += "\"input\":\"" + textsearch + "\"";
+                json += "\"input\":\"" + searchvalue + "\"";
                 json += "}";
 
                 streamWriter.Write(json);
@@ -273,6 +289,22 @@ System.Text.Encoding.UTF8);
             //{
             this.SearchComboBox.Items.Clear();
             this.SearchComboBox.Items.Add(textsearch);
+            string searchvalue = textsearch;
+
+            if (searchvalue != "")
+            {
+                searchvalue = searchvalue.Replace("\b", ""); //Backspace(ascii code 08)
+                searchvalue = searchvalue.Replace("\r", ""); //Carriage return
+                searchvalue = searchvalue.Replace("\f", ""); //Form feed(ascii code 0C)
+                searchvalue = searchvalue.Replace("\n", ""); //New line
+                searchvalue = searchvalue.Replace("\t", ""); //Tab
+                searchvalue = searchvalue.Replace("\"", ""); //Double quote
+                searchvalue = searchvalue.Replace("\'", ""); //Single quote
+                searchvalue = searchvalue.Replace("\\", ""); //Backslash
+                searchvalue = searchvalue.Replace(" ", ""); //Space
+                searchvalue = searchvalue.Replace(System.Environment.NewLine, "");
+
+            }
 
             String UrlPhP;
             UrlPhP = URL + "suggester/api/v1/suggest";
@@ -285,7 +317,7 @@ System.Text.Encoding.UTF8);
             {
                 //textsearch = "ประยุทธ";
                 string json = "{";
-                json += "\"input\":\"" + textsearch + "\"";
+                json += "\"input\":\"" + searchvalue + "\"";
                 json += "}";
 
                 streamWriter.Write(json);
