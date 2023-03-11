@@ -3401,13 +3401,13 @@ namespace PLM
                     else
                     {
                         //this.Hide();
-                        SearchBox.Show();
-                        //string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
-                        //if (result_search != "")
-                        //{
-                        //    WordApp.Selection.Text = result_search;
+                        string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
 
-                        //}
+                        if (result_search != "")
+                        {
+                            WordApp.Selection.Text = result_search;
+
+                        }
                     }
                 }
 

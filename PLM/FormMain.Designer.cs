@@ -564,10 +564,10 @@ namespace PLM
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(0, 45);
+            this.label10.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(11, 46);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(70, 25);
+            this.label10.Size = new System.Drawing.Size(56, 20);
             this.label10.TabIndex = 9;
             this.label10.Text = "ความเร็ว";
             // 
