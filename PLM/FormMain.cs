@@ -3399,7 +3399,7 @@ namespace PLM
                     {
                         //append_log("Check form :" + frm.Name + "," + frm.TopMost + "," + frm.TopLevel + ",");
                         //iterate through
-                        if (frm.Name == "SearchBox")
+                        if (frm.Name.Contains("SearchBox"))
                         {
                             form_exists = true;
                             //frm.Close();
