@@ -2022,7 +2022,7 @@ namespace PLM
                 append_log("api" + request.Resource.ToString());
                 append_log("Authorization:" + appinfo.accessKey);
                 append_log("meeting_id:" + appinfo.seq.ToString());
-                append_log("seq:" + v_transcription);
+                append_log("seq:" + appinfo.seq.ToString());
                 append_log("transcription:" + v_transcription);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
@@ -2172,6 +2172,7 @@ namespace PLM
                             thread.Join();
                         }
                         WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+                        //WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                         //// goto last position
                         //if (LastUtt > 0)
                         ////if (LastUtt !=  "")
