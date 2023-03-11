@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Globalization;
 using RestSharp;
 using MimeTypes;
+using System.Security.Cryptography;
 
 namespace PLM
 {
@@ -108,6 +109,7 @@ namespace PLM
         int WMPMaxHeight = 600;
         string Appname = ConfigurationSettings.AppSettings["Appname"];
         string Apptitle = ConfigurationSettings.AppSettings["Apptitle"];
+        string LogActivate = ConfigurationSettings.AppSettings["LogActivate"];
 
         int v_current_bookmark_id = 0;
 
@@ -383,7 +385,8 @@ namespace PLM
                             break;
                             
                         case Keys.F11: // stop
-                            WmplayerStop(); ; break;
+                            //WmplayerStop(); ; 
+                            break;
 
                         case Keys.F12: // play forward
                             if (WordEditMode == false)
@@ -979,7 +982,7 @@ namespace PLM
             {
                 String UrlPhP;
                 UrlPhP = URL + "api/reportsection/getreportsection";
-
+                append_log(URL);
                 WebRequest myRequest = WebRequest.Create(UrlPhP);
                 myRequest.ContentType = "application/json";
                 myRequest.Method = "POST";
@@ -996,6 +999,7 @@ namespace PLM
                     json += "\"seq\":\"" + appinfo.seq + "\"}";
                     json += "}";
 
+                    append_log(json);
                     streamWriter.Write(json);
                 }
                 WebResponse myResponse = myRequest.GetResponse();
@@ -1007,6 +1011,7 @@ namespace PLM
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
 
+                append_log(result);
 
 
                 //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
@@ -1024,6 +1029,7 @@ namespace PLM
             catch (Exception e)
             {
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
         private void RequestSeqInfo(APPINFO appinfo, ref CONTENTINFO obj)
@@ -1592,7 +1598,7 @@ namespace PLM
 
                 if ((files.data.current_process == 1 && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
                 {
-
+                   
                     fileName = WorkPath + Appname + "Template.docx";
                     // Create a new Document, by calling the Add function in the Documents collection
                     Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
@@ -1655,6 +1661,7 @@ namespace PLM
                                 body += "}";
                                 request.AddParameter("application/json", body, ParameterType.RequestBody);
                                 var response = client.Execute(request);
+                                append_log(request.ToString());
                                 //var response = await client.ExecuteAsync(request);
                                 if (response.StatusCode != HttpStatusCode.OK)
                                 {
@@ -1752,6 +1759,8 @@ namespace PLM
             }
             catch (Exception e)
             {
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                archive_log();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
@@ -2002,6 +2011,11 @@ namespace PLM
                 request.AddParameter("transcription", v_transcription);
                 var response = client.Execute(request);
 
+                append_log("request:" + request.ToString());
+                append_log("Authorization:" + appinfo.accessKey);
+                append_log("meeting_id:" + appinfo.seq.ToString());
+                append_log("seq:" + v_transcription);
+                append_log("transcription:" + v_transcription);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
                 if (addtrans.success== "True")
@@ -2027,6 +2041,8 @@ namespace PLM
             }
             catch (Exception e)
             {
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                archive_log();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
             return true;
@@ -2146,29 +2162,29 @@ namespace PLM
                             thread.Start();
                             thread.Join();
                         }
-                        // goto last position
-                        if (LastUtt > 0)
-                        //if (LastUtt !=  "")
-                        {
-                            //var content = files.transcription.Where(w => w.utt == LastUtt);
-                            var content = files.transcription.Where(w => int.Parse(w.utt) > LastUtt);
-                            WmPlayer.Ctlcontrols.currentPosition = content.First().start;
-                            v_bookmark = "P" + content.First().utt;
-                            //LastUtt = content.First().utt;
-                            LastUtt = int.Parse(content.First().utt);
-                            if ((ChkHighlight.Checked == true) && ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward)))
-                            {
-                                Thread thread2 = new Thread(() =>
-                                {
-                                    WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
+                        //// goto last position
+                        //if (LastUtt > 0)
+                        ////if (LastUtt !=  "")
+                        //{
+                        //    //var content = files.transcription.Where(w => w.utt == LastUtt);
+                        //    var content = files.transcription.Where(w => int.Parse(w.utt) > LastUtt);
+                        //    WmPlayer.Ctlcontrols.currentPosition = content.First().start;
+                        //    v_bookmark = "P" + content.First().utt;
+                        //    //LastUtt = content.First().utt;
+                        //    LastUtt = int.Parse(content.First().utt);
+                        //    if ((ChkHighlight.Checked == true) && ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward)))
+                        //    {
+                        //        Thread thread2 = new Thread(() =>
+                        //        {
+                        //            WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
 
-                                });
-                                thread2.Start();
-                                thread2.Join();
-                            }
-                        }
-                        // goto last position
-                        ////FormMain.ActiveForm.Focus();
+                        //        });
+                        //        thread2.Start();
+                        //        thread2.Join();
+                        //    }
+                        //}
+                        //// goto last position
+                        //////FormMain.ActiveForm.Focus();
                     }
 
                 }
@@ -2193,26 +2209,35 @@ namespace PLM
                 var resultBox = NewMessageConfirm("ต้องการบันทึกฉบับร่าง");
                 if (resultBox == System.Windows.Forms.DialogResult.Yes)
                 {
+
+                    Cursor.Current = Cursors.WaitCursor;
                     SaveData(appinfo, files);
                     if (WordChang)
                     {
-                        //UpdateToServer(vMessageVersion);
-                        //UploadToServerPost();
+                        if (UpdateToServerAndUpload())
+                        {
 
-                        UpdateToServerAndUpload();
-                        Cursor.Current = Cursors.Default;
-                        //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
-                        NewMessage("ดำเนินการเสร็จเรียบร้อย");
+                            Cursor.Current = Cursors.Default;
+                            NewMessage("ดำเนินการเสร็จเรียบร้อย");
 
+                        }
+                        else
+                        {
 
+                            Cursor.Current = Cursors.Default;
+                            NewMessage("ไม่สามารถเชื่ิอมต่อ server ได้");
+                        }
                     }
-                    //WmPlayer.Ctlcontrols.stop();
-                    //Cursor.Current = Cursors.WaitCursor;
-                    //UpdateToServer(vMessageVersion);
-                    //UploadToServerPost();
-                    //    //SaveData(appinfo, files);
-                    //Cursor.Current = Cursors.Default;
-                    //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
+                    //    SaveData(appinfo, files);
+                    //if (WordChang)
+                    //{
+
+                    //    UpdateToServerAndUpload();
+                    //    Cursor.Current = Cursors.Default;
+                    //    NewMessage("ดำเนินการเสร็จเรียบร้อย");
+
+
+                    //}
 
 
                 }
@@ -3273,6 +3298,7 @@ namespace PLM
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //archive_log();
             if (WordActive == true && (WordDirty == true || appinfo.mode != "view"))
             {
                 ////CheckDataChange(appinfo, fileinfo);
@@ -3314,7 +3340,7 @@ namespace PLM
         {
             //FlexibleMessageBox.Show(message);
             MessageBox.Show(new Form() { TopMost = true }, message);
-            TopMost = false;
+            //TopMost = false;
 
 
 
@@ -3333,7 +3359,7 @@ namespace PLM
             ////msgResized.ShowDialog();
 
 
-            ////TopMost = false;
+            TopMost = false;
         }
         private void SearchText()
         {
@@ -3341,6 +3367,9 @@ namespace PLM
             {
                 string textin;
                 string textout = "";
+
+                FormCollection fc = System.Windows.Forms.Application.OpenForms;
+                Boolean form_exists = false;
                 textin = WordApp.Selection.Text;
                 if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
                 {
@@ -3348,51 +3377,45 @@ namespace PLM
                 }
                 else
                 {
-                    string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
-                    if (result_search != "")
+                    foreach (Form frm in fc)
                     {
-                        WordApp.Selection.Text = result_search;
+                        //append_log("Check form :" + frm.Name + "," + frm.TopMost + "," + frm.TopLevel + ",");
+                        //iterate through
+                        if (frm.Name == "SearchBox")
+                        {
+                            form_exists = true;
+                            //frm.Close();
+                        }
+                        else
+                        {
 
+                        }
+                        
+                         
+                    }
+                    if (form_exists)
+                    {
+                    }
+                    else
+                    {
+                        string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
+                        if (result_search != "")
+                        {
+                            WordApp.Selection.Text = result_search;
+
+                        }
                     }
                 }
+
+                
             });
             thread.Start();
             thread.Join();
-                //Thread thread = new Thread(() =>
-                //{
-                //    string textin;
-                //    string textout = "";
-                //    textin = WordApp.Selection.Text;
-                //    if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
-                //    {
-
-                //    }
-                //    else
-                //    {
-
-                //        SearchBox msgResized = new SearchBox(textin, suggestinfo);
-                //        if (msgResized.IsAccessible == false)
-                //        {
-
-
-                //            msgResized.StartPosition = FormStartPosition.CenterScreen;
-                //            msgResized.ShowDialog();
-
-                //            if (msgResized.result_search != "")
-                //            {
-                //                WordApp.Selection.Text = msgResized.result_search;
-
-                //            }
-                //        }
-                //    }
-                //});
-                //thread.Start();
-                //thread.Join();
 
 
 
 
-            }
+        }
          private void OldSearchText()
         {
 
@@ -3544,6 +3567,8 @@ namespace PLM
             TopMost = true;
             Thread.Sleep(500);
             TopMost = false;
+            startForm.TopMost = false;
+
             this.Show();
             WordApp.Activate();
         }
@@ -3557,15 +3582,21 @@ namespace PLM
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             Delete_file_all();
+            archive_log();
             startForm.Close();
         }
 
         private void handleException(String msg)
         {
-            TopMost = false;
+            //TopMost = false;
             startForm.TopMost = false;
             startForm.Hide();
-            MessageBox.Show(msg);
+
+            startForm.TopLevel = false;
+            //FormCollection fc = System.Windows.Forms.Application.OpenForms;
+
+            NewMessage(msg);
+            //MessageBox.Show(this,msg);
             //System.Environment.Exit(1);
         }
 
@@ -3625,6 +3656,31 @@ namespace PLM
                     System.IO.File.Delete(file);
 
                 }
+            }
+        }
+        private void append_log(string log_text)
+        {
+            TxtLog.AppendText(DateTime.Now.ToString("dd-MM-yyyyTHH:mm:ss") + ":" + log_text + Environment.NewLine);
+            TxtLog.SelectionStart = TxtLog.TextLength;
+            TxtLog.ScrollToCaret();
+
+        }
+        private void archive_log()
+        {
+            try
+            {
+                if (LogActivate == "Y")
+                {
+                    File.WriteAllText(WorkPath + "\\log\\" + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt", TxtLog.Text);
+
+                }
+                TxtLog.Text = "";
+              
+            }
+            catch (Exception e)
+            {
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+
             }
         }
 

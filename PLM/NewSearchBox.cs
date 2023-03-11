@@ -91,6 +91,8 @@ namespace PLM
             using (var NewSearchBox = new NewSearchBox(text, caption))
             {
                 NewSearchBox.searchtext(text);
+                NewSearchBox.TopMost = true;
+                NewSearchBox.TopLevel = true;
                 //NewConfirmBox.Location = new System.Drawing.Point(0, 0);
                 return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.SearchComboBox.Text : "";
             }
@@ -101,7 +103,8 @@ namespace PLM
         public NewSearchBox(string title, string message)
         {
             InitializeComponent();
-            //TopMost = true;
+            TopMost = true;
+            
             //    this.Text = title;
             //    this.textBoxMessage.AppendText(Environment.NewLine);
             //    this.textBoxMessage.AppendText(Environment.NewLine);
