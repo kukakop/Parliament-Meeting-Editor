@@ -2724,8 +2724,7 @@ namespace PLM
                 CTN.Panel1.Focus();
                 //WmPlayerTimer.Start();
 
-
-                //this.Text = Apptitle + "-" + room.data[0].meeting_title;
+                this.Text = Apptitle + "-" + room.data[0].meeting_title;
                 switch (appinfo.mode)
                 {
                     case "edit":
@@ -3672,6 +3671,8 @@ namespace PLM
         {
             try
             {
+
+                System.IO.Directory.CreateDirectory(WorkPath + @"/log");
                 if (LogActivate == "Y")
                 {
                     File.WriteAllText(WorkPath + "\\log\\" + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt", TxtLog.Text);
