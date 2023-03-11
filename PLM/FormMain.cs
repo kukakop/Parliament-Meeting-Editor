@@ -2512,6 +2512,7 @@ namespace PLM
                         V_WordText = V_WordText.Replace("\n", ""); //New line
                         V_WordText = V_WordText.Replace("\t", ""); //Tab
                         V_WordText = V_WordText.Replace("\"", ""); //Double quote
+                        V_WordText = V_WordText.Replace("\'", ""); //Single quote
                         V_WordText = V_WordText.Replace("\\", ""); //Backslash
 
 
@@ -2534,6 +2535,7 @@ namespace PLM
                 V_WordText = V_WordText.Replace("\n", ""); //New line
                 V_WordText = V_WordText.Replace("\t", ""); //Tab
                 V_WordText = V_WordText.Replace("\"", ""); //Double quote
+                V_WordText = V_WordText.Replace("\'", ""); //Single quote
                 V_WordText = V_WordText.Replace("\\", ""); //Backslash
                 V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
