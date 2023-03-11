@@ -135,23 +135,23 @@ namespace PLM
             // 
             // buttonYes
             // 
+            this.buttonYes.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.buttonYes.Location = new System.Drawing.Point(107, 350);
             this.buttonYes.Name = "buttonYes";
             this.buttonYes.Size = new System.Drawing.Size(100, 40);
             this.buttonYes.TabIndex = 0;
-            this.buttonYes.Text = "Yes";
-            this.buttonYes.DialogResult = DialogResult.Yes;
+            this.buttonYes.Text = "เลือก";
             this.buttonYes.UseVisualStyleBackColor = true;
             this.buttonYes.Click += new System.EventHandler(this.buttonYes_Click);
             // 
             // buttonNo
             // 
+            this.buttonNo.DialogResult = System.Windows.Forms.DialogResult.No;
             this.buttonNo.Location = new System.Drawing.Point(257, 350);
             this.buttonNo.Name = "buttonNo";
             this.buttonNo.Size = new System.Drawing.Size(100, 40);
             this.buttonNo.TabIndex = 0;
-            this.buttonNo.Text = "No";
-            this.buttonNo.DialogResult = DialogResult.No;
+            this.buttonNo.Text = "ปิด";
             this.buttonNo.UseVisualStyleBackColor = true;
             this.buttonNo.Click += new System.EventHandler(this.buttonNo_Click);
             // 
@@ -166,7 +166,7 @@ namespace PLM
             this.SearchComboBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchComboBox_KeyUp);
             this.SearchComboBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SearchComboBox_Click);
             // 
-            // SearchBox
+            // NewSearchBox
             // 
             this.AcceptButton = this.buttonYes;
             this.ClientSize = new System.Drawing.Size(468, 400);
@@ -175,10 +175,11 @@ namespace PLM
             this.Controls.Add(this.buttonNo);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SearchBox";
+            this.Name = "NewSearchBox";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "แนะนำรายชื่อ";
             this.TopMost = true;
-            this.StartPosition = FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.NewMessageBox_Load);
             this.ResumeLayout(false);
 
