@@ -65,7 +65,7 @@
             this.label1.ForeColor = System.Drawing.Color.LightCoral;
             this.label1.Location = new System.Drawing.Point(320, 363);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 31);
+            this.label1.Size = new System.Drawing.Size(173, 33);
             this.label1.TabIndex = 5;
             this.label1.Text = "กำลังเปิดโปรแกรม";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -79,6 +79,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ScreenShot);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SplashScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreen";
