@@ -18,71 +18,12 @@ namespace PLM
 
 
         static string URL = ConfigurationSettings.AppSettings["suggestorurl"];
+        private ListBox ListSearch;
+        private TextBox TxtSearch;
         static string token = ConfigurationSettings.AppSettings["Token"];
         public static string ShowDialog(string text, string caption)
         {
-            //Form prompt = new Form()
-            //{
-            //    Width = 500,
-            //    Height = 500,
-            //    FormBorderStyle = FormBorderStyle.FixedDialog,
-            //    Text = caption,
-            //    StartPosition = FormStartPosition.CenterScreen
-            //};
-
-            //Button buttonYes = new Button()
-            //{
-            //    Left = 107
-            //    ,Top = 350
-            //    ,Width = 100
-            //    ,Height = 40
-            //    , TabIndex = 0
-            //    , Text = "Yes"
-            //    , UseVisualStyleBackColor = true
-            ////,buttonYes.Click += new System.EventHandler(this.buttonYes_Click);
-            //};
-
-            //Button buttonNo = new Button()
-            //{
-            //    Left = 257
-            //    ,
-            //    Top = 350
-            //    ,
-            //    Width = 100
-            //    ,
-            //    Height = 40                
-            //    ,TabIndex = 0
-            //    ,Text = "No"
-            //    ,UseVisualStyleBackColor = true
-            //    //,Click += new System.EventHandler(this.buttonNo_Click)
-            // };
-
-            //ComboBox SearchComboBox = new ComboBox() 
-            //{ 
-            //    DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple
-            //    ,Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
-            //    ,Location = new System.Drawing.Point(29, 36)
-            //    ,Size = new System.Drawing.Size(411, 300)
-            //    ,TabIndex = 1
-            ////         this.SearchComboBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchComboBox_KeyUp);
-            ////this.SearchComboBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SearchComboBox_Click);
-            //};
-            //prompt.Controls.Add(SearchComboBox);
-            //SearchComboBox.Text = text;
-            //buttonYes.Click += (sender, e) => { prompt.Close(); };
-            //prompt.Controls.Add(buttonYes);
-            //buttonNo.Click += (sender, e) => { prompt.Close(); };
-            //prompt.Controls.Add(buttonNo);
-
-            //Button buttonYes = new Button()
-            //Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
-            //TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
-            //Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
-            //confirmation.Click += (sender, e) => { prompt.Close(); };
-            //prompt.Controls.Add(textBox);
-            //prompt.Controls.Add(confirmation);
-            //prompt.Controls.Add(textLabel);
-            //prompt.AcceptButton = confirmation;
+           
              
 
             using (var NewSearchBox = new NewSearchBox(text, caption))
@@ -91,7 +32,8 @@ namespace PLM
                 NewSearchBox.TopMost = true;
                 NewSearchBox.TopLevel = true;
                 //NewConfirmBox.Location = new System.Drawing.Point(0, 0);
-                return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.SearchComboBox.Text : "";
+                //return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.SearchComboBox.Text : "";
+                return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.TxtSearch.Text : "";
             }
 
            
@@ -101,34 +43,16 @@ namespace PLM
         {
             InitializeComponent();
             TopMost = true;
-            
-            //    this.Text = title;
-            //    this.textBoxMessage.AppendText(Environment.NewLine);
-            //    this.textBoxMessage.AppendText(Environment.NewLine);
-            //    this.textBoxMessage.AppendText(message);
-            //    //this.textBoxMessage.Text =  message;
 
-            //    this.Deactivate += MyDeactivateHandler;
-            //    this.textBoxMessage.ReadOnly = true;
         }
-
-        //private void InitializeComponent()
-        //{
-        //    this.SuspendLayout();
-        //    // 
-        //    // NewSearchBox
-        //    // 
-        //    this.ClientSize = new System.Drawing.Size(484, 461);
-        //    this.Name = "NewSearchBox";
-        //    this.ResumeLayout(false);
-
-        //}
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewSearchBox));
             this.buttonYes = new System.Windows.Forms.Button();
             this.buttonNo = new System.Windows.Forms.Button();
             this.SearchComboBox = new System.Windows.Forms.ComboBox();
+            this.ListSearch = new System.Windows.Forms.ListBox();
+            this.TxtSearch = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // buttonYes
@@ -157,17 +81,40 @@ namespace PLM
             // 
             this.SearchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.SearchComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchComboBox.Location = new System.Drawing.Point(29, 36);
+            this.SearchComboBox.Location = new System.Drawing.Point(6, 358);
             this.SearchComboBox.Name = "SearchComboBox";
-            this.SearchComboBox.Size = new System.Drawing.Size(411, 300);
+            this.SearchComboBox.Size = new System.Drawing.Size(95, 45);
             this.SearchComboBox.TabIndex = 1;
+            this.SearchComboBox.Visible = false;
             this.SearchComboBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchComboBox_KeyUp);
-            this.SearchComboBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SearchComboBox_Click);
+            // 
+            // ListSearch
+            // 
+            this.ListSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ListSearch.FormattingEnabled = true;
+            this.ListSearch.ItemHeight = 17;
+            this.ListSearch.Location = new System.Drawing.Point(28, 60);
+            this.ListSearch.Name = "ListSearch";
+            this.ListSearch.Size = new System.Drawing.Size(413, 276);
+            this.ListSearch.TabIndex = 2;
+            this.ListSearch.Click += new System.EventHandler(this.ListSearch_Click);
+            this.ListSearch.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListSearch_MouseDoubleClick);
+            // 
+            // TxtSearch
+            // 
+            this.TxtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSearch.Location = new System.Drawing.Point(28, 34);
+            this.TxtSearch.Name = "TxtSearch";
+            this.TxtSearch.Size = new System.Drawing.Size(413, 23);
+            this.TxtSearch.TabIndex = 3;
+            this.TxtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyUp);
             // 
             // NewSearchBox
             // 
             this.AcceptButton = this.buttonYes;
             this.ClientSize = new System.Drawing.Size(468, 400);
+            this.Controls.Add(this.TxtSearch);
+            this.Controls.Add(this.ListSearch);
             this.Controls.Add(this.SearchComboBox);
             this.Controls.Add(this.buttonYes);
             this.Controls.Add(this.buttonNo);
@@ -181,6 +128,7 @@ namespace PLM
             this.Load += new System.EventHandler(this.NewMessageBox_Load);
             this.Shown += new System.EventHandler(this.NewSearchBox_Shown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         private void SearchComboBox_Click(object sender, EventArgs e)
@@ -190,7 +138,7 @@ namespace PLM
         }
         private void buttonYes_Click(object sender, EventArgs e)
         {
-            result_search = SearchComboBox.Text;
+            result_search = TxtSearch.Text;
             this.Close();
         }
         private void buttonNo_Click(object sender, EventArgs e)
@@ -221,8 +169,11 @@ namespace PLM
         {
             //try
             //{
-            this.SearchComboBox.Items.Clear();
-            this.SearchComboBox.Items.Add(textsearch);
+            this.ListSearch.Items.Clear();
+            this.TxtSearch.Text = textsearch;
+
+            //this.SearchComboBox.Items.Clear();
+            //this.SearchComboBox.Items.Add(textsearch);
             string searchvalue = textsearch;
 
             if (searchvalue != "")
@@ -269,25 +220,30 @@ System.Text.Encoding.UTF8);
             sr.Close();
             myResponse.Close();
 
-            SearchComboBox.Items.Clear();
+            ListSearch.Items.Clear();
             foreach (var suggestinfodata in suggestinfo.result)
             {
-                SearchComboBox.Items.Add(suggestinfodata);
+                ListSearch.Items.Add(suggestinfodata);
 
             }
-            SearchComboBox.Text = textsearch;
-            //}
-            //catch (Exception e)
+            ListSearch.Text = textsearch;
+            //SearchComboBox.Items.Clear();
+            //foreach (var suggestinfodata in suggestinfo.result)
             //{
-            //    MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+            //    SearchComboBox.Items.Add(suggestinfodata);
+
             //}
+            //SearchComboBox.Text = textsearch;
+
         }
         private void searchbybox(string textsearch)
         {
             //try
             //{
-            this.SearchComboBox.Items.Clear();
-            this.SearchComboBox.Items.Add(textsearch);
+            this.ListSearch.Items.Clear();
+            //this.TxtSearch.Text = textsearch;
+            //this.SearchComboBox.Items.Clear();
+            //this.SearchComboBox.Items.Add(textsearch);
             string searchvalue = textsearch;
 
             if (searchvalue != "")
@@ -334,13 +290,20 @@ System.Text.Encoding.UTF8);
             sr.Close();
             myResponse.Close();
 
-            SearchComboBox.Items.Clear();
+            ListSearch.Items.Clear();
             foreach (var suggestinfodata in intsuggestinfo.result)
             {
-                SearchComboBox.Items.Add(suggestinfodata);
+                ListSearch.Items.Add(suggestinfodata);
 
             }
-            SearchComboBox.Text = textsearch;
+            ListSearch.Text = textsearch;
+            //SearchComboBox.Items.Clear();
+            //foreach (var suggestinfodata in intsuggestinfo.result)
+            //{
+            //    SearchComboBox.Items.Add(suggestinfodata);
+
+            //}
+            //SearchComboBox.Text = textsearch;
             //}
             //catch (Exception e)
             //{
@@ -355,5 +318,31 @@ System.Text.Encoding.UTF8);
             TopMost = false;
         }
 
+        private void SearchComboBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            result_search = SearchComboBox.Text;
+            this.Close();
+        }
+
+        private void ListSearch_Click(object sender, EventArgs e)
+        {
+            TxtSearch.Text = ListSearch.Text;
+        }
+
+        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            //if (e.KeyCode == Keys.Enter)
+            //{
+                searchbybox(this.TxtSearch.Text);
+            //}
+        }
+
+        private void ListSearch_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //TxtSearch.Text = ListSearch.Text;
+            buttonYes.PerformClick();
+        }
     }
 }
