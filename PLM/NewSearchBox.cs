@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
@@ -128,6 +125,7 @@ namespace PLM
         //}
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewSearchBox));
             this.buttonYes = new System.Windows.Forms.Button();
             this.buttonNo = new System.Windows.Forms.Button();
             this.SearchComboBox = new System.Windows.Forms.ComboBox();
@@ -173,14 +171,15 @@ namespace PLM
             this.Controls.Add(this.SearchComboBox);
             this.Controls.Add(this.buttonYes);
             this.Controls.Add(this.buttonNo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewSearchBox";
-            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "แนะนำรายชื่อ";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.NewMessageBox_Load);
+            this.Shown += new System.EventHandler(this.NewSearchBox_Shown);
             this.ResumeLayout(false);
 
         }
@@ -348,5 +347,13 @@ System.Text.Encoding.UTF8);
             //    MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             //}
         }
+
+        private void NewSearchBox_Shown(object sender, EventArgs e)
+        {
+            TopMost = true;
+            Thread.Sleep(200);
+            TopMost = false;
+        }
+
     }
 }

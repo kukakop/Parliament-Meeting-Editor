@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using System.Net.Http;
 using System.IO;
 using System.Web.Script.Serialization;
 using Microsoft.Office.Interop.Word;
@@ -17,8 +16,6 @@ using System.Configuration;
 using System.Globalization;
 using RestSharp;
 using MimeTypes;
-using System.Security.Cryptography;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PLM
 {
@@ -2612,7 +2609,8 @@ namespace PLM
             {
                 //MessageBox.Show("มีการเปิด Program " + Appname + " อบู่แล้ว");
                 NewMessage("มีการเปิด Program " + Appname + " อยู่แล้ว");
-                System.Windows.Forms.Application.Exit();
+                //System.Windows.Forms.Application.Exit();
+                System.Environment.Exit(1);
                 return;
             }
             else
@@ -2640,7 +2638,8 @@ namespace PLM
                     catch (Exception e2)
                     {
                         handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
-                        System.Windows.Forms.Application.Exit();
+                        //System.Windows.Forms.Application.Exit();
+                        System.Environment.Exit(1);
                         return;
                     }
 
@@ -2677,7 +2676,8 @@ namespace PLM
                 {
                     //MessageBox.Show("ต้องการสิทธิ์ในการใช้งาน");
                     NewMessage("ต้องการสิทธิ์ในการใช้งาน");
-                    System.Windows.Forms.Application.Exit();
+                    //System.Windows.Forms.Application.Exit();
+                    System.Environment.Exit(1);
                     return;
                 }
 
