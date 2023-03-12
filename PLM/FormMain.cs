@@ -3431,10 +3431,10 @@ namespace PLM
             });
             thread.Start();
             thread.Join();
-
-
-
-
+            // popup app to top
+            TopMost = true;
+            Thread.Sleep(100);
+            TopMost = false;
         }
          private void OldSearchText()
         {
