@@ -1594,12 +1594,14 @@ namespace PLM
                 int oEnd;
                 int vRecNo;
                 byte[] data;
+                string step_track = "";
                 //check version1 is new
                 //if ((files.data.current_process == "1" && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
 
                 if ((files.data.current_process == 1 && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
                 {
-                   
+                    step_track = "01";
+                    append_log(step_track);
                     fileName = WorkPath + Appname + "Template.docx";
                     // Create a new Document, by calling the Add function in the Documents collection
                     Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
@@ -1621,15 +1623,22 @@ namespace PLM
                         oStart = oEnd;
                     }
                     ////LastVersion++;
+                    ///
+                    step_track = "01.01";
+                    append_log(step_track);
                     files.data.version = LastVersion;
                     WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
                     WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
                     aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
+                    step_track = "01.02";
+                    append_log(step_track);
                     while (System.IO.File.Exists(WorkPath + WordFileName) == false)
                     {
                         //wait file save completed
                     }
 
+                    step_track = "01.03";
+                    append_log(step_track);
                     Thread thread = new Thread(() =>
                     {
 
@@ -1637,6 +1646,8 @@ namespace PLM
                         WordDirty = true;
 
                     });
+                    step_track = "01.04";
+                    append_log(step_track);
                     thread.Start();
                     thread.Join();
                     //WordEdit();
@@ -1644,88 +1655,105 @@ namespace PLM
 
 
 
+                    step_track = "01.05";
+                    append_log(step_track);
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+                    step_track = "01.06";
+                    append_log(step_track);
                 }
                 else
                 {
 
-                        try
-                            {
-                                RestClient client = new RestClient(URL);
-                                RestRequest request = new RestRequest("api/reportsection/downloadreportsection", Method.Post);
-                                request.AddHeader("Authorization", appinfo.accessKey);
-                                var body = "{";
-                                body += "\"meeting_id\":\"" + appinfo.meeting_id + "\",";
-                                body += "\"seq\":" + appinfo.seq + ",";
-                                body += "\"process\":" + contentInfo.data[0].process + ",";
-                                body += "\"version\":" + files.data.version;
-                                body += "}";
-                                request.AddParameter("application/json", body, ParameterType.RequestBody);
-                                var response = client.Execute(request);
-                                append_log(request.ToString());
-                                //var response = await client.ExecuteAsync(request);
-                                if (response.StatusCode != HttpStatusCode.OK)
-                                {
-                                    WordActive = false;
-                                    NewMessage("äÁè¾º File ã¹ Server");
-
-                                    var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
-                                                                            System.Reflection.BindingFlags.NonPublic |
-                                                                            System.Reflection.BindingFlags.Static);
-                                    exit.Invoke(null, null);
-                                }
-                                else
-                                {
-
-                                    WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
-                                    WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
-
-                               
-                                }
-
-
-                                //byte[] fileForDownload = client.DownloadData(request);
-                                byte[] fileForDownload = response.RawBytes;
-                                System.IO.File.WriteAllBytes(WorkPath + WordFileName, fileForDownload);
-
-
-
-                                fileName = WorkPath + WordFileName;
-
-                                while (System.IO.File.Exists(fileName.ToString()) == false)
-                                {
-                                    //wait file download completed
-                                }
-
-                                Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
-                                aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
-
-                                Thread thread = new Thread(() =>
-                                {
-
-                                    WordApp.ActiveWindow.View.ReadingLayout = false;
-                                });
-                                thread.Start();
-                                thread.Join();
-                                Thread thread3 = new Thread(() =>
-                                {
-                                    WordApp.Selection.Move(WdUnits.wdCharacter, 1);
-                                    WordApp.Selection.Move(WdUnits.wdCharacter, -1);
-
-                                });
-                                thread3.Start();
-                                thread3.Join();
-
-                                WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
-
-                        }
-                        catch (Exception e)
+                    step_track = "02.00";
+                    append_log(step_track);
+                    try
+                    {
+                        RestClient client = new RestClient(URL);
+                        RestRequest request = new RestRequest("api/reportsection/downloadreportsection", Method.Post);
+                        request.AddHeader("Authorization", appinfo.accessKey);
+                        var body = "{";
+                        body += "\"meeting_id\":\"" + appinfo.meeting_id + "\",";
+                        body += "\"seq\":" + appinfo.seq + ",";
+                        body += "\"process\":" + contentInfo.data[0].process + ",";
+                        body += "\"version\":" + files.data.version;
+                        body += "}";
+                        request.AddParameter("application/json", body, ParameterType.RequestBody);
+                        var response = client.Execute(request);
+                        append_log(request.ToString());
+                        step_track = "02.01";
+                        append_log(step_track);
+                        //var response = await client.ExecuteAsync(request);
+                        if (response.StatusCode != HttpStatusCode.OK)
                         {
-                            handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
-                            //System.Windows.Forms.Application.Exit();
-                            return;
+                            WordActive = false;
+                            NewMessage("äÁè¾º File ã¹ Server");
+
+                            var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
+                                                                    System.Reflection.BindingFlags.NonPublic |
+                                                                    System.Reflection.BindingFlags.Static);
+                            exit.Invoke(null, null);
+                            step_track = "02.02";
+                            append_log(step_track);
+                        }
+                        else
+                        {
+
+                            WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
+                            WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
+                            step_track = "02.03";
+                            append_log(step_track);
 
                         }
+
+
+                        //byte[] fileForDownload = client.DownloadData(request);
+                        byte[] fileForDownload = response.RawBytes;
+                        System.IO.File.WriteAllBytes(WorkPath + WordFileName, fileForDownload);
+                        step_track = "02.04";
+                        append_log(step_track);
+
+
+                        fileName = WorkPath + WordFileName;
+
+                        while (System.IO.File.Exists(fileName.ToString()) == false)
+                        {
+                            //wait file download completed
+                        }
+                        step_track = "02.05";
+                        append_log(step_track);
+                        Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                        aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
+
+                        Thread thread = new Thread(() =>
+                        {
+
+                            WordApp.ActiveWindow.View.ReadingLayout = false;
+                        });
+                        step_track = "02.06";
+                        append_log(step_track);
+                        thread.Start();
+                        thread.Join();
+                        Thread thread3 = new Thread(() =>
+                        {
+                            WordApp.Selection.Move(WdUnits.wdCharacter, 1);
+                            WordApp.Selection.Move(WdUnits.wdCharacter, -1);
+
+                        });
+                        thread3.Start();
+                        thread3.Join();
+
+                        step_track = "02.07";
+                        append_log(step_track);
+                        WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
+
+                    }
+                    catch (Exception e)
+                    {
+                        handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message + " on step "+ step_track);
+                        //System.Windows.Forms.Application.Exit();
+                        return;
+
+                    }
                 }
 
 
@@ -1733,6 +1761,8 @@ namespace PLM
                 TxtRoomVersion.Text = contentInfo.data[0].process + "." + files.data.version.ToString();
                 CBVersion.Text = contentInfo.data[0].process + "." + files.data.version.ToString();
 
+                step_track = "03";
+                append_log(step_track);
                 WordApp.Visible = true;
                 if (P_NonEditMode == false)
                 {
@@ -1740,6 +1770,8 @@ namespace PLM
                     //WordApp.ActiveDocument.Unprotect();
                 }
 
+                step_track = "04";
+                append_log(step_track);
                 foreach (Process pList in Process.GetProcesses())
                 {
                     if (pList.MainWindowTitle.Contains(WordFileNoExt))
@@ -1749,13 +1781,19 @@ namespace PLM
                     }
                 }
 
+                step_track = "05";
+                append_log(step_track);
                 //easier to find the window handle
 
 
                 SetParent(WordWND, PNWord.Handle);
+                step_track = "06";
+                append_log(step_track);
                 // WordApp.WindowState = WdWindowState.wdWindowStateMaximize;
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
                 MoveWindow(WordWND, 0, 0, PNWord.Width, PNWord.Height, true);
+                step_track = "07";
+                append_log(step_track);
 
             }
             catch (Exception e)
@@ -1973,6 +2011,7 @@ namespace PLM
 
         private Boolean UpdateToServerAndUpload()
         {
+            string step_track = "";
             try
             {
 
@@ -1993,6 +2032,8 @@ namespace PLM
                     }
 
                 }
+                step_track = "01";
+                append_log(step_track);
                 v_transcription = "[" + v_transcription.Remove(v_transcription.Length - 1) + "]";
                 string docFile = WorkPath + @"send/" + WordFileName;
                 System.IO.Directory.CreateDirectory(WorkPath + @"/send");
@@ -2003,6 +2044,8 @@ namespace PLM
                 request.AddHeader("Authorization", appinfo.accessKey);
                 request.AddFile("file", bytes, Path.GetFileName(WordFileName), MimeTypeMap.GetMimeType(Path.GetExtension(WordFileName)));
                 request.AddParameter("meeting_id", appinfo.meeting_id.ToString());
+                step_track = "02";
+                append_log(step_track);
                 if (appinfo.mode == "merge")
                 {
                     request.AddParameter("seq", "0");
@@ -2011,20 +2054,39 @@ namespace PLM
                 {
                     request.AddParameter("seq", appinfo.seq.ToString());
                 }
+                step_track = "03";
+                append_log(step_track);
                 request.AddParameter("process", contentInfo.data[0].process.ToString());
                 request.AddParameter("transcription", v_transcription);
                 var response = client.Execute(request);
 
+                step_track = "04";
+                append_log(step_track);
                 append_log("request:" + request.ToString());
                 append_log("api" + request.Resource.ToString());
                 append_log("Authorization:" + appinfo.accessKey);
                 append_log("meeting_id:" + appinfo.seq.ToString());
                 append_log("seq:" + appinfo.seq.ToString());
                 append_log("transcription:" + v_transcription);
+                
+                step_track = "05";
+                append_log(step_track);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
                 if (addtrans.success== "True")
                 {
+                    step_track = "05.01";
+                    append_log(step_track);
+                    if (addtrans.version==0)
+                    {
+
+                        append_log("return version:" + addtrans.version);
+                    }
+                    if (addtrans.version_desc == null)
+                    {
+
+                        append_log("return version_desc:" + addtrans.version_desc);
+                    }
                     contentInfo.data[0].version = addtrans.version;
                     contentInfo.data[0].version_desc = addtrans.version_desc;
                     // update version list
@@ -2040,6 +2102,8 @@ namespace PLM
                 }
                 else
                 {
+                    step_track = "05.02";
+                    append_log(step_track);
                     return false;
                 }
 
@@ -2779,14 +2843,14 @@ namespace PLM
                 }
 
                 //if (GetActiveWindowsTitle().Contains("Partii") == true)
-                if (GetActiveWindowsTitle().Contains(Appname) == true)
-                {
-                    Kh_KeyUp_Mode = 2;
-                }
-                else
-                {
-                    Kh_KeyUp_Mode = 1;
-                }
+                //if (GetActiveWindowsTitle().Contains(Appname) == true)
+                //{
+                //    Kh_KeyUp_Mode = 2;
+                //}
+                //else
+                //{
+                //    Kh_KeyUp_Mode = 1;
+                //}
                 
             }
         }
