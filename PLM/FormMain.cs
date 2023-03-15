@@ -1706,6 +1706,7 @@ namespace PLM
                         }
 
 
+                        append_log("Download to : " + WorkPath + WordFileName);
                         //byte[] fileForDownload = client.DownloadData(request);
                         byte[] fileForDownload = response.RawBytes;
                         System.IO.File.WriteAllBytes(WorkPath + WordFileName, fileForDownload);
@@ -1721,7 +1722,9 @@ namespace PLM
                         }
                         step_track = "02.05";
                         append_log(step_track);
+                        append_log("Open word : " + fileName);
                         Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                        append_log("Save to  : " + WorkPath + WordFileName);
                         aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
 
                         Thread thread = new Thread(() =>
