@@ -2595,7 +2595,6 @@ namespace PLM
                         if (V_WordText != transcription.text)
                         {
                             WordChang = true;
-                            /*
                             V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                             V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                             V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -2604,7 +2603,6 @@ namespace PLM
                             V_WordText = V_WordText.Replace("\"", ""); //Double quote
                             V_WordText = V_WordText.Replace("\'", ""); //Single quote
                             V_WordText = V_WordText.Replace("\\", ""); //Backslash
-                            */
                             V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                             V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
@@ -2626,7 +2624,6 @@ namespace PLM
                 WordApp.Selection.Bookmarks.Add(vBookmark, rng);
                 WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
                 V_WordText = WordApp.Selection.Text;
-                /*
                 V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                 V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                 V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -2635,7 +2632,6 @@ namespace PLM
                 V_WordText = V_WordText.Replace("\"", ""); //Double quote
                 V_WordText = V_WordText.Replace("\'", ""); //Single quote
                 V_WordText = V_WordText.Replace("\\", ""); //Backslash
-                */
                 V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                 V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
@@ -3587,7 +3583,6 @@ namespace PLM
                         V_WordText = WordApp.Selection.Text;
                         last_result = transcription.text;
                         last_utt = transcription.utt;
-                        /*
                         V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                         V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                         V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -3595,7 +3590,6 @@ namespace PLM
                         V_WordText = V_WordText.Replace("\t", ""); //Tab
                         V_WordText = V_WordText.Replace("\"", ""); //Double quote
                         V_WordText = V_WordText.Replace("\\", ""); //Backslash
-                        */
                         V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                         V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
@@ -3620,7 +3614,6 @@ namespace PLM
                     {
 
                         V_WordText = WordApp.Selection.Text;
-                        /*
                         V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                         V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                         V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -3628,7 +3621,6 @@ namespace PLM
                         V_WordText = V_WordText.Replace("\t", ""); //Tab
                         V_WordText = V_WordText.Replace("\"", ""); //Double quote
                         V_WordText = V_WordText.Replace("\\", ""); //Backslash
-                        */
                         V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                         V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
@@ -3891,6 +3883,7 @@ namespace PLM
                 case '\u0020':
                 case '\u0085':
                 case '\u00A0':
+                case '\u0180':
                 case '\u1680':
                 case '\u2000':
                 case '\u2001':
@@ -3903,11 +3896,16 @@ namespace PLM
                 case '\u2008':
                 case '\u2009':
                 case '\u200A':
+                case '\u200B':
+                case '\u200C':
+                case '\u200D':
                 case '\u2028':
                 case '\u2029':
                 case '\u202F':
                 case '\u205F':
+                case '\u2060':
                 case '\u3000':
+                case '\uFEFF':
                     return true;
                 default:
                     return false;
