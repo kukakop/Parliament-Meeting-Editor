@@ -17,7 +17,7 @@ using System.Globalization;
 using RestSharp;
 using MimeTypes;
 using System.ComponentModel;
-using static System.Net.WebRequestMethods;
+using System.Text.RegularExpressions;
 
 namespace PLM
 {
@@ -2595,6 +2595,7 @@ namespace PLM
                         if (V_WordText != transcription.text)
                         {
                             WordChang = true;
+                            /*
                             V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                             V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                             V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -2603,8 +2604,8 @@ namespace PLM
                             V_WordText = V_WordText.Replace("\"", ""); //Double quote
                             V_WordText = V_WordText.Replace("\'", ""); //Single quote
                             V_WordText = V_WordText.Replace("\\", ""); //Backslash
-
-
+                            */
+                            V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                             V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
                         }
@@ -2625,6 +2626,7 @@ namespace PLM
                 WordApp.Selection.Bookmarks.Add(vBookmark, rng);
                 WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: vBookmark);
                 V_WordText = WordApp.Selection.Text;
+                /*
                 V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                 V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                 V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -2633,6 +2635,8 @@ namespace PLM
                 V_WordText = V_WordText.Replace("\"", ""); //Double quote
                 V_WordText = V_WordText.Replace("\'", ""); //Single quote
                 V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                */
+                V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                 V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
 
@@ -3444,7 +3448,7 @@ namespace PLM
         private void NewMessage(string message)
         {
             //FlexibleMessageBox.Show(message);
-            MessageBox.Show(new Form() { TopMost = true }, message);
+            MessageBox.Show(new Form() { TopMost = true }, message, Apptitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             //TopMost = false;
 
 
@@ -3456,7 +3460,7 @@ namespace PLM
         }
         private DialogResult NewMessageConfirm(string message)
         {
-            return MessageBox.Show(new Form() { TopMost = true }, message, this.Text, MessageBoxButtons.YesNo);
+            return MessageBox.Show(new Form() { TopMost = true }, message, Apptitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             //return FlexibleMessageBox.Show(message, this.Text, MessageBoxButtons.YesNo);
             ////    NewMessageBox msgResized = new NewMessageBox("", message);
             ////msgResized.StartPosition = FormStartPosition.CenterScreen;
@@ -3504,7 +3508,7 @@ namespace PLM
                     else
                     {
                         //this.Hide();
-                        string result_search = NewSearchBox.ShowDialog(textin, "การแนะนำรายชื่อ");
+                        string result_search = NewSearchBox.ShowDialog(textin, "แนะนำรายชื่อ");
 
                         if (result_search != "")
                         {
@@ -3583,7 +3587,7 @@ namespace PLM
                         V_WordText = WordApp.Selection.Text;
                         last_result = transcription.text;
                         last_utt = transcription.utt;
-
+                        /*
                         V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                         V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                         V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -3591,6 +3595,8 @@ namespace PLM
                         V_WordText = V_WordText.Replace("\t", ""); //Tab
                         V_WordText = V_WordText.Replace("\"", ""); //Double quote
                         V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                        */
+                        V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                         V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
                         if (V_WordText != transcription.text)
@@ -3614,7 +3620,7 @@ namespace PLM
                     {
 
                         V_WordText = WordApp.Selection.Text;
-
+                        /*
                         V_WordText = V_WordText.Replace("\b", ""); //Backspace(ascii code 08)
                         V_WordText = V_WordText.Replace("\r", ""); //Carriage return
                         V_WordText = V_WordText.Replace("\f", ""); //Form feed(ascii code 0C)
@@ -3622,6 +3628,8 @@ namespace PLM
                         V_WordText = V_WordText.Replace("\t", ""); //Tab
                         V_WordText = V_WordText.Replace("\"", ""); //Double quote
                         V_WordText = V_WordText.Replace("\\", ""); //Backslash
+                        */
+                        V_WordText = TrimAllWithInplaceCharArray(V_WordText);
                         V_WordText = V_WordText.Replace(System.Environment.NewLine, "");
 
                         var content = files.transcription.Where(w => w.utt == last_utt);
@@ -3868,6 +3876,56 @@ namespace PLM
                 //this.lblStatus.Text = "Done!";
             }
             progressDlg.Close();
+        }
+
+        private bool isWhiteSpace(char ch)
+        {
+            // this is surprisingly faster 
+            switch (ch)
+            {
+                case '\u0009':
+                case '\u000A':
+                case '\u000B':
+                case '\u000C':
+                case '\u000D':
+                case '\u0020':
+                case '\u0085':
+                case '\u00A0':
+                case '\u1680':
+                case '\u2000':
+                case '\u2001':
+                case '\u2002':
+                case '\u2003':
+                case '\u2004':
+                case '\u2005':
+                case '\u2006':
+                case '\u2007':
+                case '\u2008':
+                case '\u2009':
+                case '\u200A':
+                case '\u2028':
+                case '\u2029':
+                case '\u202F':
+                case '\u205F':
+                case '\u3000':
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private string TrimAllWithInplaceCharArray(string str)
+        {
+            var len = str.Length;
+            var src = str.ToCharArray();
+            int dstIdx = 0;
+            for (int i = 0; i < len; i++)
+            {
+                var ch = src[i];
+                if (!isWhiteSpace(ch))
+                    src[dstIdx++] = ch;
+            }
+            return new string(src, 0, dstIdx);
         }
 
     }
