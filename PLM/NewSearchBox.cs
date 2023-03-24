@@ -16,21 +16,19 @@ namespace PLM
         public string result_search;
         public SUGGEST intsuggestinfo;
 
-
         static string URL = ConfigurationSettings.AppSettings["suggestorurl"];
         private ListBox ListSearch;
         private TextBox TxtSearch;
         static string token = ConfigurationSettings.AppSettings["Token"];
         public static string ShowDialog(string text, string caption)
         {
-           
-             
+
 
             using (var NewSearchBox = new NewSearchBox(text, caption))
             {
-                NewSearchBox.searchtext(text);
                 NewSearchBox.TopMost = true;
                 NewSearchBox.TopLevel = true;
+                NewSearchBox.searchtext(text);
                 //NewConfirmBox.Location = new System.Drawing.Point(0, 0);
                 //return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.SearchComboBox.Text : "";
                 return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.TxtSearch.Text : "";

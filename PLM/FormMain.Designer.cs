@@ -83,6 +83,8 @@ namespace PLM
             this.TxtLog = new System.Windows.Forms.TextBox();
             this.WmPlayerTimer = new System.Windows.Forms.Timer(this.components);
             this.WmPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+            this.TxtPlayTime = new System.Windows.Forms.TextBox();
+            this.BTPlayTime = new PLM.RJControls.RJButton();
             this.BT40X = new PLM.RJControls.RJButton();
             this.BT20X = new PLM.RJControls.RJButton();
             this.BT10X = new PLM.RJControls.RJButton();
@@ -518,6 +520,8 @@ namespace PLM
             this.GrpWM.AutoSize = true;
             this.GrpWM.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.GrpWM.BackColor = System.Drawing.SystemColors.Control;
+            this.GrpWM.Controls.Add(this.BTPlayTime);
+            this.GrpWM.Controls.Add(this.TxtPlayTime);
             this.GrpWM.Controls.Add(this.BT40X);
             this.GrpWM.Controls.Add(this.label10);
             this.GrpWM.Controls.Add(this.BT20X);
@@ -529,7 +533,7 @@ namespace PLM
             this.GrpWM.Controls.Add(this.ChkHighlight);
             this.GrpWM.Location = new System.Drawing.Point(3, 3);
             this.GrpWM.Name = "GrpWM";
-            this.GrpWM.Size = new System.Drawing.Size(273, 96);
+            this.GrpWM.Size = new System.Drawing.Size(273, 118);
             this.GrpWM.TabIndex = 8;
             this.GrpWM.TabStop = false;
             // 
@@ -568,7 +572,7 @@ namespace PLM
             this.TxtRewTime.Location = new System.Drawing.Point(175, 14);
             this.TxtRewTime.Name = "TxtRewTime";
             this.TxtRewTime.Size = new System.Drawing.Size(42, 20);
-            this.TxtRewTime.TabIndex = 9;
+            this.TxtRewTime.TabIndex = 0;
             this.TxtRewTime.TabStop = false;
             // 
             // ChkHighlight
@@ -604,7 +608,7 @@ namespace PLM
             this.SplitCtnList.Panel2.Controls.Add(this.BTSumRefresh);
             this.SplitCtnList.Panel2MinSize = 40;
             this.SplitCtnList.Size = new System.Drawing.Size(279, 345);
-            this.SplitCtnList.SplitterDistance = 298;
+            this.SplitCtnList.SplitterDistance = 299;
             this.SplitCtnList.SplitterWidth = 3;
             this.SplitCtnList.TabIndex = 0;
             this.SplitCtnList.TabStop = false;
@@ -626,7 +630,7 @@ namespace PLM
             // 
             this.SplitCtnListApp.Panel2.Controls.Add(this.GRPsumList);
             this.SplitCtnListApp.Panel2MinSize = 0;
-            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 298);
+            this.SplitCtnListApp.Size = new System.Drawing.Size(279, 299);
             this.SplitCtnListApp.SplitterDistance = 51;
             this.SplitCtnListApp.SplitterWidth = 3;
             this.SplitCtnListApp.TabIndex = 0;
@@ -709,7 +713,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 661;
+            this.SplitCtnWord.SplitterDistance = 662;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.TabStop = false;
@@ -722,7 +726,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 661);
+            this.PNWord.Size = new System.Drawing.Size(982, 662);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
@@ -804,7 +808,7 @@ namespace PLM
             // 
             // WmPlayerTimer
             // 
-            this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick_1);
+            this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick);
             // 
             // WmPlayer
             // 
@@ -814,9 +818,37 @@ namespace PLM
             this.WmPlayer.Name = "WmPlayer";
             this.WmPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WmPlayer.OcxState")));
             this.WmPlayer.Size = new System.Drawing.Size(279, 257);
-            this.WmPlayer.TabIndex = 1;
+            this.WmPlayer.TabIndex = 0;
+            this.WmPlayer.TabStop = false;
             this.WmPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.WmPlayer_PlayStateChange);
             this.WmPlayer.Enter += new System.EventHandler(this.WmPlayer_Enter);
+            // 
+            // TxtPlayTime
+            // 
+            this.TxtPlayTime.Location = new System.Drawing.Point(124, 75);
+            this.TxtPlayTime.Name = "TxtPlayTime";
+            this.TxtPlayTime.Size = new System.Drawing.Size(42, 20);
+            this.TxtPlayTime.TabIndex = 12;
+            this.TxtPlayTime.TabStop = false;
+            this.TxtPlayTime.Visible = false;
+            this.TxtPlayTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPlayTime_KeyPress);
+            // 
+            // BTPlayTime
+            // 
+            this.BTPlayTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(29)))), ((int)(((byte)(58)))));
+            this.BTPlayTime.FlatAppearance.BorderSize = 0;
+            this.BTPlayTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPlayTime.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.BTPlayTime.ForeColor = System.Drawing.Color.White;
+            this.BTPlayTime.Location = new System.Drawing.Point(57, 70);
+            this.BTPlayTime.Name = "BTPlayTime";
+            this.BTPlayTime.Size = new System.Drawing.Size(65, 29);
+            this.BTPlayTime.TabIndex = 13;
+            this.BTPlayTime.TabStop = false;
+            this.BTPlayTime.Text = "เล่นเวลา";
+            this.BTPlayTime.UseVisualStyleBackColor = false;
+            this.BTPlayTime.Visible = false;
+            this.BTPlayTime.Click += new System.EventHandler(this.BTPlayTime_Click);
             // 
             // BT40X
             // 
@@ -828,7 +860,7 @@ namespace PLM
             this.BT40X.Location = new System.Drawing.Point(223, 42);
             this.BT40X.Name = "BT40X";
             this.BT40X.Size = new System.Drawing.Size(44, 34);
-            this.BT40X.TabIndex = 8;
+            this.BT40X.TabIndex = 0;
             this.BT40X.TabStop = false;
             this.BT40X.Text = "4.0 x";
             this.BT40X.UseVisualStyleBackColor = false;
@@ -844,7 +876,7 @@ namespace PLM
             this.BT20X.Location = new System.Drawing.Point(173, 42);
             this.BT20X.Name = "BT20X";
             this.BT20X.Size = new System.Drawing.Size(44, 34);
-            this.BT20X.TabIndex = 7;
+            this.BT20X.TabIndex = 70;
             this.BT20X.TabStop = false;
             this.BT20X.Text = "2.0 x";
             this.BT20X.UseVisualStyleBackColor = false;
@@ -860,7 +892,7 @@ namespace PLM
             this.BT10X.Location = new System.Drawing.Point(123, 43);
             this.BT10X.Name = "BT10X";
             this.BT10X.Size = new System.Drawing.Size(44, 34);
-            this.BT10X.TabIndex = 6;
+            this.BT10X.TabIndex = 0;
             this.BT10X.TabStop = false;
             this.BT10X.Text = "1.0 x";
             this.BT10X.UseVisualStyleBackColor = false;
@@ -876,7 +908,7 @@ namespace PLM
             this.BT05X.Location = new System.Drawing.Point(73, 42);
             this.BT05X.Name = "BT05X";
             this.BT05X.Size = new System.Drawing.Size(44, 34);
-            this.BT05X.TabIndex = 5;
+            this.BT05X.TabIndex = 0;
             this.BT05X.TabStop = false;
             this.BT05X.Text = "0.5 x";
             this.BT05X.UseVisualStyleBackColor = false;
@@ -1173,5 +1205,7 @@ namespace PLM
         private ToolStripStatusLabel StripProgressStatus;
         private ToolStripProgressBar StripProgress;
         private TextBox TxtLog;
+        private RJControls.RJButton BTPlayTime;
+        private TextBox TxtPlayTime;
     }
 }

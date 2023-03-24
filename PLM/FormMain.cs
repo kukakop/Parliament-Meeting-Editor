@@ -367,26 +367,9 @@ namespace PLM
                             if (WordEditMode == false)
                             {
                                 //WmplayerBack(appinfo, fileinfo);
-                                if (WmPlayer.settings.rate == 0.5)
-                                {
+                               
 
-                                    WmplayerPlay05();
-                                }
-                                if (WmPlayer.settings.rate == 1)
-                                {
-
-                                    WmplayerPlay10();
-                                }
-                                if (WmPlayer.settings.rate == 2)
-                                {
-
-                                    WmplayerPlay20();
-                                }
-                                if (WmPlayer.settings.rate == 4)
-                                {
-
-                                    WmplayerPlay40();
-                                }
+                                    WmplayerPlayBack();
                             }
                             break;
 
@@ -533,26 +516,50 @@ namespace PLM
 
                 WmPlayer.Ctlcontrols.play();
             }
-            BT05X.Focus();
+            //BT05X.Focus();
 
             WordNonEdit();
+        }
+
+        private void WmplayerPlayBack()
+        {
+          
+            if (TxtRewTime.Text != "")
+            {
+                if (int.Parse(TxtRewTime.Text) is int)
+                {
+                    WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                }
+            }
+
+            WmPlayer.settings.rate = 1;
+            WmPlayer.Ctlcontrols.play();
+            
+            //BT10X.Focus();
+            WordNonEdit();
+
+        }
+        private void WmplayerPlayTime()
+        {
+
+            if (TxtPlayTime.Text != "")
+            {
+                if (int.Parse(TxtPlayTime.Text) is int)
+                {
+                    WmPlayer.Ctlcontrols.currentPosition = double.Parse(TxtPlayTime.Text);
+                }
+            }
+
+            WmPlayer.settings.rate = 1;
+            WmPlayer.Ctlcontrols.play();
+
+            //BT10X.Focus();
+            WordNonEdit();
+
         }
         private void WmplayerPlay10()
         {
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
-            {
-                //if (TxtRewTime.Text != "")
-                //{
-                //    if (int.Parse(TxtRewTime.Text) is int)
-                //    {
-                //        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
-                //    }
-                //}
-
-                WmPlayer.settings.rate = 1;
-                WmPlayer.Ctlcontrols.play();
-            }
-            else
             {
                 if (TxtRewTime.Text != "")
                 {
@@ -565,7 +572,7 @@ namespace PLM
                 WmPlayer.settings.rate = 1;
                 WmPlayer.Ctlcontrols.play();
             }
-            BT10X.Focus();
+            //BT10X.Focus();
             WordNonEdit();
 
         }
@@ -576,20 +583,7 @@ namespace PLM
                 WmPlayer.settings.rate = 2;
                 WmPlayer.Ctlcontrols.play();
             }
-            else
-            {
-                if (TxtRewTime.Text != "")
-                {
-                    if (int.Parse(TxtRewTime.Text) is int)
-                    {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
-                    }
-                }
-
-                WmPlayer.settings.rate = 2;
-                WmPlayer.Ctlcontrols.play();
-            }
-            BT20X.Focus();
+            //BT20X.Focus();
             WordNonEdit();
         }
         private void WmplayerPlay40()
@@ -600,20 +594,7 @@ namespace PLM
                 WmPlayer.settings.rate = 4;
                 WmPlayer.Ctlcontrols.play();
             }
-            else
-            {
-                if (TxtRewTime.Text != "")
-                {
-                    if (int.Parse(TxtRewTime.Text) is int)
-                    {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
-                    }
-                }
-
-                WmPlayer.settings.rate = 4;
-                WmPlayer.Ctlcontrols.play();
-            }
-            BT40X.Focus();
+            //BT40X.Focus();
             WordNonEdit();
         }
         private void WmplayerRePlay(APPINFO appinfo, FILE_CONTENT files)
@@ -747,6 +728,7 @@ namespace PLM
                 }
 
             }
+            PNWord.Focus();
         }
         private void WmplayerBack(APPINFO appinfo, FILE_CONTENT files)
         {
@@ -1594,7 +1576,8 @@ namespace PLM
             try
             {
                 string vBookmark;
-                string vString;
+                string vString = "";
+                string vSpace = "";
                 string urlPHP;
                 int oStart;
                 int oEnd;
@@ -1621,7 +1604,15 @@ namespace PLM
                         vRecNo++;
                         WordApp.Selection.Move(WdUnits.wdCharacter, oEnd);
                         vBookmark = "P" + transcription.utt;
-                        vString = transcription.text;
+                        if (vString.Length > 0)
+                        {
+                            vSpace = " ";
+                        }
+                        else
+                        {
+                            vSpace = "";
+                        }
+                        vString = vSpace + transcription.text;
                         oEnd = oStart + vString.Length;
                         WordApp.Selection.Text = vString;
                         rng = aDoc.Range(oStart - 1, oEnd);
@@ -1780,7 +1771,7 @@ namespace PLM
 
                 //easier to find the window handle
 
-
+                
                 SetParent(WordWND, PNWord.Handle);
                 // WordApp.WindowState = WdWindowState.wdWindowStateMaximize;
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
@@ -2252,6 +2243,18 @@ namespace PLM
                     }
 
                 }
+
+
+               
+                //PNWord.GetChildAtPoint()
+                //foreach (Process pList in Process.GetProcesses())
+                //{
+                //    if (pList.MainWindowTitle.Contains(WordFileNoExt))
+                //    {
+                //        WordWND = pList.MainWindowHandle;
+                //        break;
+                //    }
+                //}
             }
             catch (Exception e2)
             {
@@ -2259,7 +2262,24 @@ namespace PLM
                 Cursor.Current = Cursors.Default;
             }
         }
+        private IEnumerable<Control> GetControlHierarchy(Control root)
+        {
+            var queue = new Queue<Control>();
 
+            queue.Enqueue(root);
+
+            do
+            {
+                var control = queue.Dequeue();
+
+                yield return control;
+
+                foreach (var child in control.Controls.OfType<Control>())
+                    queue.Enqueue(child);
+
+            } while (queue.Count > 0);
+
+        }
 
         private void WordMergeSave(APPINFO appinfo, FILE_CONTENT files)
         {
@@ -2320,6 +2340,7 @@ namespace PLM
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             //string vBookmark;
             string vString;
+            string vSpace = "";
             string urlPHP;
             string DeletePath;
             string OriginalFile;
@@ -3193,6 +3214,7 @@ namespace PLM
         {
 
             WordHighlight(appinfo, fileinfo);
+            
 
         }
 
@@ -3281,11 +3303,6 @@ namespace PLM
 
         }
 
-        private void WmPlayerTimer_Tick_1(object sender, EventArgs e)
-        {
-
-            WordHighlight(appinfo, fileinfo);
-        }
 
         private void SplitWM_SizeChanged(object sender, EventArgs e)
         {
@@ -3503,8 +3520,8 @@ namespace PLM
                     }
                     else
                     {
-                        //this.Hide();
-                        string result_search = NewSearchBox.ShowDialog(textin, "แนะนำรายชื่อ");
+                    //this.TopMost = false;
+                    string result_search = NewSearchBox.ShowDialog( textin, "แนะนำรายชื่อ");
 
                         if (result_search != "")
                         {
@@ -3518,10 +3535,10 @@ namespace PLM
             });
             thread.Start();
             thread.Join();
-            // popup app to top
-            TopMost = true;
-            Thread.Sleep(100);
-            TopMost = false;
+            //// popup app to top
+            //TopMost = true;
+            //Thread.Sleep(100);
+            //TopMost = false;
         }
         private void OldSearchText()
         {
@@ -3926,5 +3943,24 @@ namespace PLM
             return new string(src, 0, dstIdx);
         }
 
+        private void BTPlayTime_Click(object sender, EventArgs e)
+        {
+            WmplayerPlayTime();
+        }
+
+        private void TxtPlayTime_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
