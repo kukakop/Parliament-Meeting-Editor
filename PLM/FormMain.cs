@@ -17,7 +17,6 @@ using System.Globalization;
 using RestSharp;
 using MimeTypes;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 
 namespace PLM
 {
@@ -378,11 +377,12 @@ namespace PLM
                             break;
 
                         case Keys.F12: // play forward
+                            /*
                             if (WordEditMode == false)
                             {
                                 WmplayerFW(appinfo, fileinfo);
                             }
-
+                            */
                             break;
                         default:
                             break;
@@ -574,6 +574,7 @@ namespace PLM
             }
             //BT10X.Focus();
             WordNonEdit();
+            WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
 
         }
         private void WmplayerPlay20()
@@ -729,6 +730,7 @@ namespace PLM
 
             }
             PNWord.Focus();
+            WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
         }
         private void WmplayerBack(APPINFO appinfo, FILE_CONTENT files)
         {
@@ -2175,7 +2177,7 @@ namespace PLM
                 }
                 if (resultBox == System.Windows.Forms.DialogResult.Yes)
                 {
-                    WmPlayer.Ctlcontrols.stop();
+                    WmPlayer.Ctlcontrols.pause();
                     Cursor.Current = Cursors.WaitCursor;
                     SaveDataBg(appinfo, files);
                     //SaveData(appinfo, files);
@@ -2216,6 +2218,8 @@ namespace PLM
                             thread.Join();
                         }
                         WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+                        WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+
                         //WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                         //// goto last position
                         //if (LastUtt > 0)
@@ -2584,10 +2588,6 @@ namespace PLM
             object rng = WordApp.Selection.Range;
             try
             {
-
-
-
-
                 ///progress
                 double i = 0;
                 double i_double = 0.00;
