@@ -173,6 +173,7 @@ namespace PLM
             this.Activate();
             InitializeComponent();
             this.DoubleBuffered = true;
+            this.TxtRewTime.Text = "3";
         }
 
         //start  key  
@@ -574,7 +575,6 @@ namespace PLM
             }
             //BT10X.Focus();
             WordNonEdit();
-            WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
 
         }
         private void WmplayerPlay20()
@@ -730,7 +730,10 @@ namespace PLM
 
             }
             PNWord.Focus();
-            WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+            WordApp.Activate();
         }
         private void WmplayerBack(APPINFO appinfo, FILE_CONTENT files)
         {
@@ -2218,7 +2221,10 @@ namespace PLM
                             thread.Join();
                         }
                         WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
-                        WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                        //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                        WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                        //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+                        WordApp.Activate();
 
                         //WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                         //// goto last position
@@ -3485,11 +3491,14 @@ namespace PLM
         }
         private void SearchText()
         {
+            WmPlayer.Ctlcontrols.pause();
+            string result_search = "";
             Thread thread = new Thread(() =>
             {
                 string textin;
                 string textout = "";
 
+                LastPosition = WordApp.Selection.Range.Start;
                 FormCollection fc = System.Windows.Forms.Application.OpenForms;
                 Boolean form_exists = false;
                 textin = WordApp.Selection.Text;
@@ -3521,12 +3530,12 @@ namespace PLM
                     else
                     {
                     //this.TopMost = false;
-                    string result_search = NewSearchBox.ShowDialog( textin, "แนะนำรายชื่อ");
+                    result_search = NewSearchBox.ShowDialog( textin, "แนะนำรายชื่อ");
 
                         if (result_search != "")
                         {
+                            result_search = result_search + " ";
                             WordApp.Selection.Text = result_search;
-
                         }
                     }
                 }
@@ -3535,6 +3544,12 @@ namespace PLM
             });
             thread.Start();
             thread.Join();
+            LastPosition = LastPosition + result_search.Length;
+            WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+            WordApp.Activate();
             //// popup app to top
             //TopMost = true;
             //Thread.Sleep(100);
