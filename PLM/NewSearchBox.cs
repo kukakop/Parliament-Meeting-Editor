@@ -329,10 +329,10 @@ System.Text.Encoding.UTF8);
 
         private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
         {
+            searchbybox(this.TxtSearch.Text);
 
             //if (e.KeyCode == Keys.Enter)
             //{
-                searchbybox(this.TxtSearch.Text);
             //}
         }
 
