@@ -47,21 +47,13 @@ namespace PLM
         public SearchBox(string textsearch,SUGGEST suggestinfo)
         {
             InitializeComponent();
-            //TopMost = true;
+            TopMost = true;
             this.Text = "การแนะนำรายชื่อ";
             searchtext(textsearch, suggestinfo);
-            //this.SerachComboBox.Text = message;
+
+            //this.Deactivate += MyDeactivateHandler;
 
 
-
-            //this.SearchComboBox.Items.Add("Text1");
-            //this.SearchComboBox.Items.Add("Text2");
-            //this.SearchComboBox.Items.Add("Text3");
-
-            this.Deactivate += MyDeactivateHandler;
-
-
-            //this.textBoxMessage.ReadOnly = true;
         }
         public void BoxOwner(Form SOwner)
         {

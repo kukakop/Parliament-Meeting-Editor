@@ -15,7 +15,7 @@ namespace PLM
         private Button buttonNo;
         public string result_search;
         public SUGGEST intsuggestinfo;
-
+        public string temp;
         static string URL = ConfigurationSettings.AppSettings["suggestorurl"];
         private ListBox ListSearch;
         private TextBox TxtSearch;
@@ -315,7 +315,6 @@ System.Text.Encoding.UTF8);
             Thread.Sleep(200);
             TopMost = false;
         }
-
         private void SearchComboBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
@@ -342,5 +341,10 @@ System.Text.Encoding.UTF8);
             //TxtSearch.Text = ListSearch.Text;
             buttonYes.PerformClick();
         }
+
+       
+
+
+
     }
 }

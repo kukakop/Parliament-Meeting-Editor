@@ -334,7 +334,7 @@ namespace PLM
                             break;
                         case Keys.F5:  // inc volume
 
-                            SearchText();
+                            TestSearchText();
                             //WmPlayer.settings.volume = WmPlayer.settings.volume + 10;
                             break;
                         case Keys.F6: // dec volume
@@ -497,30 +497,6 @@ namespace PLM
         }
 
 
-        private void WmplayerPlay05()
-        {
-            if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
-            {
-                WmPlayer.settings.rate = 0.5;
-                WmPlayer.Ctlcontrols.play();
-            }
-            else
-            {
-                if (TxtRewTime.Text != "")
-                {
-                    if (int.Parse(TxtRewTime.Text) is int)
-                    {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
-                    }
-                }
-                WmPlayer.settings.rate = 0.5;
-
-                WmPlayer.Ctlcontrols.play();
-            }
-            //BT05X.Focus();
-
-            WordNonEdit();
-        }
 
         private void WmplayerPlayBack()
         {
@@ -558,10 +534,40 @@ namespace PLM
             WordNonEdit();
 
         }
+        private void WmplayerPlay05()
+        {
+            if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
+            {
+                WmPlayer.settings.rate = 0.5;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+                WmPlayer.settings.rate = 0.5;
+
+                WmPlayer.Ctlcontrols.play();
+            }
+            //BT05X.Focus();
+
+            WordNonEdit();
+        }
         private void WmplayerPlay10()
         {
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
+
+                WmPlayer.settings.rate = 1;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            { 
                 if (TxtRewTime.Text != "")
                 {
                     if (int.Parse(TxtRewTime.Text) is int)
@@ -584,6 +590,19 @@ namespace PLM
                 WmPlayer.settings.rate = 2;
                 WmPlayer.Ctlcontrols.play();
             }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+
+                WmPlayer.settings.rate = 2;
+                WmPlayer.Ctlcontrols.play();
+            }
             //BT20X.Focus();
             WordNonEdit();
         }
@@ -592,6 +611,19 @@ namespace PLM
 
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
             {
+                WmPlayer.settings.rate = 4;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (TxtRewTime.Text != "")
+                {
+                    if (int.Parse(TxtRewTime.Text) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    }
+                }
+
                 WmPlayer.settings.rate = 4;
                 WmPlayer.Ctlcontrols.play();
             }
@@ -730,10 +762,19 @@ namespace PLM
 
             }
             PNWord.Focus();
-            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
-            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
-            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
-            WordApp.Activate();
+
+
+            Thread thread2 = new Thread(() =>
+            {
+                //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                    WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+
+                    WordApp.Activate();
+                //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+                //WordApp.ActiveWindow.View.SplitSpecial = Microsoft.Office.Interop.Word.WdSpecialPane.wdPaneRevisionsVert;
+            });
+            thread2.Start();
+            thread2.Join();
         }
         private void WmplayerBack(APPINFO appinfo, FILE_CONTENT files)
         {
@@ -2221,10 +2262,17 @@ namespace PLM
                             thread.Join();
                         }
                         WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
-                        //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
-                        WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
-                        //WordApp.ActiveDocument.ActiveWindow.SetFocus();
-                        WordApp.Activate();
+                        Thread thread2 = new Thread(() =>
+                        {
+                            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+
+                            WordApp.Activate();
+                            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+                            //WordApp.ActiveWindow.View.SplitSpecial = Microsoft.Office.Interop.Word.WdSpecialPane.wdPaneRevisionsVert;
+                        });
+                        thread2.Start();
+                        thread2.Join();
 
                         //WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                         //// goto last position
@@ -2336,6 +2384,19 @@ namespace PLM
 
 
                 }
+
+                WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+                Thread thread2 = new Thread(() =>
+                {
+                    //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                    WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+
+                    WordApp.Activate();
+                    //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+                    //WordApp.ActiveWindow.View.SplitSpecial = Microsoft.Office.Interop.Word.WdSpecialPane.wdPaneRevisionsVert;
+                });
+                thread2.Start();
+                thread2.Join();
             }
             catch (Exception e2)
             {
@@ -3151,7 +3212,7 @@ namespace PLM
                     WordNonEdit();
                     break;
                 case 3:    // Playing
-                    BT10X.Focus();
+                    //BT10X.Focus();
                     WordNonEdit();
                     break;
                 //        WmPlayerTimer.Start();
@@ -3515,7 +3576,20 @@ namespace PLM
                         if (frm.Name.Contains("SearchBox"))
                         {
                             form_exists = true;
+                            Thread thread2 = new Thread(() =>
+                            {
+                                //frm.Invoke(new MethodInvoker(delegate () { frm.Activate(); }));
+                                frm.Invoke((MethodInvoker)delegate () {
+                                    frm.Close();
+                                });
+                                //frm.Invoke(( MethodInvoker)delegate () { 
+                                //    frm.Activate();
+                                //});
+                            });
+                            thread2.Start();
+                            thread2.Join();
                             //frm.Close();
+                            break;
                         }
                         else
                         {
@@ -3524,12 +3598,11 @@ namespace PLM
 
 
                     }
-                    if (form_exists)
-                    {
-                    }
-                    else
-                    {
-                    //this.TopMost = false;
+                    //if (form_exists)
+                    //{
+                    //}
+                    //else
+                    //{
                     result_search = NewSearchBox.ShowDialog( textin, "แนะนำรายชื่อ");
 
                         if (result_search != "")
@@ -3537,7 +3610,7 @@ namespace PLM
                             result_search = result_search + " ";
                             WordApp.Selection.Text = result_search;
                         }
-                    }
+                    //}
                 }
 
 
@@ -3555,13 +3628,18 @@ namespace PLM
             //Thread.Sleep(100);
             //TopMost = false;
         }
-        private void OldSearchText()
+        private void TestSearchText()
         {
-
+            WmPlayer.Ctlcontrols.pause();
+            string result_search = "";
             Thread thread = new Thread(() =>
             {
                 string textin;
                 string textout = "";
+
+                LastPosition = WordApp.Selection.Range.Start;
+                FormCollection fc = System.Windows.Forms.Application.OpenForms;
+                Boolean form_exists = false;
                 textin = WordApp.Selection.Text;
                 if ((appinfo.mode == "view") || (appinfo.mode == "sum"))
                 {
@@ -3569,25 +3647,62 @@ namespace PLM
                 }
                 else
                 {
-
-                    SearchBox msgResized = new SearchBox(textin, suggestinfo);
-                    if (msgResized.IsAccessible == false)
+                    foreach (Form frm in fc)
                     {
-
-
-                        msgResized.StartPosition = FormStartPosition.CenterScreen;
-                        msgResized.ShowDialog();
-
-                        if (msgResized.result_search != "")
+                        //append_log("Check form :" + frm.Name + "," + frm.TopMost + "," + frm.TopLevel + ",");
+                        //iterate through
+                        if (frm.Name.Contains("SearchBox"))
                         {
-                            WordApp.Selection.Text = msgResized.result_search;
+                            form_exists = true;
+                            //frm.Close();
+                        }
+                        else
+                        {
 
                         }
+
+
+                    }
+                    if (form_exists)
+                    {
+                    }
+                    else
+                    {
+                        //this.TopMost = false;
+                        SearchBox msgResized = new SearchBox(textin, suggestinfo);
+                        if (msgResized.IsAccessible == false)
+                        {
+
+
+                            msgResized.StartPosition = FormStartPosition.CenterScreen;
+                            msgResized.ShowDialog();
+
+                            if (msgResized.result_search != "")
+                            {
+                                WordApp.Selection.Text = msgResized.result_search;
+
+                            }
+                        }
+
                     }
                 }
+
+
             });
             thread.Start();
             thread.Join();
+            LastPosition = LastPosition + result_search.Length;
+            WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
+            WordApp.Activate();
+            //// popup app to top
+            //TopMost = true;
+            //Thread.Sleep(100);
+            //TopMost = false;
+
+           
 
 
 
@@ -3977,5 +4092,9 @@ namespace PLM
                 e.Handled = true;
             }
         }
+
+       
+        
+
     }
 }
