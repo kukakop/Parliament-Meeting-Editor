@@ -311,9 +311,9 @@ System.Text.Encoding.UTF8);
 
         private void NewSearchBox_Shown(object sender, EventArgs e)
         {
-            TopMost = true;
-            Thread.Sleep(200);
-            TopMost = false;
+            //TopMost = true;
+            //Thread.Sleep(200);
+            //TopMost = false;
         }
         private void SearchComboBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
