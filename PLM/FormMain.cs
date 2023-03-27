@@ -3667,7 +3667,7 @@ namespace PLM
                     {
                     }
                     else
-                    { 
+                    {  
                         //this.TopMost = false;
                         SearchBox msgResized = new SearchBox(textin, suggestinfo);
                         if (msgResized.IsAccessible == false)
