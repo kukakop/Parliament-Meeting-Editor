@@ -359,8 +359,8 @@ namespace PLM
                             }
                             else
                             {
-
-                                WmplayerPlay10();
+                                WmplayerPlayBack();
+                                //WmplayerPlay10();
                                 break;
                             }
                         case Keys.F10: // play back
