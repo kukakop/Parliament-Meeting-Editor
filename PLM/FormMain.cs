@@ -3879,7 +3879,7 @@ namespace PLM
                 {
                     System.IO.File.Delete(file);
 
-                }
+                } 
             }
 
             System.IO.Directory.CreateDirectory(WorkPath + @"/send");
