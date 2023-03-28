@@ -334,7 +334,7 @@ namespace PLM
                             break;
                         case Keys.F5:  // inc volume
 
-                            TestSearchText();
+                            //TestSearchText();
                             //WmPlayer.settings.volume = WmPlayer.settings.volume + 10;
                             break;
                         case Keys.F6: // dec volume
@@ -344,10 +344,12 @@ namespace PLM
                         //case Keys.Space: //for edit
                         //    WmplayerEdit(); break;
                         case Keys.F7:
-                            WmplayerRePlay(appinfo, fileinfo);
+                            //WmplayerRePlay(appinfo, fileinfo);
                             break;
                         case Keys.F8:
-                            SearchText();
+
+                            TestSearchText();
+                            //SearchText();
                             //WmPlayerMovetoCurr(appinfo, fileinfo);
                             break;
                         case Keys.F9: //play puase
@@ -3502,6 +3504,29 @@ namespace PLM
 
                 WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
                 WordApp.Quit();
+
+                FormCollection fc = System.Windows.Forms.Application.OpenForms; //find form search
+                foreach (Form frm in fc)
+                {
+                    if (frm.Name.Contains("SearchBox"))
+                    {
+                        Thread thread2 = new Thread(() =>
+                        {
+                            frm.Invoke((MethodInvoker)delegate () {
+                                frm.Close();
+                            });
+                        });
+                        thread2.Start();
+                        thread2.Join();
+                        break;
+                    }
+                    else
+                    {
+
+                    }
+
+
+                }
 
                 foreach (Process pList in Process.GetProcesses())
                 {

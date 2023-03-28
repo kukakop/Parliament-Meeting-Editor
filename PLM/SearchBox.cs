@@ -24,6 +24,8 @@ namespace PLM
         public SUGGEST intsuggestinfo;
 
         string URL = ConfigurationSettings.AppSettings["suggestorurl"];
+        private TextBox TxtSearch;
+        private ListBox ListSearch;
         string token = ConfigurationSettings.AppSettings["Token"];
 
 
@@ -63,57 +65,27 @@ namespace PLM
         {
             //try
             //{
-                this.SearchComboBox.Items.Clear();
-                this.SearchComboBox.Items.Add(textsearch);
+            this.ListSearch.Items.Clear();
+            this.TxtSearch.Text = textsearch;
+            //this.SearchComboBox.Items.Clear();
+            //    this.SearchComboBox.Items.Add(textsearch);
 
-                String UrlPhP;
-                UrlPhP = URL + "suggester/api/v1/suggest";
+            string searchvalue = textsearch;
 
-                WebRequest myRequest = WebRequest.Create(UrlPhP);
-                myRequest.ContentType = "application/json";
-                myRequest.Method = "POST";
-                myRequest.Headers.Add("x-access-token", token);
-                using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
-                {
-                    //textsearch = "ประยุทธ";
-                    string json = "{";
-                    json += "\"input\":\"" + textsearch + "\"";
-                    json += "}";
+            if (searchvalue != "")
+            {
+                searchvalue = searchvalue.Replace("\b", ""); //Backspace(ascii code 08)
+                searchvalue = searchvalue.Replace("\r", ""); //Carriage return
+                searchvalue = searchvalue.Replace("\f", ""); //Form feed(ascii code 0C)
+                searchvalue = searchvalue.Replace("\n", ""); //New line
+                searchvalue = searchvalue.Replace("\t", ""); //Tab
+                searchvalue = searchvalue.Replace("\"", ""); //Double quote
+                searchvalue = searchvalue.Replace("\'", ""); //Single quote
+                searchvalue = searchvalue.Replace("\\", ""); //Backslash
+                searchvalue = searchvalue.Replace(" ", ""); //Space
+                searchvalue = searchvalue.Replace(System.Environment.NewLine, "");
 
-                    streamWriter.Write(json);
-                }
-                WebResponse myResponse = myRequest.GetResponse();
-
-                StreamReader sr = new StreamReader(myResponse.GetResponseStream(),
-    System.Text.Encoding.UTF8);
-                string result = sr.ReadToEnd();
-
-                JavaScriptSerializer jss = new JavaScriptSerializer();
-                suggestinfo = jss.Deserialize<SUGGEST>(result);
-
-
-                sr.Close();
-                myResponse.Close();
-
-                SearchComboBox.Items.Clear();
-                foreach (var suggestinfodata in suggestinfo.result)
-                {
-                    SearchComboBox.Items.Add(suggestinfodata);
-
-                }
-                SearchComboBox.Text = textsearch;
-            //}
-            //catch (Exception e)
-            //{
-            //    MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
-            //}
-        }
-        private void searchbybox(string textsearch)
-        {
-            //try
-            //{
-            this.SearchComboBox.Items.Clear();
-            this.SearchComboBox.Items.Add(textsearch);
+            }
 
             String UrlPhP;
             UrlPhP = URL + "suggester/api/v1/suggest";
@@ -126,7 +98,81 @@ namespace PLM
             {
                 //textsearch = "ประยุทธ";
                 string json = "{";
-                json += "\"input\":\"" + textsearch + "\"";
+                json += "\"input\":\"" + searchvalue + "\"";
+                json += "}";
+
+                streamWriter.Write(json);
+            }
+            WebResponse myResponse = myRequest.GetResponse();
+
+            StreamReader sr = new StreamReader(myResponse.GetResponseStream(),
+System.Text.Encoding.UTF8);
+            string result = sr.ReadToEnd();
+
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            suggestinfo = jss.Deserialize<SUGGEST>(result);
+
+
+            sr.Close();
+            myResponse.Close();
+
+            ListSearch.Items.Clear();
+            foreach (var suggestinfodata in suggestinfo.result)
+            {
+                ListSearch.Items.Add(suggestinfodata);
+
+            }
+            ListSearch.Text = textsearch;
+            //SearchComboBox.Items.Clear();
+            //foreach (var suggestinfodata in suggestinfo.result)
+            //{
+            //    SearchComboBox.Items.Add(suggestinfodata);
+
+            //}
+            //SearchComboBox.Text = textsearch;
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBox.Show(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+            //}
+        }
+        private void searchbybox(string textsearch)
+        {
+            //try
+            //{
+            this.ListSearch.Items.Clear();
+            //this.SearchComboBox.Items.Clear();
+            //this.SearchComboBox.Items.Add(textsearch);
+
+            string searchvalue = textsearch;
+
+            if (searchvalue != "")
+            {
+                searchvalue = searchvalue.Replace("\b", ""); //Backspace(ascii code 08)
+                searchvalue = searchvalue.Replace("\r", ""); //Carriage return
+                searchvalue = searchvalue.Replace("\f", ""); //Form feed(ascii code 0C)
+                searchvalue = searchvalue.Replace("\n", ""); //New line
+                searchvalue = searchvalue.Replace("\t", ""); //Tab
+                searchvalue = searchvalue.Replace("\"", ""); //Double quote
+                searchvalue = searchvalue.Replace("\'", ""); //Single quote
+                searchvalue = searchvalue.Replace("\\", ""); //Backslash
+                searchvalue = searchvalue.Replace(" ", ""); //Space
+                searchvalue = searchvalue.Replace(System.Environment.NewLine, "");
+
+            }
+
+            String UrlPhP;
+            UrlPhP = URL + "suggester/api/v1/suggest";
+
+            WebRequest myRequest = WebRequest.Create(UrlPhP);
+            myRequest.ContentType = "application/json";
+            myRequest.Method = "POST";
+            myRequest.Headers.Add("x-access-token", token);
+            using (var streamWriter = new StreamWriter(myRequest.GetRequestStream()))
+            {
+                //textsearch = "ประยุทธ";
+                string json = "{";
+                json += "\"input\":\"" + searchvalue + "\"";
                 json += "}";
 
                 streamWriter.Write(json);
@@ -144,13 +190,21 @@ System.Text.Encoding.UTF8);
             sr.Close();
             myResponse.Close();
 
-            SearchComboBox.Items.Clear();
+            ListSearch.Items.Clear();
             foreach (var suggestinfodata in intsuggestinfo.result)
             {
-                SearchComboBox.Items.Add(suggestinfodata);
+                ListSearch.Items.Add(suggestinfodata);
 
             }
-            SearchComboBox.Text = textsearch;
+            ListSearch.Text = textsearch;
+
+            //SearchComboBox.Items.Clear();
+            //foreach (var suggestinfodata in intsuggestinfo.result)
+            //{
+            //    SearchComboBox.Items.Add(suggestinfodata);
+
+            //}
+            //SearchComboBox.Text = textsearch;
             //}
             //catch (Exception e)
             //{
@@ -160,9 +214,12 @@ System.Text.Encoding.UTF8);
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchBox));
             this.buttonYes = new System.Windows.Forms.Button();
             this.buttonNo = new System.Windows.Forms.Button();
             this.SearchComboBox = new System.Windows.Forms.ComboBox();
+            this.TxtSearch = new System.Windows.Forms.TextBox();
+            this.ListSearch = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // buttonYes
@@ -189,20 +246,45 @@ System.Text.Encoding.UTF8);
             // 
             this.SearchComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.SearchComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchComboBox.Location = new System.Drawing.Point(29, 36);
+            this.SearchComboBox.Location = new System.Drawing.Point(-1, 343);
             this.SearchComboBox.Name = "SearchComboBox";
-            this.SearchComboBox.Size = new System.Drawing.Size(411, 300);
+            this.SearchComboBox.Size = new System.Drawing.Size(147, 45);
             this.SearchComboBox.TabIndex = 1;
+            this.SearchComboBox.Visible = false;
             this.SearchComboBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchComboBox_KeyUp);
             this.SearchComboBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SearchComboBox_Click);
+            // 
+            // TxtSearch
+            // 
+            this.TxtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSearch.Location = new System.Drawing.Point(29, 20);
+            this.TxtSearch.Name = "TxtSearch";
+            this.TxtSearch.Size = new System.Drawing.Size(413, 23);
+            this.TxtSearch.TabIndex = 5;
+            this.TxtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyUp);
+            // 
+            // ListSearch
+            // 
+            this.ListSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ListSearch.FormattingEnabled = true;
+            this.ListSearch.ItemHeight = 17;
+            this.ListSearch.Location = new System.Drawing.Point(29, 46);
+            this.ListSearch.Name = "ListSearch";
+            this.ListSearch.Size = new System.Drawing.Size(413, 276);
+            this.ListSearch.TabIndex = 4;
+            this.ListSearch.Click += new System.EventHandler(this.ListSearch_Click);
+            this.ListSearch.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListSearch_MouseDoubleClick);
             // 
             // SearchBox
             // 
             this.AcceptButton = this.buttonYes;
             this.ClientSize = new System.Drawing.Size(468, 400);
-            this.Controls.Add(this.SearchComboBox);
+            this.Controls.Add(this.TxtSearch);
+            this.Controls.Add(this.ListSearch);
             this.Controls.Add(this.buttonYes);
+            this.Controls.Add(this.SearchComboBox);
             this.Controls.Add(this.buttonNo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SearchBox";
@@ -210,6 +292,7 @@ System.Text.Encoding.UTF8);
             this.TopMost = true;
             this.Load += new System.EventHandler(this.NewMessageBox_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -218,12 +301,14 @@ System.Text.Encoding.UTF8);
 
         private void SearchComboBox_Click(object sender, EventArgs e)
         {
-            result_search = SearchComboBox.Text;
+            result_search = TxtSearch.Text;
+            //result_search = SearchComboBox.Text;
             this.Close();
         }
         private void buttonYes_Click(object sender, EventArgs e)
         {
-            result_search = SearchComboBox.Text;
+            result_search = TxtSearch.Text;
+            //result_search = SearchComboBox.Text;
             this.Close();
         }
         private void buttonNo_Click(object sender, EventArgs e)
@@ -248,6 +333,26 @@ System.Text.Encoding.UTF8);
         {
 
             this.Activate();
+        }
+
+        private void ListSearch_Click(object sender, EventArgs e)
+        {
+
+            TxtSearch.Text = ListSearch.Text;
+        }
+
+
+        private void ListSearch_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            TxtSearch.Text = ListSearch.Text;
+            buttonYes.PerformClick();
+        }
+
+        private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            searchbybox(this.TxtSearch.Text);
         }
     }
 }
