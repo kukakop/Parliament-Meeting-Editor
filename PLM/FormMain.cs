@@ -2051,7 +2051,7 @@ namespace PLM
         private Boolean UpdateToServerAndUpload()
         {
             string step_track = "";
-            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            //append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             try
             {
 
@@ -2072,11 +2072,11 @@ namespace PLM
                     }
 
                 }
-                append_log("api:" + "uploadtranscription");
-                append_log("Authorization:" + appinfo.accessKey);
-                append_log("meeting_id:" + appinfo.seq.ToString());
-                append_log("seq:" + appinfo.seq.ToString());
-                append_log("transcription:" + v_transcription);
+                //append_log("api:" + "uploadtranscription");
+                //append_log("Authorization:" + appinfo.accessKey);
+                //append_log("meeting_id:" + appinfo.seq.ToString());
+                //append_log("seq:" + appinfo.seq.ToString());
+                //append_log("transcription:" + v_transcription);
                 v_transcription = "[" + v_transcription.Remove(v_transcription.Length - 1) + "]";
                 string docFile = WorkPath + @"send/" + WordFileName;
                 System.IO.Directory.CreateDirectory(WorkPath + @"/send");
@@ -2102,10 +2102,10 @@ namespace PLM
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
-                append_log("response.success:" + addtrans.success);
-                append_log("response.filepath:" + addtrans.filepath);
-                append_log("response.version:" + addtrans.version);
-                append_log("response.version_desc:" + addtrans.version_desc);
+                //append_log("response.success:" + addtrans.success);
+                //append_log("response.filepath:" + addtrans.filepath);
+                //append_log("response.version:" + addtrans.version);
+                //append_log("response.version_desc:" + addtrans.version_desc);
                 if (addtrans.success == "True")
                 {
 
@@ -2122,14 +2122,14 @@ namespace PLM
                     contentInfo.data[0].version = addtrans.version;
                     contentInfo.data[0].version_desc = addtrans.version_desc;
                     // update version list
-                    List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
-                    CBVersion.DataSource = null;
-                    CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
-                    CBVersion.DataSource = CBVersionItem;
-                    CBVersion.DisplayMember = "Value";
-                    CBVersion.ValueMember = "Key";
-                    CBVersion.Text = contentInfo.data[0].version_desc;
-                    TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
+                    //List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
+                    //CBVersion.DataSource = null;
+                    //CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
+                    //CBVersion.DataSource = CBVersionItem;
+                    //CBVersion.DisplayMember = "Value";
+                    //CBVersion.ValueMember = "Key";
+                    //CBVersion.Text = contentInfo.data[0].version_desc.ToString();
+                    //TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
                     return true;
                 }
                 else
@@ -2140,7 +2140,7 @@ namespace PLM
             }
             catch (Exception e)
             {
-                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                //append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                 archive_log();
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
@@ -2202,8 +2202,7 @@ namespace PLM
 
             }
         }
-
-        private void WordSave(APPINFO appinfo, FILE_CONTENT files, string mode)
+        private void WordSaveBackup(APPINFO appinfo, FILE_CONTENT files, string mode)
         {
             int vMessageVersion;
 
@@ -2266,55 +2265,89 @@ namespace PLM
                         WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
                         Thread thread2 = new Thread(() =>
                         {
-                            //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
                             WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
 
                             WordApp.Activate();
-                            //WordApp.ActiveDocument.ActiveWindow.SetFocus();
-                            //WordApp.ActiveWindow.View.SplitSpecial = Microsoft.Office.Interop.Word.WdSpecialPane.wdPaneRevisionsVert;
                         });
                         thread2.Start();
                         thread2.Join();
 
-                        //WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
-                        //// goto last position
-                        //if (LastUtt > 0)
-                        ////if (LastUtt !=  "")
-                        //{
-                        //    //var content = files.transcription.Where(w => w.utt == LastUtt);
-                        //    var content = files.transcription.Where(w => int.Parse(w.utt) > LastUtt);
-                        //    WmPlayer.Ctlcontrols.currentPosition = content.First().start;
-                        //    v_bookmark = "P" + content.First().utt;
-                        //    //LastUtt = content.First().utt;
-                        //    LastUtt = int.Parse(content.First().utt);
-                        //    if ((ChkHighlight.Checked == true) && ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward)))
-                        //    {
-                        //        Thread thread2 = new Thread(() =>
-                        //        {
-                        //            WordApp.Selection.GoTo(WdGoToItem.wdGoToBookmark, Name: v_bookmark);
-
-                        //        });
-                        //        thread2.Start();
-                        //        thread2.Join();
-                        //    }
-                        //}
-                        //// goto last position
-                        //////FormMain.ActiveForm.Focus();
                     }
 
                 }
 
 
-               
-                //PNWord.GetChildAtPoint()
-                //foreach (Process pList in Process.GetProcesses())
-                //{
-                //    if (pList.MainWindowTitle.Contains(WordFileNoExt))
-                //    {
-                //        WordWND = pList.MainWindowHandle;
-                //        break;
-                //    }
-                //}
+            }
+            catch (Exception e2)
+            {
+                handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
+                Cursor.Current = Cursors.Default;
+            }
+        }
+        private void WordSave(APPINFO appinfo, FILE_CONTENT files, string mode)
+        {
+            int vMessageVersion;
+
+            try
+            {
+                var resultBox = System.Windows.Forms.DialogResult.Yes;
+                vMessageVersion = LastVersion + 1;
+                if (mode == "" || mode == "SAVE")
+                {
+                    //resultBox = MessageBox.Show("ต้องการบันทึกฉบับร่าง", "ต้องการบันทึก", MessageBoxButtons.YesNo);
+                    //resultBox =  NewConfirmBox.ShowDialog(this, "ยืนยันการบันทึก" , "ต้องการบันทึกฉบับร่าง");
+                    resultBox = NewMessageConfirm("ต้องการบันทึกฉบับร่าง");
+                }
+                else
+                {
+                    resultBox = System.Windows.Forms.DialogResult.Yes;
+                }
+                if (resultBox == System.Windows.Forms.DialogResult.Yes)
+                {
+                    WmPlayer.Ctlcontrols.pause();
+                    Cursor.Current = Cursors.WaitCursor;
+                    SaveDataBg(appinfo, files);
+                    //SaveData(appinfo, files);
+                    if (WordChang)
+                    {
+                        List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
+                        CBVersion.DataSource = null;
+                        CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
+                        CBVersion.DataSource = CBVersionItem;
+                        CBVersion.DisplayMember = "Value";
+                        CBVersion.ValueMember = "Key";
+                        CBVersion.Text = contentInfo.data[0].version_desc.ToString();
+                        TxtRoomVersion.Text = contentInfo.data[0].process + "." + contentInfo.data[0].version.ToString();
+                        if (P_NonEditMode == true)
+                        {
+                            Thread thread = new Thread(() =>
+                            {
+                                if (WordApp.ActiveDocument.ProtectionType == WdProtectionType.wdAllowOnlyReading)
+                                {
+                                }
+                                else
+                                {
+                                    WordApp.ActiveDocument.Protect(WdProtectionType.wdAllowOnlyReading);
+                                }
+                            });
+                            thread.Start();
+                            thread.Join();
+                        }
+                        WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
+                        Thread thread2 = new Thread(() =>
+                        {
+                            WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+
+                            WordApp.Activate();
+                        });
+                        thread2.Start();
+                        thread2.Join();
+
+                    }
+
+                }
+
+
             }
             catch (Exception e2)
             {
@@ -3997,21 +4030,28 @@ namespace PLM
             //BackgroundWorker worker = sender as BackgroundWorker;
 
             SaveData(appinfo, fileinfo);
-            //SaveData_with_progress(appinfo, fileinfo, sender);
-            //for (int i = 1; i <= 100; i++)
-            //{
-            //    if (worker.CancellationPending == true)
-            //    {
-            //        e.Cancel = true;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        // Perform a time consuming operation and report progress.
-            //        System.Threading.Thread.Sleep(100);
-            //        worker.ReportProgress(i);
-            //    }
-            //}
+            if (WordChang)
+            {
+                if (UpdateToServerAndUpload())
+                {
+
+                    Cursor.Current = Cursors.Default;
+                    NewMessage("ดำเนินการเสร็จเรียบร้อย");
+
+                  
+
+                }
+                else
+                {
+
+                    Cursor.Current = Cursors.Default;
+                    NewMessage("ไม่สามารถเชื่ิอมต่อ server ได้");
+                }
+
+
+                
+
+            }
         }
 
         // This event handler updates the progress.
