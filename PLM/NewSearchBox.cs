@@ -20,9 +20,8 @@ namespace PLM
         private ListBox ListSearch;
         private TextBox TxtSearch;
         static string token = ConfigurationSettings.AppSettings["Token"];
-        public static string ShowDialog(string text, string caption)
+        public static string ShowDialog(Form parent, string text, string caption)
         {
-
 
             using (var NewSearchBox = new NewSearchBox(text, caption))
             {
@@ -31,7 +30,7 @@ namespace PLM
                 NewSearchBox.searchtext(text);
                 //NewConfirmBox.Location = new System.Drawing.Point(0, 0);
                 //return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.SearchComboBox.Text : "";
-                return NewSearchBox.ShowDialog() == DialogResult.Yes ? NewSearchBox.TxtSearch.Text : "";
+                return NewSearchBox.ShowDialog(parent) == DialogResult.Yes ? NewSearchBox.TxtSearch.Text : "";
             }
 
            

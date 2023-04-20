@@ -45,9 +45,9 @@
             this.LB_Processing.AutoSize = true;
             this.LB_Processing.Location = new System.Drawing.Point(211, 54);
             this.LB_Processing.Name = "LB_Processing";
-            this.LB_Processing.Size = new System.Drawing.Size(71, 13);
+            this.LB_Processing.Size = new System.Drawing.Size(72, 13);
             this.LB_Processing.TabIndex = 1;
-            this.LB_Processing.Text = "Processing .. ";
+            this.LB_Processing.Text = "กำลังทำงาน .. ";
             this.LB_Processing.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button1
@@ -67,7 +67,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(460, 136);
+            this.ClientSize = new System.Drawing.Size(456, 132);
             this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.LB_Processing);
@@ -79,7 +79,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Running....";
+            this.Text = "บันทึกข้อมูล";
             this.ResumeLayout(false);
             this.PerformLayout();
 

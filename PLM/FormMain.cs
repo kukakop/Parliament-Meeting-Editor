@@ -3661,7 +3661,7 @@ namespace PLM
                     //}
                     //else
                     //{
-                    result_search = NewSearchBox.ShowDialog( textin, "แนะนำรายชื่อ");
+                    result_search = NewSearchBox.ShowDialog(this, textin, "แนะนำรายชื่อ");
 
                         if (result_search != "")
                         {
