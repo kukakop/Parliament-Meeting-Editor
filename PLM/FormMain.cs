@@ -884,14 +884,26 @@ namespace PLM
                 //string sysFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
                 //string sysUIFormat = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
                 TxtRoomSection.Text = room.data[0].council_type.ToString();
-                if (room.data[0].meeting_group.ToString() == "")
+                TxtRoomGroup.Text = "-";
+                if (room.data[0].meeting_group != null)
                 {
-
+                    TxtRoomGroup.Text = (room.data[0].meeting_group.ToString() != "") ? room.data[0].meeting_group.ToString() : "-";
                 }
-                TxtRoomGroup.Text = (room.data[0].meeting_group.ToString() != "") ? room.data[0].meeting_group.ToString() : "-";
-                TxtRoomYear.Text = (room.data[0].meeting_year.ToString() != "") ? room.data[0].meeting_year.ToString() : "-";
-                TxtRoomNo.Text = (room.data[0].meeting_number.ToString() != "") ? room.data[0].meeting_number.ToString() : "-";
-                TxtRoomType.Text = (room.data[0].episode_name.ToString() != "") ? room.data[0].episode_name.ToString() : "-";
+                TxtRoomYear.Text = "-";
+                if (room.data[0].meeting_year != null)
+                {
+                    TxtRoomYear.Text = (room.data[0].meeting_year.ToString() != "") ? room.data[0].meeting_year.ToString() : "-";
+                }
+                TxtRoomNo.Text = "-";
+                if (room.data[0].meeting_number != null)
+                {
+                    TxtRoomNo.Text = (room.data[0].meeting_number.ToString() != "") ? room.data[0].meeting_number.ToString() : "-";
+                }
+                TxtRoomType.Text = "-";
+                if (room.data[0].episode_name != null)
+                {
+                    TxtRoomType.Text = (room.data[0].episode_name.ToString() != "") ? room.data[0].episode_name.ToString() : "-";
+                }
                 //CultureInfo provider = CultureInfo.GetCultureInfo("th-TH");
                 //DateTime date = DateTime.Parse(room.data[0].start_timestamp.ToString(), provider);
                 DateTime meetingDate = Convert.ToDateTime(room.data[0].start_timestamp.ToString(), CultureInfo.CreateSpecificCulture("en-US"));
