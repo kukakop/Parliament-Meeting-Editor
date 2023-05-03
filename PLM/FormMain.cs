@@ -17,6 +17,7 @@ using System.Globalization;
 using RestSharp;
 using MimeTypes;
 using System.ComponentModel;
+using static System.Net.WebRequestMethods;
 
 namespace PLM
 {
@@ -1386,7 +1387,7 @@ namespace PLM
 
             // Use a tab to indent each line of the file.
 
-            RequestSeqInfo(appinfo, ref contentInfoAll);
+            //RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
             //foreach (var contentinfodata in contentInfoAll.data)
             //{
             //    listV = LVPart.Items.Add(contentinfodata.seq.ToString());
@@ -1456,7 +1457,6 @@ namespace PLM
                 myResponse.Close();
 
 
-                RequestContentInfo(appinfo, ref contentInfo);
 
             }
             catch (Exception e)
@@ -2236,7 +2236,7 @@ namespace PLM
                 {
                     WmPlayer.Ctlcontrols.pause();
                     Cursor.Current = Cursors.WaitCursor;
-                    SaveDataBg(appinfo, files);
+                    SaveDataBg("");
                     //SaveData(appinfo, files);
                     if (WordChang)
                     {
@@ -2298,12 +2298,12 @@ namespace PLM
         }
         private void WordSave(APPINFO appinfo, FILE_CONTENT files, string mode)
         {
-            int vMessageVersion;
+            //int vMessageVersion;
 
             try
             {
                 var resultBox = System.Windows.Forms.DialogResult.Yes;
-                vMessageVersion = LastVersion + 1;
+                //vMessageVersion = LastVersion + 1;
                 if (mode == "" || mode == "SAVE")
                 {
                     //resultBox = MessageBox.Show("ต้องการบันทึกฉบับร่าง", "ต้องการบันทึก", MessageBoxButtons.YesNo);
@@ -2318,7 +2318,7 @@ namespace PLM
                 {
                     WmPlayer.Ctlcontrols.pause();
                     Cursor.Current = Cursors.WaitCursor;
-                    SaveDataBg(appinfo, files);
+                    SaveDataBg("");
                     //SaveData(appinfo, files);
                     if (WordChang)
                     {
@@ -2401,7 +2401,7 @@ namespace PLM
 
                     Cursor.Current = Cursors.WaitCursor;
                     //SaveData(appinfo, files);
-                    SaveDataBg(appinfo, files);
+                    SaveDataBg("");
                     if (WordChang)
                     {
                         if (UpdateToServerAndUpload())
@@ -2908,7 +2908,7 @@ namespace PLM
                 RequestVersionInfo(appinfo, ref versioninfo);
                 RequestContentInfo(appinfo, ref contentInfo);
                 RequestFileInfo(appinfo, ref fileinfo);
-                RequestSeqInfo(appinfo, ref contentInfoAll);
+                //RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
 
 
                 switch (appinfo.mode)
@@ -3104,6 +3104,7 @@ namespace PLM
         {
 
             RejectReport();
+            //RejectReportBG();
         }
 
         private void BTsumSave_Click(object sender, EventArgs e)
@@ -3492,15 +3493,18 @@ namespace PLM
             if (resultBox == System.Windows.Forms.DialogResult.Yes)
             {
                 WordDirty = false; //not check change
-                SubmitRejectStatus(appinfo);
+                SaveDataBg("REJECT");
+                //SubmitRejectStatus(appinfo);
+                //RequestContentInfo(appinfo, ref contentInfo);
                 //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
-                NewMessage("ดำเนินการเสร็จเรียบร้อย");
+                //NewMessage("ดำเนินการเสร็จเรียบร้อย");
                 var exit = typeof(System.Windows.Forms.Application).GetMethod("ExitInternal",
                                                                     System.Reflection.BindingFlags.NonPublic |
                                                                     System.Reflection.BindingFlags.Static);
                 exit.Invoke(null, null);
             }
         }
+       
         private void PNWord_Paint(object sender, PaintEventArgs e)
         {
 
@@ -4012,13 +4016,21 @@ namespace PLM
 
             }
         }
-        private void SaveDataBg(APPINFO appinfo, FILE_CONTENT files)
+        private void SaveDataBg(string mode)
         {
             // New BackgroundWorker
             bgWorker = new BackgroundWorker();
             bgWorker.WorkerReportsProgress = true;
             bgWorker.WorkerSupportsCancellation = true;
-            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
+            if (mode == "REJECT")
+            {
+                bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork_Reject);
+            }
+            else
+            {
+                bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
+
+            }
             bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgWorker_RunWorkerCompleted);
             bgWorker.ProgressChanged += new ProgressChangedEventHandler(bgWorker_ProgressChanged);
             // Start the asynchronous operation.
@@ -4037,6 +4049,7 @@ namespace PLM
             progressDlg.ShowDialog();
 
         }
+
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             //BackgroundWorker worker = sender as BackgroundWorker;
@@ -4062,6 +4075,37 @@ namespace PLM
 
 
                 
+
+            }
+        }
+
+        private void bgWorker_DoWork_Reject(object sender, DoWorkEventArgs e)
+        {
+            //BackgroundWorker worker = sender as BackgroundWorker;
+
+            SaveData(appinfo, fileinfo);
+            if (WordChang)
+            {
+                if (UpdateToServerAndUpload())
+                {
+
+                    Cursor.Current = Cursors.Default;
+                    SubmitRejectStatus(appinfo);
+                    NewMessage("ดำเนินการเสร็จเรียบร้อย");
+
+
+
+                }
+                else
+                {
+
+                    Cursor.Current = Cursors.Default;
+                    SubmitRejectStatus(appinfo);
+                    NewMessage("ไม่สามารถเชื่ิอมต่อ server ได้");
+                }
+
+
+
 
             }
         }
