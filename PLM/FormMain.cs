@@ -18,6 +18,7 @@ using RestSharp;
 using MimeTypes;
 using System.ComponentModel;
 using static System.Net.WebRequestMethods;
+using System.Data.SqlTypes;
 
 namespace PLM
 {
@@ -114,6 +115,7 @@ namespace PLM
         string LogActivate = ConfigurationSettings.AppSettings["LogActivate"];
 
         int v_current_bookmark_id = 0;
+        int v_SplashTimer = 1;
 
         public string v_result_search = "";
 
@@ -1644,6 +1646,7 @@ namespace PLM
                 int vRecNo;
                 byte[] data;
                 string step_track = "";
+                int progress = 60;
                 //check version1 is new
                 //if ((files.data.current_process == "1" && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
 
@@ -1651,6 +1654,11 @@ namespace PLM
                 {
                     append_log("New file");
 
+                    progress += 1;
+                    if (progress < 70)
+                    {
+                        startForm.Progress(progress);
+                    }
                     fileName = WorkPath + Appname + "Template.docx";
                     // Create a new Document, by calling the Add function in the Documents collection
                     Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
@@ -1680,6 +1688,11 @@ namespace PLM
                         oStart = oEnd;
                     }
 
+                    progress += 1;
+                    if (progress < 70)
+                    {
+                        startForm.Progress(progress);
+                    }
                     ////LastVersion++;
                     ///
                     files.data.version = LastVersion;
@@ -1687,6 +1700,13 @@ namespace PLM
                     WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
                     aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
                     append_log("path:" + WorkPath + WordFileName);
+
+                    progress += 1;
+                    if (progress < 70)
+                    {
+                        startForm.Progress(progress);
+                    }
+
                     while (System.IO.File.Exists(WorkPath + WordFileName) == false)
                     {
                         //wait file save completed
@@ -1707,6 +1727,11 @@ namespace PLM
 
 
 
+                    progress += 1;
+                    if (progress < 70)
+                    {
+                        startForm.Progress(progress);
+                    }
                     WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                 }
                 else
@@ -1714,6 +1739,11 @@ namespace PLM
 
                     append_log("Download file");
 
+                    progress += 1;
+                    if (progress < 70)
+                    {
+                        startForm.Progress(progress);
+                    }
                     try
                     {
 
@@ -1737,6 +1767,11 @@ namespace PLM
                         var response = client.Execute(request);
 
 
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
                         append_log("StatusCode:" + response.StatusCode);
 
                         //var response = await client.ExecuteAsync(request);
@@ -1762,6 +1797,11 @@ namespace PLM
                         }
 
 
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
                         append_log("Download to : " + WorkPath + WordFileName);
                         //byte[] fileForDownload = client.DownloadData(request);
                         byte[] fileForDownload = response.RawBytes;
@@ -1769,6 +1809,11 @@ namespace PLM
                         append_log("Write complete");
 
 
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
                         fileName = WorkPath + WordFileName;
 
                         while (System.IO.File.Exists(fileName.ToString()) == false)
@@ -1780,6 +1825,11 @@ namespace PLM
                         append_log("Save to  : " + WorkPath + WordFileName);
                         aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
 
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
                         Thread thread = new Thread(() =>
                         {
 
@@ -1796,6 +1846,11 @@ namespace PLM
                         thread3.Start();
                         thread3.Join();
 
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
                         WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
 
                     }
@@ -2469,9 +2524,11 @@ namespace PLM
             int oEnd;
             int vRecNo;
             byte[] data;
+            int progress = 50;
             try
             {
 
+                startForm.Progress(51);
                 StripProgress.Visible = true;
                 // Set Minimum to 1 to represent the first file being copied.
                 StripProgress.Minimum = 1;
@@ -2497,6 +2554,11 @@ namespace PLM
                     //RequestAllInfo(appinfo, ref roomall);
                     foreach (var seqInfo in contentInfoAll.data)
                     {
+                        progress += 1;
+                        if(progress < 60)
+                        {
+                            startForm.Progress(progress);
+                        }
                         //½StripProgress.PerformStep();
                         StripProgressStatus.Text = "Download File...";
                         if (seqInfo.function < 3)
@@ -2616,6 +2678,11 @@ namespace PLM
 
 
 
+                        progress += 1;
+                        if (progress < 60)
+                        {
+                            startForm.Progress(progress);
+                        }
                         OriginalFile = file;
                         //WordApp.Selection.InsertFile(OriginalFile)
                         WordApp.Selection.InsertFile(OriginalFile
@@ -2661,6 +2728,11 @@ namespace PLM
                 {
                     try
                     {
+                        progress += 1;
+                        if (progress < 60)
+                        {
+                            startForm.Progress(progress);
+                        }
                         //if (fileinfo.data.current_process == "3")
                         if (fileinfo.data.current_process == 3)
                         {
@@ -2806,6 +2878,7 @@ namespace PLM
         
         private void FormMain_Load(object sender, EventArgs e)
         {
+            //SplashTimer.Start();
             this.Hide();
             startForm.Show();
             //tSplashScreen = new Thread(new ThreadStart(StartForm));
@@ -2904,57 +2977,84 @@ namespace PLM
                 }
 
                 Delete_file_all();
+                startForm.Progress(10);
 
                 RequestVersionInfo(appinfo, ref versioninfo);
+                startForm.Progress(20);
                 RequestContentInfo(appinfo, ref contentInfo);
+                startForm.Progress(30);
                 RequestFileInfo(appinfo, ref fileinfo);
-                //RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
+                startForm.Progress(40);
+                RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
+                startForm.Progress(50);
 
 
                 switch (appinfo.mode)
                 {
                     case "edit":
 
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
+                        startForm.Progress(70);
                         OpenMedia(appinfo, fileinfo);
                         UpdateMeetingStatus(1);
+                        startForm.Progress(80);
                         UpdateReportStatus();
+                        startForm.Progress(90);
                         break;
                     case "new":
 
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
+                        startForm.Progress(70);
                         OpenMedia(appinfo, fileinfo);
                         UpdateMeetingStatus(1);
+                        startForm.Progress(80);
                         UpdateReportStatus();
+                        startForm.Progress(90);
                         break;
                     case "mergeNew":
                         MergeToNewWordFile();
                         UpdateReportStatus();
+                        startForm.Progress(70);
                         break;
                     case "merge":
                         MergeToNewWordFile();
                         UpdateReportStatus();
+                        startForm.Progress(70);
                         break;
                     case "view":
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
                         if (fileinfo.data.seq > 0)
                         {
                             OpenMedia(appinfo, fileinfo);
                         }
+                        startForm.Progress(60);
                         break;
                     case "audit":
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
+                        startForm.Progress(70);
                         OpenMedia(appinfo, fileinfo);
                         UpdateReportStatus();
+                        startForm.Progress(80);
                         break;
                     case "sum":
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
+                        startForm.Progress(70);
                         OpenMedia(appinfo, fileinfo);
+                        startForm.Progress(80);
                         break;
                     case "proof":
+                        startForm.Progress(60);
                         OpenWord(appinfo, fileinfo);
+                        startForm.Progress(70);
                         OpenMedia(appinfo, fileinfo);
+                        startForm.Progress(80);
                         UpdateReportStatus();
+                        startForm.Progress(90);
                         break;
                     case "admin":
                         break;
@@ -2964,6 +3064,8 @@ namespace PLM
                 this.Activate();
                 CTN.Panel1.Focus();
                 //WmPlayerTimer.Start();
+
+                startForm.Progress(90);
 
                 this.Text = Apptitle + "-" + room.data[0].meeting_title;
                 switch (appinfo.mode)
@@ -3000,6 +3102,7 @@ namespace PLM
 
                 }
 
+                startForm.Progress(100);
                 //if (GetActiveWindowsTitle().Contains("Partii") == true)
                 //if (GetActiveWindowsTitle().Contains(Appname) == true)
                 //{
@@ -4214,8 +4317,6 @@ namespace PLM
             }
         }
 
-       
-        
-
+  
     }
 }
