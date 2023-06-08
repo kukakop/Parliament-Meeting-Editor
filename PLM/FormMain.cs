@@ -323,18 +323,18 @@ namespace PLM
                     switch (Key)
                     {
 
-                        case Keys.F1:  // Play 0.5
-                            WmplayerPlay05();
-                            break;
-                        case Keys.F2: // Play 1
-                            WmplayerPlay10();
-                            break;
-                        case Keys.F3:  // Play 2
-                            WmplayerPlay20();
-                            break;
-                        case Keys.F4: //play 4
-                            WmplayerPlay40();
-                            break;
+                        //case Keys.F1:  // Play 0.5
+                        //    WmplayerPlay05();
+                        //    break;
+                        //case Keys.F2: // Play 1
+                        //    WmplayerPlay10();
+                        //    break;
+                        //case Keys.F3:  // Play 2
+                        //    WmplayerPlay20();
+                        //    break;
+                        //case Keys.F4: //play 4
+                        //    WmplayerPlay40();
+                        //    break;
                         case Keys.F5:  // inc volume
 
                             //TestSearchText();

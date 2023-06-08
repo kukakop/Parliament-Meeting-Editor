@@ -32,6 +32,8 @@
             this.ScreenShot = new System.Windows.Forms.PictureBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.PG_Panel_Run = new System.Windows.Forms.Panel();
+            this.PG_Panel_Back = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,6 +58,7 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 4;
             this.progressBar1.Visible = false;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // label1
             // 
@@ -70,16 +73,32 @@
             this.label1.Text = "กำลังเปิดโปรแกรม";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // PG_Panel_Run
+            // 
+            this.PG_Panel_Run.BackColor = System.Drawing.Color.SpringGreen;
+            this.PG_Panel_Run.Location = new System.Drawing.Point(0, 432);
+            this.PG_Panel_Run.Name = "PG_Panel_Run";
+            this.PG_Panel_Run.Size = new System.Drawing.Size(23, 18);
+            this.PG_Panel_Run.TabIndex = 6;
+            // 
+            // PG_Panel_Back
+            // 
+            this.PG_Panel_Back.Location = new System.Drawing.Point(-26, 432);
+            this.PG_Panel_Back.Name = "PG_Panel_Back";
+            this.PG_Panel_Back.Size = new System.Drawing.Size(826, 18);
+            this.PG_Panel_Back.TabIndex = 7;
+            // 
             // SplashScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.PG_Panel_Run);
+            this.Controls.Add(this.PG_Panel_Back);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ScreenShot);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SplashScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreen";
@@ -95,5 +114,7 @@
         private System.Windows.Forms.PictureBox ScreenShot;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel PG_Panel_Run;
+        private System.Windows.Forms.Panel PG_Panel_Back;
     }
 }
