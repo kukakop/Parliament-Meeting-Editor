@@ -187,12 +187,12 @@ namespace PLM
             // 
             this.TxtRoomTime.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomTime.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomTime.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomTime.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomTime.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomTime.Location = new System.Drawing.Point(117, 19);
+            this.TxtRoomTime.Location = new System.Drawing.Point(137, 21);
             this.TxtRoomTime.Name = "TxtRoomTime";
             this.TxtRoomTime.ReadOnly = true;
-            this.TxtRoomTime.Size = new System.Drawing.Size(194, 20);
+            this.TxtRoomTime.Size = new System.Drawing.Size(133, 24);
             this.TxtRoomTime.TabIndex = 23;
             this.TxtRoomTime.TabStop = false;
             this.TxtRoomTime.Text = "Room.Time";
@@ -201,12 +201,12 @@ namespace PLM
             // 
             this.TxtRoomVersion.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomVersion.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtRoomVersion.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomVersion.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomVersion.Location = new System.Drawing.Point(1061, 20);
+            this.TxtRoomVersion.Location = new System.Drawing.Point(1066, 20);
             this.TxtRoomVersion.Name = "TxtRoomVersion";
             this.TxtRoomVersion.ReadOnly = true;
-            this.TxtRoomVersion.Size = new System.Drawing.Size(198, 20);
+            this.TxtRoomVersion.Size = new System.Drawing.Size(198, 24);
             this.TxtRoomVersion.TabIndex = 39;
             this.TxtRoomVersion.TabStop = false;
             this.TxtRoomVersion.Text = "Room.Version";
@@ -214,22 +214,22 @@ namespace PLM
             // LbTop
             // 
             this.LbTop.AutoSize = true;
-            this.LbTop.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LbTop.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LbTop.ForeColor = System.Drawing.Color.White;
-            this.LbTop.Location = new System.Drawing.Point(5, 0);
+            this.LbTop.Location = new System.Drawing.Point(3, 0);
             this.LbTop.Name = "LbTop";
-            this.LbTop.Size = new System.Drawing.Size(111, 20);
+            this.LbTop.Size = new System.Drawing.Size(134, 25);
             this.LbTop.TabIndex = 20;
             this.LbTop.Text = "ประเภทการประชุม :";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label8.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(998, 20);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(57, 20);
+            this.label8.Size = new System.Drawing.Size(68, 25);
             this.label8.TabIndex = 38;
             this.label8.Text = "เวอร์ชั่น :";
             // 
@@ -237,12 +237,12 @@ namespace PLM
             // 
             this.TxtRoomSection.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomSection.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomSection.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtRoomSection.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomSection.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomSection.Location = new System.Drawing.Point(116, 0);
+            this.TxtRoomSection.Location = new System.Drawing.Point(137, 0);
             this.TxtRoomSection.Name = "TxtRoomSection";
             this.TxtRoomSection.ReadOnly = true;
-            this.TxtRoomSection.Size = new System.Drawing.Size(195, 20);
+            this.TxtRoomSection.Size = new System.Drawing.Size(164, 24);
             this.TxtRoomSection.TabIndex = 21;
             this.TxtRoomSection.TabStop = false;
             this.TxtRoomSection.Text = "Room.Section";
@@ -251,12 +251,12 @@ namespace PLM
             // 
             this.TxtRoomType.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomType.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomType.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtRoomType.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomType.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomType.Location = new System.Drawing.Point(1061, 0);
+            this.TxtRoomType.Location = new System.Drawing.Point(1065, 0);
             this.TxtRoomType.Name = "TxtRoomType";
             this.TxtRoomType.ReadOnly = true;
-            this.TxtRoomType.Size = new System.Drawing.Size(179, 20);
+            this.TxtRoomType.Size = new System.Drawing.Size(196, 24);
             this.TxtRoomType.TabIndex = 37;
             this.TxtRoomType.TabStop = false;
             this.TxtRoomType.Text = "Room.Type";
@@ -264,33 +264,33 @@ namespace PLM
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(78, 20);
+            this.label1.Location = new System.Drawing.Point(91, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 20);
+            this.label1.Size = new System.Drawing.Size(47, 25);
             this.label1.TabIndex = 22;
             this.label1.Text = "วันที่ :";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label9.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(1016, 0);
+            this.label9.Location = new System.Drawing.Point(1017, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(39, 20);
+            this.label9.Size = new System.Drawing.Size(49, 25);
             this.label9.TabIndex = 36;
             this.label9.Text = "สมัย :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label3.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(318, 0);
+            this.label3.Location = new System.Drawing.Point(317, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 20);
+            this.label3.Size = new System.Drawing.Size(48, 25);
             this.label3.TabIndex = 24;
             this.label3.Text = "ชุดที่ :";
             // 
@@ -298,12 +298,12 @@ namespace PLM
             // 
             this.TxtRoomStatus.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomStatus.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomStatus.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomStatus.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomStatus.Location = new System.Drawing.Point(817, 19);
+            this.TxtRoomStatus.Location = new System.Drawing.Point(798, 19);
             this.TxtRoomStatus.Name = "TxtRoomStatus";
             this.TxtRoomStatus.ReadOnly = true;
-            this.TxtRoomStatus.Size = new System.Drawing.Size(207, 20);
+            this.TxtRoomStatus.Size = new System.Drawing.Size(207, 24);
             this.TxtRoomStatus.TabIndex = 35;
             this.TxtRoomStatus.TabStop = false;
             this.TxtRoomStatus.Text = "Room.Status";
@@ -312,12 +312,12 @@ namespace PLM
             // 
             this.TxtRoomGroup.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomGroup.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomGroup.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomGroup.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomGroup.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomGroup.Location = new System.Drawing.Point(360, 0);
+            this.TxtRoomGroup.Location = new System.Drawing.Point(367, 0);
             this.TxtRoomGroup.Name = "TxtRoomGroup";
             this.TxtRoomGroup.ReadOnly = true;
-            this.TxtRoomGroup.Size = new System.Drawing.Size(145, 20);
+            this.TxtRoomGroup.Size = new System.Drawing.Size(158, 24);
             this.TxtRoomGroup.TabIndex = 25;
             this.TxtRoomGroup.TabStop = false;
             this.TxtRoomGroup.Text = "Room.Group";
@@ -325,22 +325,22 @@ namespace PLM
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label6.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(769, 19);
+            this.label6.Location = new System.Drawing.Point(735, 19);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 20);
+            this.label6.Size = new System.Drawing.Size(61, 25);
             this.label6.TabIndex = 34;
             this.label6.Text = "สถานะ :";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label2.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(312, 19);
+            this.label2.Location = new System.Drawing.Point(307, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 20);
+            this.label2.Size = new System.Drawing.Size(58, 25);
             this.label2.TabIndex = 26;
             this.label2.Text = "ตอนที่ :";
             // 
@@ -348,12 +348,12 @@ namespace PLM
             // 
             this.TxtRoomNo.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomNo.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomNo.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomNo.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomNo.Location = new System.Drawing.Point(817, 0);
+            this.TxtRoomNo.Location = new System.Drawing.Point(798, 0);
             this.TxtRoomNo.Name = "TxtRoomNo";
             this.TxtRoomNo.ReadOnly = true;
-            this.TxtRoomNo.Size = new System.Drawing.Size(207, 20);
+            this.TxtRoomNo.Size = new System.Drawing.Size(207, 24);
             this.TxtRoomNo.TabIndex = 33;
             this.TxtRoomNo.TabStop = false;
             this.TxtRoomNo.Text = "Room.No";
@@ -362,12 +362,12 @@ namespace PLM
             // 
             this.TxtRoomPart.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomPart.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomPart.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomPart.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomPart.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomPart.Location = new System.Drawing.Point(360, 19);
+            this.TxtRoomPart.Location = new System.Drawing.Point(367, 19);
             this.TxtRoomPart.Name = "TxtRoomPart";
             this.TxtRoomPart.ReadOnly = true;
-            this.TxtRoomPart.Size = new System.Drawing.Size(145, 20);
+            this.TxtRoomPart.Size = new System.Drawing.Size(145, 24);
             this.TxtRoomPart.TabIndex = 27;
             this.TxtRoomPart.TabStop = false;
             this.TxtRoomPart.Text = "Room.Part";
@@ -375,22 +375,22 @@ namespace PLM
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label7.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(772, 0);
+            this.label7.Location = new System.Drawing.Point(740, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 20);
+            this.label7.Size = new System.Drawing.Size(56, 25);
             this.label7.TabIndex = 32;
             this.label7.Text = "ครั้งที่ :";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label5.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(540, 0);
+            this.label5.Location = new System.Drawing.Point(541, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 20);
+            this.label5.Size = new System.Drawing.Size(39, 25);
             this.label5.TabIndex = 28;
             this.label5.Text = "ปีที่ :";
             // 
@@ -398,12 +398,12 @@ namespace PLM
             // 
             this.TxtRoomPeriod.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomPeriod.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomPeriod.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomPeriod.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomPeriod.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomPeriod.Location = new System.Drawing.Point(571, 19);
+            this.TxtRoomPeriod.Location = new System.Drawing.Point(579, 19);
             this.TxtRoomPeriod.Name = "TxtRoomPeriod";
             this.TxtRoomPeriod.ReadOnly = true;
-            this.TxtRoomPeriod.Size = new System.Drawing.Size(247, 20);
+            this.TxtRoomPeriod.Size = new System.Drawing.Size(247, 24);
             this.TxtRoomPeriod.TabIndex = 31;
             this.TxtRoomPeriod.TabStop = false;
             this.TxtRoomPeriod.Text = "Room.Period";
@@ -412,12 +412,12 @@ namespace PLM
             // 
             this.TxtRoomYear.BackColor = System.Drawing.Color.Brown;
             this.TxtRoomYear.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtRoomYear.Font = new System.Drawing.Font("Kanit", 9.75F);
+            this.TxtRoomYear.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtRoomYear.ForeColor = System.Drawing.Color.White;
-            this.TxtRoomYear.Location = new System.Drawing.Point(571, 0);
+            this.TxtRoomYear.Location = new System.Drawing.Point(579, 0);
             this.TxtRoomYear.Name = "TxtRoomYear";
             this.TxtRoomYear.ReadOnly = true;
-            this.TxtRoomYear.Size = new System.Drawing.Size(247, 20);
+            this.TxtRoomYear.Size = new System.Drawing.Size(247, 24);
             this.TxtRoomYear.TabIndex = 29;
             this.TxtRoomYear.TabStop = false;
             this.TxtRoomYear.Text = "Room.Year";
@@ -425,11 +425,11 @@ namespace PLM
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label4.Font = new System.Drawing.Font("Kanit", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(531, 19);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 20);
+            this.label4.Size = new System.Drawing.Size(49, 25);
             this.label4.TabIndex = 30;
             this.label4.Text = "เวลา :";
             // 
@@ -736,7 +736,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 666;
+            this.SplitCtnWord.SplitterDistance = 667;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.TabStop = false;
@@ -749,7 +749,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 666);
+            this.PNWord.Size = new System.Drawing.Size(982, 667);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
