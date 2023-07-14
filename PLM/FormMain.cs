@@ -909,8 +909,12 @@ namespace PLM
                 }
                 //CultureInfo provider = CultureInfo.GetCultureInfo("th-TH");
                 //DateTime date = DateTime.Parse(room.data[0].start_timestamp.ToString(), provider);
-                DateTime meetingDate = Convert.ToDateTime(room.data[0].start_timestamp.ToString(), CultureInfo.CreateSpecificCulture("en-US"));
-                TxtRoomTime.Text = meetingDate.ToString("D", CultureInfo.CreateSpecificCulture("th-TH"));
+                if (room.data[0].start_timestamp.ToString() != null)
+                {
+                    DateTime meetingDate = Convert.ToDateTime(room.data[0].start_timestamp.ToString(), CultureInfo.CreateSpecificCulture("en-US"));
+                    TxtRoomTime.Text = meetingDate.ToString("D", CultureInfo.CreateSpecificCulture("th-TH"));
+
+                }
                 //TxtRoomTime.Text = meetingDate.ToString("g");
                 //TxtRoomPart.Text = appinfo.seq.ToString();
                 TxtRoomStatus.Text = room.data[0].meeting_status_desc.ToString();
@@ -1068,7 +1072,11 @@ namespace PLM
                 //TxtRoomVersion.Text = contentInfo.data[0].version.ToString();
                 //TxtRoomVersion.Text = contentInfo.data[0].version_desc.ToString();
                 //TxtRoomPeriod.Text = contentInfo.data[0].start_time + "-" + contentInfo.data[0].end_time;
-                TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
+                if (contentInfo.data[0].start_time.ToString() != null)
+                {
+                    TxtRoomPeriod.Text = (contentInfo.data[0].start_time.ToString() != "") ? Convert.ToDateTime(contentInfo.data[0].start_time).ToString("HH:mm") + "-" + Convert.ToDateTime(contentInfo.data[0].end_time).ToString("HH:mm") : "-";
+
+                }
                 TxtRoomPart.Text = contentInfo.data[0].seq_desc;
                 //obj = contentInfo;
                 //CBVersion.Text = contentInfo.data[0].version.ToString();
@@ -2885,17 +2893,17 @@ namespace PLM
             //tSplashScreen.Start();
 
             string[] args = Environment.GetCommandLineArgs();
-            //default
-            //MessageBox.Show(args[0]+","+ args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
-            foreach (var proc in Process.GetProcessesByName("WINWORD"))
-            {
-                if (proc.MainWindowTitle == "")
-                {
-                    proc.Kill();
-                }
-            }
+            ////Change sequence
+            //foreach (var proc in Process.GetProcessesByName("WINWORD"))
+            //{
+            //    if (proc.MainWindowTitle == "")
+            //    {
+            //        proc.Kill();
+            //    }
+            //}
 
-            WordApp = new Microsoft.Office.Interop.Word.Application();
+            //WordApp = new Microsoft.Office.Interop.Word.Application();
+            ////end Change sequence
             foreach (Process proc in Process.GetProcessesByName(Appname))
             {
                 proc_cnt++;
@@ -2910,7 +2918,16 @@ namespace PLM
             }
             else
             {
-
+                //Change sequence
+                foreach (var proc in Process.GetProcessesByName("WINWORD"))
+                {
+                    if (proc.MainWindowTitle == "")
+                    {
+                        proc.Kill();
+                    }
+                }
+                WordApp = new Microsoft.Office.Interop.Word.Application();
+                //end Change sequence
                 ControllInitial();
                 if (args.Length > 1)
                 {
