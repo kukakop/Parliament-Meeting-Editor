@@ -2919,13 +2919,13 @@ namespace PLM
             else
             {
                 //Change sequence
-                foreach (var proc in Process.GetProcessesByName("WINWORD"))
-                {
-                    if (proc.MainWindowTitle == "")
-                    {
-                        proc.Kill();
-                    }
-                }
+                //foreach (var proc in Process.GetProcessesByName("WINWORD"))
+                //{
+                //    if (proc.MainWindowTitle == "")
+                //    {
+                //        proc.Kill();
+                //    }
+                //}
                 WordApp = new Microsoft.Office.Interop.Word.Application();
                 //end Change sequence
                 ControllInitial();
