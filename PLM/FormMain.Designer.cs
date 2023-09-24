@@ -84,6 +84,7 @@ namespace PLM
             this.GrpEdit = new System.Windows.Forms.GroupBox();
             this.TxtLog = new System.Windows.Forms.TextBox();
             this.WmPlayerTimer = new System.Windows.Forms.Timer(this.components);
+            this.AutoSaveTime = new System.Windows.Forms.Timer(this.components);
             this.BTPlayTime = new PLM.RJControls.RJButton();
             this.BT40X = new PLM.RJControls.RJButton();
             this.BT20X = new PLM.RJControls.RJButton();
@@ -736,7 +737,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 667;
+            this.SplitCtnWord.SplitterDistance = 668;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.TabStop = false;
@@ -749,7 +750,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 667);
+            this.PNWord.Size = new System.Drawing.Size(982, 668);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
@@ -832,6 +833,11 @@ namespace PLM
             // WmPlayerTimer
             // 
             this.WmPlayerTimer.Tick += new System.EventHandler(this.WmPlayerTimer_Tick);
+            // 
+            // AutoSaveTime
+            // 
+            this.AutoSaveTime.Interval = 10000;
+            this.AutoSaveTime.Tick += new System.EventHandler(this.AutoSaveTime_Tick);
             // 
             // BTPlayTime
             // 
@@ -1207,5 +1213,6 @@ namespace PLM
         private TextBox TxtLog;
         private RJControls.RJButton BTPlayTime;
         private TextBox TxtPlayTime;
+        private Timer AutoSaveTime;
     }
 }

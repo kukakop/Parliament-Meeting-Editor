@@ -37,3 +37,6 @@ C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug
 C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.csproj.CopyComplete
 C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.exe
 C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.pdb
+C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.NewSearchBox.resources
+C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.SearchBox.resources
+C:\Users\kuka2\OneDrive\Documents\GitHub\Parliament-Meeting-Editor\PLM\obj\Debug\PLM.ProgressForm.resources
