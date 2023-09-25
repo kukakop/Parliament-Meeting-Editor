@@ -80,6 +80,7 @@ namespace PLM
         bool WordActive = true;
         string v_bookmark;
 
+        string LogFileName;
         string WordFileName;
         //string WordPath;
         string WordFileNameNew;
@@ -175,8 +176,10 @@ namespace PLM
             //this.KeyDown += new KeyEventHandler(Kh_KeyDownNew);
             this.Activate();
             InitializeComponent();
+            AutoSaveTime.Enabled = false;
             this.DoubleBuffered = true;
             this.TxtRewTime.Text = "3";
+            LogFileName = DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt";
         }
 
         //start  key  
@@ -1125,7 +1128,8 @@ namespace PLM
 
 
                     string json = "{";
-                    json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\"}";
+                    json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\"},";
+                    json += "\"size\": 1000";
                     json += "}";
 
                     streamWriter.Write(json);
@@ -1228,7 +1232,8 @@ namespace PLM
                 {
 
                     string json = "{";
-                    json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\"";
+                    json += "\"query\":{\"meeting_id\":\"" + appinfo.meeting_id + "\"},";
+                    json += "\"size\": 1000";
                     json += "}";
 
                     streamWriter.Write(json);
@@ -1797,6 +1802,7 @@ namespace PLM
                         body += "\"version\":" + files.data.version;
                         body += "}";
                         request.AddParameter("application/json", body, ParameterType.RequestBody);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "request:" + client.BuildUri(request));
                         var response = client.Execute(request);
 
 
@@ -1805,7 +1811,7 @@ namespace PLM
                         {
                             startForm.Progress(progress);
                         }
-                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Download " + response.StatusCode);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "response: " + response.StatusCode);
 
                         //var response = await client.ExecuteAsync(request);
                         if (response.StatusCode != HttpStatusCode.OK)
@@ -1926,7 +1932,7 @@ namespace PLM
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
                 MoveWindow(WordWND, 0, 0, PNWord.Width, PNWord.Height, true);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "SetParent");
-                AutoSaveTime.Enabled = true;
+               // AutoSaveTime.Enabled = true;
 
             }
             catch (Exception e)
@@ -2144,6 +2150,7 @@ namespace PLM
                 }
                 request.AddParameter("process", contentInfo.data[0].process.ToString());
                 request.AddParameter("version", contentInfo.data[0].version.ToString());
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "request:" + client.BuildUri(request));
                 var response = client.Execute(request);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "response:" + response.Content);
                 //Console.WriteLine(response.Content);
@@ -2226,6 +2233,7 @@ namespace PLM
                 }
                 request.AddParameter("process", contentInfo.data[0].process.ToString());
                 request.AddParameter("transcription", v_transcription);
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "request:" + client.BuildUri(request));
                 var response = client.Execute(request);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "response:" + response.Content);
 
@@ -2439,6 +2447,7 @@ namespace PLM
                 {
                     WmPlayer.Ctlcontrols.pause();
                     Cursor.Current = Cursors.WaitCursor;
+                    SaveDataTemp();
                     SaveDataBg("");
                     //SaveData(appinfo, files);
                     if (WordChang)
@@ -2600,7 +2609,7 @@ namespace PLM
             try
             {
 
-                startForm.Progress(51);
+                startForm.Progress(progress);
                 StripProgress.Visible = true;
                 // Set Minimum to 1 to represent the first file being copied.
                 StripProgress.Minimum = 1;
@@ -2628,7 +2637,7 @@ namespace PLM
                     foreach (var seqInfo in contentInfoAll.data)
                     {
                         progress += 1;
-                        if(progress < 60)
+                        if(progress < 95)
                         {
                             startForm.Progress(progress);
                         }
@@ -2668,7 +2677,9 @@ namespace PLM
                                 body += "\"version\":" + seqInfo.version;
                                 body += "}";
                                 request.AddParameter("application/json", body, ParameterType.RequestBody);
+                                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "request:" + client.BuildUri(request));
                                 var response = client.Execute(request);
+                                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "response:" + response.Content);
 
                                 WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000") + ".docx";
                                 WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + seqInfo.seq.ToString("00000");
@@ -2757,7 +2768,7 @@ namespace PLM
                         append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Merge File " + file);
 
                         progress += 1;
-                        if (progress < 60)
+                        if (progress < 95)
                         {
                             startForm.Progress(progress);
                         }
@@ -2808,7 +2819,7 @@ namespace PLM
                     try
                     {
                         progress += 1;
-                        if (progress < 60)
+                        if (progress < 95)
                         {
                             startForm.Progress(progress);
                         }
@@ -2835,7 +2846,7 @@ namespace PLM
 
                 }
 
-                AutoSaveTime.Enabled = true;
+                //AutoSaveTime.Enabled = true;
             }
             catch (Exception e)
             {
@@ -3156,12 +3167,12 @@ namespace PLM
                     case "mergeNew":
                         MergeToNewWordFile();
                         UpdateReportStatus();
-                        startForm.Progress(70);
+                        startForm.Progress(90);
                         break;
                     case "merge":
                         MergeToNewWordFile();
                         UpdateReportStatus();
-                        startForm.Progress(70);
+                        startForm.Progress(90);
                         break;
                     case "view":
                         startForm.Progress(60);
@@ -3205,7 +3216,7 @@ namespace PLM
                 CTN.Panel1.Focus();
                 //WmPlayerTimer.Start();
 
-                startForm.Progress(90);
+                startForm.Progress(95);
 
                 this.Text = Apptitle + "-" + room.data[0].meeting_title;
                 switch (appinfo.mode)
@@ -4255,8 +4266,7 @@ namespace PLM
             System.IO.Directory.CreateDirectory(WorkPath + @"/log");
             if (LogActivate == "Y")
             {
-                System.IO.File.AppendAllText(WorkPath + "\\log\\" + DateTime.Now.ToLongDateString()  + ".txt", TextLog);
-
+                System.IO.File.AppendAllText(WorkPath + "\\log\\" + LogFileName, TextLog);
             }
             TextLog = "";
 
@@ -4269,8 +4279,7 @@ namespace PLM
                 System.IO.Directory.CreateDirectory(WorkPath + @"/log");
                 if (LogActivate == "Y")
                 {
-                    System.IO.File.WriteAllText(WorkPath + "\\log\\" + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt", TxtLog.Text);
-
+                    System.IO.File.AppendAllText(WorkPath + "\\log\\" + LogFileName, TxtLog.Text);
                 }
                 TxtLog.Text = "";
 
@@ -4284,6 +4293,7 @@ namespace PLM
         private void SaveDataBg(string mode)
         {
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name );
+            SaveDataTemp();
             // New BackgroundWorker
             bgWorker = new BackgroundWorker();
             bgWorker.WorkerReportsProgress = true;
