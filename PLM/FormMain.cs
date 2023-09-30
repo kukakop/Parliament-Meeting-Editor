@@ -19,6 +19,7 @@ using MimeTypes;
 using System.ComponentModel;
 using static System.Net.WebRequestMethods;
 using System.Data.SqlTypes;
+using System.Windows.Forms.VisualStyles;
 
 namespace PLM
 {
@@ -1932,7 +1933,7 @@ namespace PLM
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
                 MoveWindow(WordWND, 0, 0, PNWord.Width, PNWord.Height, true);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "SetParent");
-               // AutoSaveTime.Enabled = true;
+                AutoSaveTime.Enabled = true;
 
             }
             catch (Exception e)
@@ -3696,6 +3697,8 @@ namespace PLM
             GrpEdit.Location = new System.Drawing.Point((SplitCtnWord.Panel2.Width / 2) - (GrpEdit.Width / 2), GrpEdit.Location.Y);
             GrpAudit.Location = new System.Drawing.Point((SplitCtnWord.Panel2.Width / 2) - (GrpAudit.Width / 2), GrpAudit.Location.Y);
             GrpSum.Location = new System.Drawing.Point((SplitCtnWord.Panel2.Width / 2) - (GrpSum.Width / 2), GrpSum.Location.Y);
+            //Chk_AutoSave.Location = new System.Drawing.Point(SplitCtnWord.Panel2.Width - Chk_AutoSave.Width , Chk_AutoSave.Location.Y);
+            GrpAutoSave.Location = new System.Drawing.Point(SplitCtnWord.Panel2.Width - GrpAutoSave.Width, GrpAutoSave.Location.Y);
         }
 
         private void SplitWM_Resize(object sender, EventArgs e)
@@ -4493,7 +4496,25 @@ namespace PLM
 
         private void AutoSaveTime_Tick(object sender, EventArgs e)
         {
-            SaveDataTemp();
+            if (Chk_AutoSave.Checked)
+            {
+                SaveDataTemp();
+            }
+            
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            int parsedValue;
+            if (!int.TryParse(TxtAutoSaveTime.Text, out parsedValue))
+            {
+
+                MessageBox.Show("This is a number only field");
+            }
+            else
+            {
+                AutoSaveTime.Interval = 60000 * int.Parse(TxtAutoSaveTime.Text);
+            }
         }
     }
 }

@@ -75,6 +75,10 @@ namespace PLM
             this.LVPart = new System.Windows.Forms.ListView();
             this.SplitCtnWord = new System.Windows.Forms.SplitContainer();
             this.PNWord = new System.Windows.Forms.Panel();
+            this.GrpAutoSave = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.TxtAutoSaveTime = new System.Windows.Forms.TextBox();
+            this.Chk_AutoSave = new System.Windows.Forms.CheckBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.StripProgressStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -133,6 +137,7 @@ namespace PLM
             this.SplitCtnWord.Panel1.SuspendLayout();
             this.SplitCtnWord.Panel2.SuspendLayout();
             this.SplitCtnWord.SuspendLayout();
+            this.GrpAutoSave.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.GrpSum.SuspendLayout();
             this.GrpAudit.SuspendLayout();
@@ -732,12 +737,13 @@ namespace PLM
             // 
             // SplitCtnWord.Panel2
             // 
+            this.SplitCtnWord.Panel2.Controls.Add(this.GrpAutoSave);
             this.SplitCtnWord.Panel2.Controls.Add(this.StatusStrip);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpSum);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 708);
-            this.SplitCtnWord.SplitterDistance = 668;
+            this.SplitCtnWord.SplitterDistance = 670;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.TabStop = false;
@@ -750,11 +756,57 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 668);
+            this.PNWord.Size = new System.Drawing.Size(982, 670);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
             this.PNWord.Resize += new System.EventHandler(this.PNWord_Resize);
+            // 
+            // GrpAutoSave
+            // 
+            this.GrpAutoSave.BackColor = System.Drawing.SystemColors.Control;
+            this.GrpAutoSave.Controls.Add(this.label15);
+            this.GrpAutoSave.Controls.Add(this.TxtAutoSaveTime);
+            this.GrpAutoSave.Controls.Add(this.Chk_AutoSave);
+            this.GrpAutoSave.Location = new System.Drawing.Point(864, -5);
+            this.GrpAutoSave.Name = "GrpAutoSave";
+            this.GrpAutoSave.Size = new System.Drawing.Size(126, 36);
+            this.GrpAutoSave.TabIndex = 20;
+            this.GrpAutoSave.TabStop = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Kanit", 8.25F);
+            this.label15.Location = new System.Drawing.Point(77, 23);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(27, 17);
+            this.label15.TabIndex = 21;
+            this.label15.Text = "นาที";
+            // 
+            // TxtAutoSaveTime
+            // 
+            this.TxtAutoSaveTime.Location = new System.Drawing.Point(29, 22);
+            this.TxtAutoSaveTime.Name = "TxtAutoSaveTime";
+            this.TxtAutoSaveTime.Size = new System.Drawing.Size(42, 20);
+            this.TxtAutoSaveTime.TabIndex = 20;
+            this.TxtAutoSaveTime.TabStop = false;
+            this.TxtAutoSaveTime.Text = "1";
+            this.TxtAutoSaveTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TxtAutoSaveTime.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // Chk_AutoSave
+            // 
+            this.Chk_AutoSave.AutoSize = true;
+            this.Chk_AutoSave.Checked = true;
+            this.Chk_AutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Chk_AutoSave.Location = new System.Drawing.Point(29, 7);
+            this.Chk_AutoSave.Name = "Chk_AutoSave";
+            this.Chk_AutoSave.Size = new System.Drawing.Size(76, 17);
+            this.Chk_AutoSave.TabIndex = 19;
+            this.Chk_AutoSave.TabStop = false;
+            this.Chk_AutoSave.Text = "Auto Save";
+            this.Chk_AutoSave.UseVisualStyleBackColor = true;
             // 
             // StatusStrip
             // 
@@ -788,7 +840,7 @@ namespace PLM
             this.GrpSum.BackColor = System.Drawing.SystemColors.Control;
             this.GrpSum.Controls.Add(this.BTsumApprove);
             this.GrpSum.Controls.Add(this.BTsumSave);
-            this.GrpSum.Location = new System.Drawing.Point(705, 7);
+            this.GrpSum.Location = new System.Drawing.Point(584, 0);
             this.GrpSum.Name = "GrpSum";
             this.GrpSum.Size = new System.Drawing.Size(274, 32);
             this.GrpSum.TabIndex = 13;
@@ -836,7 +888,7 @@ namespace PLM
             // 
             // AutoSaveTime
             // 
-            this.AutoSaveTime.Interval = 10000;
+            this.AutoSaveTime.Interval = 60000;
             this.AutoSaveTime.Tick += new System.EventHandler(this.AutoSaveTime_Tick);
             // 
             // BTPlayTime
@@ -1135,6 +1187,8 @@ namespace PLM
             this.SplitCtnWord.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitCtnWord)).EndInit();
             this.SplitCtnWord.ResumeLayout(false);
+            this.GrpAutoSave.ResumeLayout(false);
+            this.GrpAutoSave.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.GrpSum.ResumeLayout(false);
@@ -1214,5 +1268,9 @@ namespace PLM
         private RJControls.RJButton BTPlayTime;
         private TextBox TxtPlayTime;
         private Timer AutoSaveTime;
+        private CheckBox Chk_AutoSave;
+        private GroupBox GrpAutoSave;
+        private Label label15;
+        private TextBox TxtAutoSaveTime;
     }
 }
