@@ -79,6 +79,7 @@ namespace PLM
         bool WordEditMode;
         bool WordDirty = false;
         bool WordActive = true;
+        bool WordAutoSaving = false;
         string v_bookmark;
 
         string LogFileName;
@@ -115,6 +116,9 @@ namespace PLM
         string Appname = ConfigurationSettings.AppSettings["Appname"];
         string Apptitle = ConfigurationSettings.AppSettings["Apptitle"];
         string LogActivate = ConfigurationSettings.AppSettings["LogActivate"];
+        string AutoSaveActivate = ConfigurationSettings.AppSettings["AutoSaveActivate"];
+        string AutoSaveInterval = ConfigurationSettings.AppSettings["AutoSaveInterval"];
+        string RewindTime = ConfigurationSettings.AppSettings["RewindTime"];
 
         int v_current_bookmark_id = 0;
         int v_SplashTimer = 1;
@@ -179,8 +183,11 @@ namespace PLM
             InitializeComponent();
             AutoSaveTime.Enabled = false;
             this.DoubleBuffered = true;
-            this.TxtRewTime.Text = "3";
+            this.TxtRewTime.Text = RewindTime.Trim();
             LogFileName = DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt";
+            // set autosave
+            TxtAutoSaveTime.Text = AutoSaveInterval;
+            AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
         }
 
         //start  key  
@@ -510,11 +517,11 @@ namespace PLM
         private void WmplayerPlayBack()
         {
           
-            if (TxtRewTime.Text != "")
+            if (RewindTime != "")
             {
-                if (int.Parse(TxtRewTime.Text) is int)
+                if (int.Parse(RewindTime) is int)
                 {
-                    WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                    WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
                 }
             }
 
@@ -552,11 +559,11 @@ namespace PLM
             }
             else
             {
-                if (TxtRewTime.Text != "")
+                if (RewindTime != "")
                 {
-                    if (int.Parse(TxtRewTime.Text) is int)
+                    if (int.Parse(RewindTime) is int)
                     {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
                     }
                 }
                 WmPlayer.settings.rate = 0.5;
@@ -577,11 +584,11 @@ namespace PLM
             }
             else
             { 
-                if (TxtRewTime.Text != "")
+                if (RewindTime != "")
                 {
-                    if (int.Parse(TxtRewTime.Text) is int)
+                    if (int.Parse(RewindTime) is int)
                     {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
                     }
                 }
 
@@ -601,11 +608,11 @@ namespace PLM
             }
             else
             {
-                if (TxtRewTime.Text != "")
+                if (RewindTime != "")
                 {
-                    if (int.Parse(TxtRewTime.Text) is int)
+                    if (int.Parse(RewindTime) is int)
                     {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
                     }
                 }
 
@@ -625,11 +632,11 @@ namespace PLM
             }
             else
             {
-                if (TxtRewTime.Text != "")
+                if (RewindTime != "")
                 {
-                    if (int.Parse(TxtRewTime.Text) is int)
+                    if (int.Parse(RewindTime) is int)
                     {
-                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(TxtRewTime.Text);
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
                     }
                 }
 
@@ -1897,7 +1904,7 @@ namespace PLM
                     catch (Exception e)
                     {
                         handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message + " on step " + step_track);
-                               append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
                         //System.Windows.Forms.Application.Exit();
                         return;
 
@@ -1926,15 +1933,14 @@ namespace PLM
                 }
 
                 //easier to find the window handle
-
-                
                 SetParent(WordWND, PNWord.Handle);
                 // WordApp.WindowState = WdWindowState.wdWindowStateMaximize;
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
                 MoveWindow(WordWND, 0, 0, PNWord.Width, PNWord.Height, true);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "SetParent");
-                AutoSaveTime.Enabled = true;
-
+                if (AutoSaveActivate == "Y") {
+                    AutoSaveTime.Enabled = true;
+                }
             }
             catch (Exception e)
             {
@@ -2860,15 +2866,19 @@ namespace PLM
         {
             if (WordApp != null)
             {
-                try
-                {
-                    WordApp.ActiveDocument.Save();
-                    System.IO.File.Copy(WorkPath + WordFileName, WorkPath + "plm_report_temp.docx", true);
+                if (!WordAutoSaving)
+                    {
+                    WordAutoSaving = true;
+                    try
+                    {
+                        WordApp.ActiveDocument.Save();
+                        System.IO.File.Copy(WorkPath + WordFileName, WorkPath + "plm_report_temp.docx", true);
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                    WordAutoSaving = false;
                 }
-                catch (Exception e)
-                {
-                }
-
             }
         }
         private void SaveData(APPINFO appinfo, FILE_CONTENT files)
@@ -4494,6 +4504,14 @@ namespace PLM
             }
         }
 
+        private static void SetAppSetting(string key, string value)
+        {
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings[key].Value = value;
+            configuration.Save(ConfigurationSaveMode.Modified, true);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
         private void AutoSaveTime_Tick(object sender, EventArgs e)
         {
             if (Chk_AutoSave.Checked)
@@ -4503,17 +4521,50 @@ namespace PLM
             
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void TxtAutoSaveTime_TextChanged(object sender, EventArgs e)
         {
             int parsedValue;
             if (!int.TryParse(TxtAutoSaveTime.Text, out parsedValue))
             {
-
                 MessageBox.Show("This is a number only field");
             }
             else
             {
-                AutoSaveTime.Interval = 60000 * int.Parse(TxtAutoSaveTime.Text);
+                AutoSaveTime.Stop();
+                AutoSaveInterval = TxtAutoSaveTime.Text;
+                AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
+                SetAppSetting("AutoSaveInterval", AutoSaveInterval);
+                AutoSaveTime.Start();
+            }
+        }
+
+        private void Chk_AutoSave_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Chk_AutoSave.Checked)
+            {
+                AutoSaveInterval = TxtAutoSaveTime.Text;
+                AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
+                AutoSaveTime.Start();
+                SetAppSetting("AutoSaveActivate", "Y");
+            }
+            else
+            {
+                AutoSaveTime.Stop();
+                SetAppSetting("AutoSaveActivate", "N");
+            }
+        }
+
+        private void TxtRewTime_TextChanged(object sender, EventArgs e)
+        {
+            int parsedValue;
+            if (!int.TryParse(TxtRewTime.Text.Trim(), out parsedValue))
+            {
+                MessageBox.Show("This is a number only field");
+            }
+            else
+            {
+                RewindTime = TxtRewTime.Text.Trim();
+                SetAppSetting("RewindTime", RewindTime);
             }
         }
     }
