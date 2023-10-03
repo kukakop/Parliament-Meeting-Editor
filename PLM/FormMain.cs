@@ -75,7 +75,7 @@ namespace PLM
         private static extern int AttachThreadInput(int CurrentForegroundThread, int MakeThisThreadForegrouond, bool boolAttach);
         //end force foreground
 
-
+        IniFile iniFile = new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/" + ConfigurationSettings.AppSettings["Appname"] + @"/" + "config.ini");  // user setting
         bool WordEditMode;
         bool WordDirty = false;
         bool WordActive = true;
@@ -84,6 +84,8 @@ namespace PLM
 
         string LogFileName;
         string WordFileName;
+        string TempFileName;
+        string BackupFileName = "plm_report_temp.docx";
         //string WordPath;
         string WordFileNameNew;
         string WordFileNameNewNoExt;
@@ -181,13 +183,19 @@ namespace PLM
             //this.KeyDown += new KeyEventHandler(Kh_KeyDownNew);
             this.Activate();
             InitializeComponent();
-            AutoSaveTime.Enabled = false;
+            // read user config
+            AutoSaveActivate = iniFile.IniReadValue("Default", "AutoSaveActivate");
+            AutoSaveInterval = iniFile.IniReadValue("Default", "AutoSaveInterval");
+            RewindTime = iniFile.IniReadValue("Default", "RewindTime");
             this.DoubleBuffered = true;
             this.TxtRewTime.Text = RewindTime.Trim();
             LogFileName = DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString().Replace(":", "") + ".txt";
             // set autosave
+            System.IO.Directory.CreateDirectory(WorkPath + @"/backup");
             TxtAutoSaveTime.Text = AutoSaveInterval;
             AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
+            AutoSaveTime.Enabled = false;
+            Chk_AutoSave.Checked = false;
         }
 
         //start  key  
@@ -1674,7 +1682,9 @@ namespace PLM
         private void OpenWord(APPINFO appinfo, FILE_CONTENT files)
         {
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            Console.WriteLine("OpenWord");
+           // Console.WriteLine("OpenWord");
+            // set temp file
+            TempFileName = "\\backup\\" + "_plm_report_" + appinfo.meeting_id + "_" + appinfo.seq + ".docx";
             IntPtr r;
             try
             {
@@ -1861,7 +1871,16 @@ namespace PLM
                         {
                             startForm.Progress(progress);
                         }
-                        fileName = WorkPath + WordFileName;
+
+                        // check autosave file, open autosave file if exists
+                        if (System.IO.File.Exists(WorkPath + TempFileName))
+                        {
+                            fileName = WorkPath + TempFileName;
+                        }
+                        else
+                        {
+                            fileName = WorkPath + WordFileName;
+                        }
 
                         while (System.IO.File.Exists(fileName.ToString()) == false)
                         {
@@ -1940,6 +1959,7 @@ namespace PLM
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "SetParent");
                 if (AutoSaveActivate == "Y") {
                     AutoSaveTime.Enabled = true;
+                    Chk_AutoSave.Checked = true;
                 }
             }
             catch (Exception e)
@@ -2454,7 +2474,7 @@ namespace PLM
                 {
                     WmPlayer.Ctlcontrols.pause();
                     Cursor.Current = Cursors.WaitCursor;
-                    SaveDataTemp();
+                    SaveDataTemp(1);
                     SaveDataBg("");
                     //SaveData(appinfo, files);
                     if (WordChang)
@@ -2862,7 +2882,7 @@ namespace PLM
                 Cursor.Current = Cursors.Default;
             }
         }
-        private void SaveDataTemp()
+        private void SaveDataTemp(int mode)
         {
             if (WordApp != null)
             {
@@ -2872,7 +2892,13 @@ namespace PLM
                     try
                     {
                         WordApp.ActiveDocument.Save();
-                        System.IO.File.Copy(WorkPath + WordFileName, WorkPath + "plm_report_temp.docx", true);
+                        if (mode == 0)
+                        {
+                            System.IO.File.Copy(WorkPath + WordFileName, WorkPath + TempFileName, true);
+                        } else
+                        {
+                            System.IO.File.Copy(WorkPath + WordFileName, WorkPath + BackupFileName, true);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -4185,6 +4211,10 @@ namespace PLM
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             //SaveDataTemp();
+            AutoSaveTime.Stop();
+            // clear backup file
+            System.IO.File.Delete(WorkPath + TempFileName);
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":Deleted " + WorkPath + TempFileName);
             Delete_file_all();
             archive_log();
             startForm.Close();
@@ -4222,7 +4252,7 @@ namespace PLM
             string[] files = System.IO.Directory.GetFiles(DeletePath);
             foreach (string file in files)
             {
-                if (file.Contains("mplate.doc") || file.Contains("temp.doc") )
+                if (file.Contains("mplate.doc") || file.Contains("temp.doc") || file.Contains(".ini"))
                 {
 
                 }
@@ -4306,7 +4336,7 @@ namespace PLM
         private void SaveDataBg(string mode)
         {
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name );
-            SaveDataTemp();
+            SaveDataTemp(1);
             // New BackgroundWorker
             bgWorker = new BackgroundWorker();
             bgWorker.WorkerReportsProgress = true;
@@ -4504,19 +4534,11 @@ namespace PLM
             }
         }
 
-        private static void SetAppSetting(string key, string value)
-        {
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings[key].Value = value;
-            configuration.Save(ConfigurationSaveMode.Modified, true);
-            ConfigurationManager.RefreshSection("appSettings");
-        }
-
         private void AutoSaveTime_Tick(object sender, EventArgs e)
         {
             if (Chk_AutoSave.Checked)
             {
-                SaveDataTemp();
+                SaveDataTemp(0);
             }
             
         }
@@ -4530,11 +4552,14 @@ namespace PLM
             }
             else
             {
-                AutoSaveTime.Stop();
                 AutoSaveInterval = TxtAutoSaveTime.Text;
-                AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
-                SetAppSetting("AutoSaveInterval", AutoSaveInterval);
-                AutoSaveTime.Start();
+                iniFile.IniWriteValue("Default", "AutoSaveInterval", AutoSaveInterval);
+                if (Chk_AutoSave.Checked)
+                {
+                    AutoSaveTime.Stop();
+                    AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
+                    AutoSaveTime.Start();
+                }
             }
         }
 
@@ -4545,12 +4570,12 @@ namespace PLM
                 AutoSaveInterval = TxtAutoSaveTime.Text;
                 AutoSaveTime.Interval = 60000 * int.Parse(AutoSaveInterval);
                 AutoSaveTime.Start();
-                SetAppSetting("AutoSaveActivate", "Y");
+                iniFile.IniWriteValue("Default", "AutoSaveActivate", "Y");
             }
             else
             {
                 AutoSaveTime.Stop();
-                SetAppSetting("AutoSaveActivate", "N");
+                iniFile.IniWriteValue("Default", "AutoSaveActivate", "N");
             }
         }
 
@@ -4564,7 +4589,7 @@ namespace PLM
             else
             {
                 RewindTime = TxtRewTime.Text.Trim();
-                SetAppSetting("RewindTime", RewindTime);
+                iniFile.IniWriteValue("Default", "RewindTime", RewindTime);
             }
         }
     }
