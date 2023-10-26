@@ -793,7 +793,7 @@ namespace PLM
             this.TxtAutoSaveTime.TabStop = false;
             this.TxtAutoSaveTime.Text = "1";
             this.TxtAutoSaveTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TxtAutoSaveTime.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.TxtAutoSaveTime.TextChanged += new System.EventHandler(this.TxtAutoSaveTime_TextChanged);
             // 
             // Chk_AutoSave
             // 

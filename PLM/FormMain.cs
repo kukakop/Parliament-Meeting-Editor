@@ -3091,7 +3091,7 @@ namespace PLM
                 //end Change sequence
                 ControllInitial();
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Check program parameter ");
-                WordApp = new Microsoft.Office.Interop.Word.Application();
+                //WordApp = new Microsoft.Office.Interop.Word.Application();
                 if (args.Length > 1)
                 {
                     try
@@ -3877,10 +3877,19 @@ namespace PLM
 
                 foreach (Process pList in Process.GetProcesses())
                 {
-                    if (pList.MainWindowTitle.Contains(WordFileNoExt))
+                    if (pList.ProcessName == "WINWORD")
                     {
-                        pList.Kill();
-                        break;
+
+                        if (pList.MainWindowTitle.Contains(WordFileNoExt))
+                        {
+                            pList.Kill();
+                            //break;
+                        }
+                        if (pList.MainWindowTitle == "")
+                        {
+                            pList.Kill();
+                            //break;
+                        }
                     }
                 }
 
