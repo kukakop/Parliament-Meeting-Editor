@@ -28,13 +28,13 @@ namespace PLM
     }
     public class FILE
     {
-        public int report_section_id { get; set; }
-        public int report_section_actor_id { get; set; }
+        //public int report_section_id { get; set; }
+        //public int report_section_actor_id { get; set; }
         public int seq { get; set; }
         public string seq_desc { get; set; } //add 2030304
         public int meeting_id { get; set; }
-        public int user_id { get; set; }
-        public string fullname { get; set; }
+        //public int user_id { get; set; }
+        //public string fullname { get; set; }
         public string start_time { get; set; }
         public string end_time { get; set; }
         //public string current_process { get; set; }
@@ -42,10 +42,10 @@ namespace PLM
         public string current_process_desc { get; set; }
         public int section_status { get; set; }
         public string section_status_desc { get; set; }
-        public int report_section_task_id { get; set; }
-        public int function { get; set; }
-        public int process { get; set; }
-        public int version { get; set; }
+        //public int report_section_task_id { get; set; }
+        //public int? function { get; set; }
+        public int? process { get; set; }
+        public int? version { get; set; }
         public string version_desc { get; set; }
         //public string report_status { get; set; }
         public int report_status { get; set; }
@@ -81,29 +81,29 @@ namespace PLM
     public class dataROOM
     {
         public int? meeting_id { get; set; }
-        public int? council_type_id { get; set; }
-        public int? episode_id { get; set; }
-        public int? room_id { get; set; }
-        public int? meeting_type_id { get; set; }
+        //public int? council_type_id { get; set; }
+        //public int? episode_id { get; set; }
+        //public int? room_id { get; set; }
+        //public int? meeting_type_id { get; set; }
         //public string no { get; set; }
         public int? meeting_number { get; set; }
         //public string year { get; set; }
         public int? meeting_year { get; set; }
         //public string group { get; set; }
         public int? meeting_group { get; set; }
-        public string    meeting_title { get; set; }
+        public string meeting_title { get; set; }
         //public string time { get; set; }
-        public string    start_timestamp { get; set; }
+        public string start_timestamp { get; set; }
         public string end_timestamp { get; set; }
-        public int section_time { get; set; }
-        public int overlap_time { get; set; }
+        //public int section_time { get; set; }
+        //public int overlap_time { get; set; }
         public int process_seq { get; set; }
         //public int status_id { get; set; }
         public int meeting_status { get; set; }
-        public string process_meta { get; set; }
-        public int duration { get; set; }
-        public int shorthand_group_id { get; set; }
-        public int created_by { get; set; }
+        //public string process_meta { get; set; }
+        //public int duration { get; set; }
+        //public int shorthand_group_id { get; set; }
+        //public int created_by { get; set; }
         //public string status { get; set; }
         public string meeting_status_desc { get; set; }
         //public string section { get; set; }
@@ -111,7 +111,7 @@ namespace PLM
         //public string type { get; set; }
         //public string meeting_episode { get; set; }
         public string episode_name { get; set; }
-        public string shorthand_group { get; set; }
+        //public string shorthand_group { get; set; }
         public int total_section { get; set; }
 
     }
@@ -140,29 +140,29 @@ namespace PLM
     ////}
     public class dataCONTENTINFO
     {
-        public int report_section_id { get; set; }
-        public int report_section_actor_id { get; set; }
+        //public int report_section_id { get; set; }
+        //public int report_section_actor_id { get; set; }
         public int seq { get; set; }
         public string seq_desc { get; set; }
         public int meeting_id { get; set; }
-        public int user_id { get; set; }
-        public string fullname { get; set; } 
+        //public int user_id { get; set; }
+        //public string fullname { get; set; } 
         public string start_time { get; set; } = string.Empty;
         public string end_time { get; set; } = string.Empty;
-        public int current_process { get; set; }
+        public int? current_process { get; set; }
         public string current_process_desc { get; set; }
         //public string status_id { get; set; }
         public int section_status { get; set; }
         //public string status { get; set; }
         public string section_status_desc { get; set; }
-        public int report_section_task_id { get; set; }
-        public int function { get; set; }
-        public int process { get; set; }
-        public int version { get; set; }
+        //public int report_section_task_id { get; set; }
+        public int? function { get; set; }
+        public int? process { get; set; }
+        public int? version { get; set; }
         public string version_desc { get; set; }
-        public int task_status { get; set; }
-        public int row_no { get; set; }
-       // public string modify_time { get; set; }
+        //public int task_status { get; set; }
+        //public int row_no { get; set; }
+        // public string modify_time { get; set; }
     }
 
     public class CONTENTINFO
@@ -196,16 +196,16 @@ namespace PLM
     {
         public int meeting_id { get; set; }
         public int seq { get; set; }
-        public int process { get; set; }
-        public int version { get; set; }
+        public int? process { get; set; }
+        public int? version { get; set; }
         public string version_desc { get; set; }
-        public int report_section_id { get; set; }
-        public int report_section_actor_id { get; set; }
-        public int report_section_task_id { get; set; }
-        public int user_id { get; set; }
+        //public int report_section_id { get; set; }
+        //public int report_section_actor_id { get; set; }
+        //public int report_section_task_id { get; set; }
+        //public int user_id { get; set; }
         public string start_time { get; set; }
         public string end_time { get; set; }
-        public int current_process { get; set; }
+        public int? current_process { get; set; }
         public string current_process_desc { get; set; }
     }
 
@@ -215,7 +215,6 @@ namespace PLM
         public List<string> result { get; set; }
         public string status { get; set; }
     }
-    
 
 
 }

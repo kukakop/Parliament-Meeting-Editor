@@ -27,6 +27,8 @@ namespace PLM
     {
 
         Microsoft.Office.Interop.Word.Application WordApp;
+        Document aDoc;
+        Document ReviseDoc;
         object missing = System.Reflection.Missing.Value;
         object fileName = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + @"/" + ConfigurationSettings.AppSettings["Appname"] + @"/" + ConfigurationSettings.AppSettings["Appname"] + "Template.docx"; // template file name
         object newTemplate = false;
@@ -391,9 +393,9 @@ namespace PLM
                             if (WordEditMode == false)
                             {
                                 //WmplayerBack(appinfo, fileinfo);
-                               
 
-                                    WmplayerPlayBack();
+
+                                WmplayerPlayBack();
                             }
                             break;
 
@@ -524,7 +526,7 @@ namespace PLM
 
         private void WmplayerPlayBack()
         {
-          
+
             if (RewindTime != "")
             {
                 if (int.Parse(RewindTime) is int)
@@ -535,7 +537,7 @@ namespace PLM
 
             WmPlayer.settings.rate = 1;
             WmPlayer.Ctlcontrols.play();
-            
+
             //BT10X.Focus();
             WordNonEdit();
 
@@ -591,7 +593,7 @@ namespace PLM
                 WmPlayer.Ctlcontrols.play();
             }
             else
-            { 
+            {
                 if (RewindTime != "")
                 {
                     if (int.Parse(RewindTime) is int)
@@ -791,9 +793,9 @@ namespace PLM
             Thread thread2 = new Thread(() =>
             {
                 //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
-                    WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
+                WordApp.ActiveDocument.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
 
-                    WordApp.Activate();
+                WordApp.Activate();
                 //WordApp.ActiveDocument.ActiveWindow.SetFocus();
                 //WordApp.ActiveWindow.View.SplitSpecial = Microsoft.Office.Interop.Word.WdSpecialPane.wdPaneRevisionsVert;
             });
@@ -1128,7 +1130,7 @@ namespace PLM
         }
         private void RequestSeqInfo(APPINFO appinfo, ref CONTENTINFO obj)
         {
-            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "");
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + appinfo.meeting_id);
 
             try
             {
@@ -1682,7 +1684,7 @@ namespace PLM
         private void OpenWord(APPINFO appinfo, FILE_CONTENT files)
         {
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-           // Console.WriteLine("OpenWord");
+            // Console.WriteLine("OpenWord");
             // set temp file
             TempFileName = "\\backup\\" + "_plm_report_" + appinfo.meeting_id + "_" + appinfo.seq + ".docx";
             IntPtr r;
@@ -1712,7 +1714,7 @@ namespace PLM
                     }
                     fileName = WorkPath + Appname + "Template.docx";
                     // Create a new Document, by calling the Add function in the Documents collection
-                    Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                    aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
                     object rng = WordApp.Selection.Range;
                     //set value for bookmarks           
                     oStart = 1;
@@ -1761,6 +1763,7 @@ namespace PLM
                     while (System.IO.File.Exists(WorkPath + WordFileName) == false)
                     {
                         //wait file save completed
+                        Thread.Sleep(100);
                     }
 
                     append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Create word completed");
@@ -1788,7 +1791,7 @@ namespace PLM
                 else
                 {
 
-                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "File exist");
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Previous version exist");
 
                     progress += 1;
                     if (progress < 70)
@@ -1876,6 +1879,7 @@ namespace PLM
                         if (System.IO.File.Exists(WorkPath + TempFileName))
                         {
                             fileName = WorkPath + TempFileName;
+                            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Backup file exists : " + fileName);
                         }
                         else
                         {
@@ -1885,9 +1889,10 @@ namespace PLM
                         while (System.IO.File.Exists(fileName.ToString()) == false)
                         {
                             //wait file download completed
+                            Thread.Sleep(100);
                         };
-                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "File Exists" + fileName);
-                        Document aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+
+                        aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
                         append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Save to  : " + WorkPath + WordFileName);
                         aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
 
@@ -1957,7 +1962,8 @@ namespace PLM
                 //SetWindowPos(WordWND, -1, 0, 0, PNWord.Width, PNWord.Height, 0x0040);
                 MoveWindow(WordWND, 0, 0, PNWord.Width, PNWord.Height, true);
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "SetParent");
-                if (AutoSaveActivate == "Y") {
+                if (AutoSaveActivate == "Y")
+                {
                     AutoSaveTime.Enabled = true;
                     Chk_AutoSave.Checked = true;
                 }
@@ -1996,7 +2002,7 @@ namespace PLM
                 }
 
                 WebResponse myResponse = myRequest.GetResponse();
-                
+
 
 
                 myResponse.Close();
@@ -2228,14 +2234,14 @@ namespace PLM
                     v_transcription = "";
                     foreach (var transcription in fileinfo.transcription)
                     {
-                       
 
-                            v_transcription += "{";
-                            v_transcription += "\"utt\":\"" + transcription.utt + "\",";
-                            v_transcription += "\"start\":" + transcription.start + ",";
-                            v_transcription += "\"stop\":" + transcription.stop + ",";
-                            v_transcription += "\"text\":\"" + transcription.text + "\"";
-                            v_transcription += "},";
+
+                        v_transcription += "{";
+                        v_transcription += "\"utt\":\"" + transcription.utt + "\",";
+                        v_transcription += "\"start\":" + transcription.start + ",";
+                        v_transcription += "\"stop\":" + transcription.stop + ",";
+                        v_transcription += "\"text\":\"" + transcription.text + "\"";
+                        v_transcription += "},";
 
 
                     }
@@ -2337,7 +2343,7 @@ namespace PLM
         {
             try
             {
-                object doNotSaveChanges = Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges;
+                object doNotSaveChanges = WdSaveOptions.wdDoNotSaveChanges;
                 WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
             }
             catch (Exception e2)
@@ -2352,7 +2358,7 @@ namespace PLM
         {
             try
             {
-                object doNotSaveChanges = Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges;
+                object doNotSaveChanges = WdSaveOptions.wdDoNotSaveChanges;
                 WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
                 appinfo.seq = int.Parse(LVPart.SelectedItems[0].Text);
 
@@ -2561,6 +2567,7 @@ namespace PLM
 
                     Cursor.Current = Cursors.WaitCursor;
                     //SaveData(appinfo, files);
+                    SaveDataTemp(1);
                     SaveDataBg("");
                     if (WordChang)
                     {
@@ -2635,7 +2642,7 @@ namespace PLM
             int progress = 50;
             try
             {
-
+                RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
                 startForm.Progress(progress);
                 StripProgress.Visible = true;
                 // Set Minimum to 1 to represent the first file being copied.
@@ -2664,13 +2671,13 @@ namespace PLM
                     foreach (var seqInfo in contentInfoAll.data)
                     {
                         progress += 1;
-                        if(progress < 95)
+                        if (progress < 95)
                         {
                             startForm.Progress(progress);
                         }
                         //ฝStripProgress.PerformStep();
 
-                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Download file " );
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Download file ");
                         StripProgressStatus.Text = "Download File...";
                         if (seqInfo.function < 3)
                         {
@@ -2724,9 +2731,10 @@ namespace PLM
                                 while (System.IO.File.Exists(fileName.ToString()) == false)
                                 {
                                     //wait file download completed
+                                    Thread.Sleep(100);
                                 }
 
-                                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Download completed file :" +  WordFileName);
+                                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Download completed file :" + WordFileName);
 
                             }
                             catch (Exception e)
@@ -2752,7 +2760,7 @@ namespace PLM
 
                     //Microsoft.Office.Interop.Word.Application WordAppNew = new Microsoft.Office.Interop.Word.Application();
                     //Document ReviseDoc = WordAppNew.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
-                    Document ReviseDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                    ReviseDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
                     //ReviseDoc.SaveAs2(ReviseFile, WdSaveFormat.wdFormatDocumentDefault);
 
                     WordApp.Visible = true;
@@ -2824,7 +2832,7 @@ namespace PLM
 
                     //WordApp.Selection.Delete();
                     TopMost = false;
-                    
+
 
                     ReviseDoc.SaveAs2(ReviseFile, WdSaveFormat.wdFormatDocumentDefault);
                     Cursor.Current = Cursors.Default;
@@ -2887,7 +2895,7 @@ namespace PLM
             if (WordApp != null)
             {
                 if (!WordAutoSaving)
-                    {
+                {
                     WordAutoSaving = true;
                     try
                     {
@@ -2895,7 +2903,8 @@ namespace PLM
                         if (mode == 0)
                         {
                             System.IO.File.Copy(WorkPath + WordFileName, WorkPath + TempFileName, true);
-                        } else
+                        }
+                        else
                         {
                             System.IO.File.Copy(WorkPath + WordFileName, WorkPath + BackupFileName, true);
                         }
@@ -3010,7 +3019,7 @@ namespace PLM
                     else
                     {
 
-                       
+
                     }
                 }
 
@@ -3039,7 +3048,7 @@ namespace PLM
                 handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e.Message);
             }
         }
-        
+
         private void FormMain_Load(object sender, EventArgs e)
         {
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -3087,7 +3096,6 @@ namespace PLM
                 //    }
                 //}
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Not Found existing session ");
-                WordApp = new Microsoft.Office.Interop.Word.Application();
                 //end Change sequence
                 ControllInitial();
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Check program parameter ");
@@ -3118,7 +3126,7 @@ namespace PLM
                     }
                     catch (Exception e2)
                     {
-                         append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Not Found existing session ");
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Not Found existing session ");
                         handleException(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + e2.Message);
                         //System.Windows.Forms.Application.Exit();
                         System.Environment.Exit(1);
@@ -3163,17 +3171,17 @@ namespace PLM
                     System.Environment.Exit(1);
                     return;
                 }
-
+                WordApp = new Microsoft.Office.Interop.Word.Application();
+                startForm.Progress(5);
                 Delete_file_all();
                 startForm.Progress(10);
-
                 RequestVersionInfo(appinfo, ref versioninfo);
                 startForm.Progress(20);
                 RequestContentInfo(appinfo, ref contentInfo);
                 startForm.Progress(30);
                 RequestFileInfo(appinfo, ref fileinfo);
-                startForm.Progress(40);
-                RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
+                //startForm.Progress(40);
+                //RequestSeqInfo(appinfo, ref contentInfoAll);//20230502 comment sequnce null
                 startForm.Progress(50);
 
 
@@ -3620,7 +3628,7 @@ namespace PLM
         {
 
             WordHighlight(appinfo, fileinfo);
-            
+
 
         }
 
@@ -3629,7 +3637,7 @@ namespace PLM
             try
             {
 
-                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
                 if ((ChkHighlight.Checked == true)
                     && ((WmPlayer.playState == WMPLib.WMPPlayState.wmppsPlaying) || (WmPlayer.playState == WMPLib.WMPPlayState.wmppsScanForward))
                     //&& (WmPlayer.Ctlcontrols.currentPosition > LastUttStop)
@@ -3800,7 +3808,7 @@ namespace PLM
                 exit.Invoke(null, null);
             }
         }
-       
+
         private void PNWord_Paint(object sender, PaintEventArgs e)
         {
 
@@ -3818,7 +3826,7 @@ namespace PLM
             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             try
             {
-                object doNotSaveChanges = Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges;
+                object doNotSaveChanges = WdSaveOptions.wdDoNotSaveChanges;
                 WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
                 //contentInfo.data[0].version = int.Parse(CBVersion.SelectedItem.ToString());
                 contentInfo.data[0].version = int.Parse(((KeyValuePair<string, string>)CBVersion.SelectedItem).Key);
@@ -3841,7 +3849,7 @@ namespace PLM
             {
                 ////CheckDataChange(appinfo, fileinfo);
             }
-            object doNotSaveChanges = Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges;
+            object doNotSaveChanges = WdSaveOptions.wdDoNotSaveChanges;
             try
             {
                 if (WordApp.Options.SaveInterval == 10)
@@ -3849,8 +3857,28 @@ namespace PLM
                     WordApp.Options.SaveInterval = 0;
                 }
 
-                WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
+                //CLEAN UP
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                if (aDoc != null)
+                {
+                    aDoc.Close(ref doNotSaveChanges, ref missing, ref missing);
+                    Marshal.FinalReleaseComObject(aDoc);
+                    aDoc = null;
+                }
+                if (ReviseDoc != null)
+                {
+                    ReviseDoc.Close(ref doNotSaveChanges, ref missing, ref missing);
+                    Marshal.FinalReleaseComObject(ReviseDoc);
+                    ReviseDoc = null;
+                }
+                //WordApp.Documents.Close(ref doNotSaveChanges, ref missing, ref missing);
                 WordApp.Quit();
+                if (WordApp != null)
+                {
+                    Marshal.FinalReleaseComObject(WordApp);
+                    WordApp = null;
+                }
 
                 FormCollection fc = System.Windows.Forms.Application.OpenForms; //find form search
                 foreach (Form frm in fc)
@@ -3877,19 +3905,10 @@ namespace PLM
 
                 foreach (Process pList in Process.GetProcesses())
                 {
-                    if (pList.ProcessName == "WINWORD")
+                    if (pList.MainWindowTitle.Contains(WordFileNoExt))
                     {
-
-                        if (pList.MainWindowTitle.Contains(WordFileNoExt))
-                        {
-                            pList.Kill();
-                            //break;
-                        }
-                        if (pList.MainWindowTitle == "")
-                        {
-                            pList.Kill();
-                            //break;
-                        }
+                        pList.Kill();
+                        break;
                     }
                 }
 
@@ -3987,11 +4006,11 @@ namespace PLM
                     //{
                     result_search = NewSearchBox.ShowDialog(this, textin, "แนะนำรายชื่อ");
 
-                        if (result_search != "")
-                        {
-                            result_search = result_search + " ";
-                            WordApp.Selection.Text = result_search;
-                        }
+                    if (result_search != "")
+                    {
+                        result_search = result_search + " ";
+                        WordApp.Selection.Text = result_search;
+                    }
                     //}
                 }
 
@@ -4050,9 +4069,9 @@ namespace PLM
                     {
                     }
                     else
-                    {  
+                    {
                         //this.TopMost = false;
-                        SearchBox msgResized = new SearchBox(textin,  suggestinfo);
+                        SearchBox msgResized = new SearchBox(textin, suggestinfo);
                         if (msgResized.IsAccessible == false)
                         {
 
@@ -4085,7 +4104,7 @@ namespace PLM
             //Thread.Sleep(100);
             //TopMost = false;
 
-           
+
 
 
 
@@ -4270,7 +4289,7 @@ namespace PLM
                     System.IO.File.Delete(file);
                     append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":Deleted " + file);
 
-                } 
+                }
             }
 
             System.IO.Directory.CreateDirectory(WorkPath + @"/send");
@@ -4344,7 +4363,7 @@ namespace PLM
         }
         private void SaveDataBg(string mode)
         {
-            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name );
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             SaveDataTemp(1);
             // New BackgroundWorker
             bgWorker = new BackgroundWorker();
@@ -4366,7 +4385,7 @@ namespace PLM
             progressDlg = new ProgressForm();
             progressDlg.stopProgress = new EventHandler((s, e1) =>
             {
-            switch (progressDlg.DialogResult)
+                switch (progressDlg.DialogResult)
                 {
                     case DialogResult.Cancel:
                         bgWorker.CancelAsync();
@@ -4382,7 +4401,7 @@ namespace PLM
         {
             //BackgroundWorker worker = sender as BackgroundWorker;
 
-            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name );
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             SaveData(appinfo, fileinfo);
             if (WordChang)
             {
@@ -4392,7 +4411,7 @@ namespace PLM
                     Cursor.Current = Cursors.Default;
                     NewMessage("ดำเนินการเสร็จเรียบร้อย");
 
-                  
+
 
                 }
                 else
@@ -4403,7 +4422,7 @@ namespace PLM
                 }
 
 
-                
+
 
             }
         }
@@ -4549,7 +4568,7 @@ namespace PLM
             {
                 SaveDataTemp(0);
             }
-            
+
         }
 
         private void TxtAutoSaveTime_TextChanged(object sender, EventArgs e)
@@ -4557,7 +4576,8 @@ namespace PLM
             int parsedValue;
             if (!int.TryParse(TxtAutoSaveTime.Text, out parsedValue))
             {
-                MessageBox.Show("This is a number only field");
+                MessageBox.Show("กรุณาใส่ตัวเลขเท่านั้น");
+                TxtAutoSaveTime.Text = AutoSaveInterval; // restore value
             }
             else
             {
@@ -4593,7 +4613,8 @@ namespace PLM
             int parsedValue;
             if (!int.TryParse(TxtRewTime.Text.Trim(), out parsedValue))
             {
-                MessageBox.Show("This is a number only field");
+                MessageBox.Show("กรุณาใส่ตัวเลขเท่านั้น");
+                TxtRewTime.Text = RewindTime; // restore value
             }
             else
             {
