@@ -609,6 +609,29 @@ namespace PLM
             WordNonEdit();
 
         }
+        private void WmplayerPlay15()
+        {
+            if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
+            {
+                WmPlayer.settings.rate = 1.5;
+                WmPlayer.Ctlcontrols.play();
+            }
+            else
+            {
+                if (RewindTime != "")
+                {
+                    if (int.Parse(RewindTime) is int)
+                    {
+                        WmPlayer.Ctlcontrols.currentPosition = WmPlayer.Ctlcontrols.currentPosition - int.Parse(RewindTime);
+                    }
+                }
+
+                WmPlayer.settings.rate = 1.5;
+                WmPlayer.Ctlcontrols.play();
+            }
+            //BT20X.Focus();
+            WordNonEdit();
+        }
         private void WmplayerPlay20()
         {
             if ((WmPlayer.playState != WMPLib.WMPPlayState.wmppsPlaying) && (WmPlayer.playState != WMPLib.WMPPlayState.wmppsScanForward))
@@ -3327,13 +3350,13 @@ namespace PLM
         private void BT20X_Click(object sender, EventArgs e)
         {
 
-            WmplayerPlay20();
+            WmplayerPlay15();
         }
 
         private void BT40X_Click(object sender, EventArgs e)
         {
 
-            WmplayerPlay40();
+            WmplayerPlay20();
         }
 
         private void BTShowVersion_Click(object sender, EventArgs e)
