@@ -224,7 +224,7 @@ namespace PLM
             this.LbTop.ForeColor = System.Drawing.Color.White;
             this.LbTop.Location = new System.Drawing.Point(3, 0);
             this.LbTop.Name = "LbTop";
-            this.LbTop.Size = new System.Drawing.Size(134, 24);
+            this.LbTop.Size = new System.Drawing.Size(134, 25);
             this.LbTop.TabIndex = 20;
             this.LbTop.Text = "ประเภทการประชุม :";
             // 
@@ -235,7 +235,7 @@ namespace PLM
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(998, 20);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(68, 24);
+            this.label8.Size = new System.Drawing.Size(68, 25);
             this.label8.TabIndex = 38;
             this.label8.Text = "เวอร์ชั่น :";
             // 
@@ -274,7 +274,7 @@ namespace PLM
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(91, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 24);
+            this.label1.Size = new System.Drawing.Size(47, 25);
             this.label1.TabIndex = 22;
             this.label1.Text = "วันที่ :";
             // 
@@ -285,7 +285,7 @@ namespace PLM
             this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.Location = new System.Drawing.Point(1017, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(49, 24);
+            this.label9.Size = new System.Drawing.Size(49, 25);
             this.label9.TabIndex = 36;
             this.label9.Text = "สมัย :";
             // 
@@ -296,7 +296,7 @@ namespace PLM
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(317, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 24);
+            this.label3.Size = new System.Drawing.Size(48, 25);
             this.label3.TabIndex = 24;
             this.label3.Text = "ชุดที่ :";
             // 
@@ -335,7 +335,7 @@ namespace PLM
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(735, 19);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 24);
+            this.label6.Size = new System.Drawing.Size(61, 25);
             this.label6.TabIndex = 34;
             this.label6.Text = "สถานะ :";
             // 
@@ -346,7 +346,7 @@ namespace PLM
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(307, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 24);
+            this.label2.Size = new System.Drawing.Size(58, 25);
             this.label2.TabIndex = 26;
             this.label2.Text = "ตอนที่ :";
             // 
@@ -385,7 +385,7 @@ namespace PLM
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(740, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 24);
+            this.label7.Size = new System.Drawing.Size(56, 25);
             this.label7.TabIndex = 32;
             this.label7.Text = "ครั้งที่ :";
             // 
@@ -396,7 +396,7 @@ namespace PLM
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(541, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 24);
+            this.label5.Size = new System.Drawing.Size(39, 25);
             this.label5.TabIndex = 28;
             this.label5.Text = "ปีที่ :";
             // 
@@ -435,7 +435,7 @@ namespace PLM
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(531, 19);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 24);
+            this.label4.Size = new System.Drawing.Size(49, 25);
             this.label4.TabIndex = 30;
             this.label4.Text = "เวลา :";
             // 
@@ -605,7 +605,7 @@ namespace PLM
             this.label10.Font = new System.Drawing.Font("Kanit", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(11, 46);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(56, 19);
+            this.label10.Size = new System.Drawing.Size(56, 20);
             this.label10.TabIndex = 9;
             this.label10.Text = "ความเร็ว";
             // 
@@ -631,7 +631,7 @@ namespace PLM
             this.label12.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.label12.Location = new System.Drawing.Point(121, 17);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(48, 16);
+            this.label12.Size = new System.Drawing.Size(49, 17);
             this.label12.TabIndex = 11;
             this.label12.Text = "ย้อนกลับ";
             // 
@@ -657,7 +657,7 @@ namespace PLM
             this.label11.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.label11.Location = new System.Drawing.Point(224, 17);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(31, 16);
+            this.label11.Size = new System.Drawing.Size(32, 17);
             this.label11.TabIndex = 10;
             this.label11.Text = "วินาที";
             // 
@@ -692,7 +692,7 @@ namespace PLM
             this.ChkHighlight.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.ChkHighlight.Location = new System.Drawing.Point(10, 14);
             this.ChkHighlight.Name = "ChkHighlight";
-            this.ChkHighlight.Size = new System.Drawing.Size(79, 20);
+            this.ChkHighlight.Size = new System.Drawing.Size(80, 21);
             this.ChkHighlight.TabIndex = 8;
             this.ChkHighlight.Text = "เน้นข้อความ";
             this.ChkHighlight.UseVisualStyleBackColor = false;
@@ -791,7 +791,7 @@ namespace PLM
             this.label13.ForeColor = System.Drawing.Color.Transparent;
             this.label13.Location = new System.Drawing.Point(11, 18);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 19);
+            this.label13.Size = new System.Drawing.Size(49, 20);
             this.label13.TabIndex = 11;
             this.label13.Text = "เวอร์ชั่น";
             // 
@@ -871,7 +871,7 @@ namespace PLM
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpAudit);
             this.SplitCtnWord.Panel2.Controls.Add(this.GrpEdit);
             this.SplitCtnWord.Size = new System.Drawing.Size(982, 696);
-            this.SplitCtnWord.SplitterDistance = 662;
+            this.SplitCtnWord.SplitterDistance = 655;
             this.SplitCtnWord.SplitterWidth = 3;
             this.SplitCtnWord.TabIndex = 0;
             this.SplitCtnWord.TabStop = false;
@@ -884,7 +884,7 @@ namespace PLM
             this.PNWord.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNWord.Location = new System.Drawing.Point(0, 0);
             this.PNWord.Name = "PNWord";
-            this.PNWord.Size = new System.Drawing.Size(982, 662);
+            this.PNWord.Size = new System.Drawing.Size(982, 655);
             this.PNWord.TabIndex = 1;
             this.PNWord.TabStop = true;
             this.PNWord.Paint += new System.Windows.Forms.PaintEventHandler(this.PNWord_Paint);
@@ -908,7 +908,7 @@ namespace PLM
             this.label15.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.label15.Location = new System.Drawing.Point(102, 7);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(26, 16);
+            this.label15.Size = new System.Drawing.Size(27, 17);
             this.label15.TabIndex = 21;
             this.label15.Text = "นาที";
             // 
@@ -969,7 +969,7 @@ namespace PLM
             this.GrpSum.BackColor = System.Drawing.SystemColors.Control;
             this.GrpSum.Controls.Add(this.BTsumApprove);
             this.GrpSum.Controls.Add(this.BTsumSave);
-            this.GrpSum.Location = new System.Drawing.Point(584, 0);
+            this.GrpSum.Location = new System.Drawing.Point(591, 0);
             this.GrpSum.Name = "GrpSum";
             this.GrpSum.Size = new System.Drawing.Size(274, 32);
             this.GrpSum.TabIndex = 13;
@@ -1013,7 +1013,8 @@ namespace PLM
             this.GrpAudit.Controls.Add(this.BTauditNoApprove);
             this.GrpAudit.Controls.Add(this.BTauditApprove);
             this.GrpAudit.Controls.Add(this.BTauditSave);
-            this.GrpAudit.Location = new System.Drawing.Point(305, 2);
+            this.GrpAudit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GrpAudit.Location = new System.Drawing.Point(305, -6);
             this.GrpAudit.Name = "GrpAudit";
             this.GrpAudit.Size = new System.Drawing.Size(394, 39);
             this.GrpAudit.TabIndex = 14;
@@ -1027,7 +1028,7 @@ namespace PLM
             this.BTauditNoApprove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTauditNoApprove.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.BTauditNoApprove.ForeColor = System.Drawing.Color.White;
-            this.BTauditNoApprove.Location = new System.Drawing.Point(279, 5);
+            this.BTauditNoApprove.Location = new System.Drawing.Point(283, 5);
             this.BTauditNoApprove.Name = "BTauditNoApprove";
             this.BTauditNoApprove.Size = new System.Drawing.Size(109, 34);
             this.BTauditNoApprove.TabIndex = 11;
@@ -1043,7 +1044,7 @@ namespace PLM
             this.BTauditApprove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTauditApprove.Font = new System.Drawing.Font("Kanit", 8.25F);
             this.BTauditApprove.ForeColor = System.Drawing.Color.White;
-            this.BTauditApprove.Location = new System.Drawing.Point(140, 5);
+            this.BTauditApprove.Location = new System.Drawing.Point(142, 5);
             this.BTauditApprove.Name = "BTauditApprove";
             this.BTauditApprove.Size = new System.Drawing.Size(109, 34);
             this.BTauditApprove.TabIndex = 10;
@@ -1075,7 +1076,7 @@ namespace PLM
             this.GrpEdit.Controls.Add(this.BTEditSaveDB);
             this.GrpEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GrpEdit.ForeColor = System.Drawing.SystemColors.Control;
-            this.GrpEdit.Location = new System.Drawing.Point(6, 3);
+            this.GrpEdit.Location = new System.Drawing.Point(6, -7);
             this.GrpEdit.Name = "GrpEdit";
             this.GrpEdit.Size = new System.Drawing.Size(293, 40);
             this.GrpEdit.TabIndex = 16;
