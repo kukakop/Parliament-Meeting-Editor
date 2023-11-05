@@ -2508,6 +2508,7 @@ namespace PLM
                     //SaveData(appinfo, files);
                     if (WordChang)
                     {
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":Word change ");
                         List<KeyValuePair<string, string>> CBVersionItem = (List<KeyValuePair<string, string>>)CBVersion.DataSource;
                         CBVersion.DataSource = null;
                         CBVersionItem.Add(new KeyValuePair<string, string>(contentInfo.data[0].version.ToString(), contentInfo.data[0].version_desc));
@@ -2541,6 +2542,11 @@ namespace PLM
                         });
                         thread2.Start();
                         thread2.Join();
+
+                    }
+                    else
+                    {
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":Word not change ");
 
                     }
 
@@ -2941,6 +2947,7 @@ namespace PLM
         }
         private void SaveData(APPINFO appinfo, FILE_CONTENT files)
         {
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name);
             BackgroundWorker worker = bgWorker as BackgroundWorker;
             string V_WordText;
             string vBookmark = "";
@@ -3003,6 +3010,8 @@ namespace PLM
 
                     }
                 }
+
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Check transcription complete ");
                 //check bookmark exist
                 if (checked_exist <= 0)
                 {
@@ -3046,9 +3055,13 @@ namespace PLM
                     }
                 }
 
+                append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "update text temporary");
                 if (WordChang)
                 {
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Word change");
                     WordApp.ActiveDocument.Save(); //save old version
+
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "WordApp.ActiveDocument.Save");
                     LastVersion++;
                     //TxtRoomVersion.Text = contentInfo.data[0].process + "." + LastVersion.ToString();
 
@@ -3056,10 +3069,12 @@ namespace PLM
                     fileName = WorkPath + WordFileName;
 
                     WordApp.ActiveDocument.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault); //save old version
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "WordApp.ActiveDocument.SaveAs2");
 
                 }
                 else
                 {
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Word not change");
                     //MessageBox.Show("ไม่มีการเปลี่ยนแปลงข้อความ");
                     NewMessage("ไม่มีการเปลี่ยนแปลงข้อความ");
                 }
@@ -4116,6 +4131,8 @@ namespace PLM
             });
             thread.Start();
             thread.Join();
+
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name+ "Search completed");
             LastPosition = LastPosition + result_search.Length;
             WordApp.ActiveDocument.Range(LastPosition, LastPosition).Select();
             //WordApp.ActiveWindow.WindowState = WdWindowState.wdWindowStateMaximize;
@@ -4128,6 +4145,7 @@ namespace PLM
             //TopMost = false;
 
 
+            append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + " WordApp.Activate");
 
 
 
