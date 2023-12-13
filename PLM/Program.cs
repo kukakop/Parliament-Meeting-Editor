@@ -39,7 +39,7 @@ namespace PLM
             append_log("Application_ThreadException caught : " + e.Message);
             Console.WriteLine("Application_ThreadException caught : " + e.Message);
             MessageBox.Show(e.Message, "PLM", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //Application.Exit();
+            Application.Exit();
         }
 
         /// <summary>

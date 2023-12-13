@@ -185,6 +185,8 @@ namespace PLM
             //this.KeyDown += new KeyEventHandler(Kh_KeyDownNew);
             this.Activate();
             InitializeComponent();
+            //append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Config file = " + iniFile.path);
+            Console.WriteLine("Config file = " + iniFile.path);
             // read user config
             AutoSaveActivate = iniFile.IniReadValue("Default", "AutoSaveActivate");
             AutoSaveInterval = iniFile.IniReadValue("Default", "AutoSaveInterval");
@@ -1710,6 +1712,8 @@ namespace PLM
             // Console.WriteLine("OpenWord");
             // set temp file
             TempFileName = "\\backup\\" + "_plm_report_" + appinfo.meeting_id + "_" + appinfo.seq + ".docx";
+            WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
+            WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
             IntPtr r;
             try
             {
@@ -1728,88 +1732,132 @@ namespace PLM
 
                 if ((files.data.current_process == 1 && (files.data.section_status == 0 || files.data.section_status == 1) && files.data.version == 1) || (appinfo.mode == "new"))//0 is original 99 fortest add version to productive
                 {
-                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "New Generate");
-
-                    progress += 1;
-                    if (progress < 70)
+                    // check autosave file, open autosave file if exists
+                    Console.WriteLine("Checking backup file : " + WorkPath + TempFileName);
+                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Checking backup file : " + WorkPath + TempFileName);
+                    if (System.IO.File.Exists(WorkPath + TempFileName))
                     {
-                        startForm.Progress(progress);
-                    }
-                    fileName = WorkPath + Appname + "Template.docx";
-                    // Create a new Document, by calling the Add function in the Documents collection
-                    aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
-                    object rng = WordApp.Selection.Range;
-                    //set value for bookmarks           
-                    oStart = 1;
-                    oEnd = 1;
-                    vRecNo = 0;
-                    foreach (TRANSCRIPTION transcription in files.transcription)
-                    {
-                        vRecNo++;
-                        WordApp.Selection.Move(WdUnits.wdCharacter, oEnd);
-                        vBookmark = "P" + transcription.utt;
-                        if (vString.Length > 0)
+                        fileName = WorkPath + TempFileName;
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Backup file exists : " + fileName);
+                        /*
+                        while (System.IO.File.Exists(fileName.ToString()) == false)
                         {
-                            vSpace = " ";
-                        }
-                        else
+                            //wait file download completed
+                            Thread.Sleep(100);
+                        };
+                        */
+                        aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Save to  : " + WorkPath + WordFileName);
+                        aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
+
+                        progress += 1;
+                        if (progress < 70)
                         {
-                            vSpace = "";
+                            startForm.Progress(progress);
                         }
-                        vString = vSpace + transcription.text;
-                        oEnd = oStart + vString.Length;
-                        WordApp.Selection.Text = vString;
-                        rng = aDoc.Range(oStart - 1, oEnd);
-                        WordApp.Selection.Bookmarks.Add(vBookmark, rng);
-                        oStart = oEnd;
+                        Thread thread = new Thread(() =>
+                        {
+                            WordApp.ActiveWindow.View.ReadingLayout = false;
+                        });
+                        thread.Start();
+                        thread.Join();
+                        Thread thread3 = new Thread(() =>
+                        {
+                            WordApp.Selection.Move(WdUnits.wdCharacter, 1);
+                            WordApp.Selection.Move(WdUnits.wdCharacter, -1);
+
+                        });
+                        thread3.Start();
+                        thread3.Join();
+
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
+                        WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                     }
-
-                    progress += 1;
-                    if (progress < 70)
+                    else
                     {
-                        startForm.Progress(progress);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "New Generate");
+
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
+                        fileName = WorkPath + Appname + "Template.docx";
+                        // Create a new Document, by calling the Add function in the Documents collection
+                        aDoc = WordApp.Documents.Open(ref fileName, ref newTemplate, ref docType, ref isVisible);
+                        object rng = WordApp.Selection.Range;
+                        //set value for bookmarks           
+                        oStart = 1;
+                        oEnd = 1;
+                        vRecNo = 0;
+                        foreach (TRANSCRIPTION transcription in files.transcription)
+                        {
+                            vRecNo++;
+                            WordApp.Selection.Move(WdUnits.wdCharacter, oEnd);
+                            vBookmark = "P" + transcription.utt;
+                            if (vString.Length > 0)
+                            {
+                                vSpace = " ";
+                            }
+                            else
+                            {
+                                vSpace = "";
+                            }
+                            vString = vSpace + transcription.text;
+                            oEnd = oStart + vString.Length;
+                            WordApp.Selection.Text = vString;
+                            rng = aDoc.Range(oStart - 1, oEnd);
+                            WordApp.Selection.Bookmarks.Add(vBookmark, rng);
+                            oStart = oEnd;
+                        }
+
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
+                        ////LastVersion++;
+                        ///
+                        files.data.version = LastVersion;
+                        aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + " Save to :" + WorkPath + WordFileName);
+
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
+
+                        while (System.IO.File.Exists(WorkPath + WordFileName) == false)
+                        {
+                            //wait file save completed
+                            Thread.Sleep(100);
+                        }
+
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Create word completed");
+                        Thread thread = new Thread(() =>
+                        {
+
+                            WordApp.ActiveWindow.View.ReadingLayout = false;
+                            WordDirty = true;
+
+                        });
+                        thread.Start();
+                        thread.Join();
+                        //WordEdit();
+                        //WordNonEdit();
+
+                        progress += 1;
+                        if (progress < 70)
+                        {
+                            startForm.Progress(progress);
+                        }
+                        WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                     }
-                    ////LastVersion++;
-                    ///
-                    files.data.version = LastVersion;
-                    WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
-                    WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
-                    aDoc.SaveAs2(WorkPath + WordFileName, WdSaveFormat.wdFormatDocumentDefault);
-                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + " Save to :" + WorkPath + WordFileName);
-
-                    progress += 1;
-                    if (progress < 70)
-                    {
-                        startForm.Progress(progress);
-                    }
-
-                    while (System.IO.File.Exists(WorkPath + WordFileName) == false)
-                    {
-                        //wait file save completed
-                        Thread.Sleep(100);
-                    }
-
-                    append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Create word completed");
-                    Thread thread = new Thread(() =>
-                    {
-
-                        WordApp.ActiveWindow.View.ReadingLayout = false;
-                        WordDirty = true;
-
-                    });
-                    thread.Start();
-                    thread.Join();
-                    //WordEdit();
-                    //WordNonEdit();
-
-
-
-                    progress += 1;
-                    if (progress < 70)
-                    {
-                        startForm.Progress(progress);
-                    }
-                    WordApp.Selection.GoTo(WdGoToItem.wdGoToPage, 1);
                 }
                 else
                 {
@@ -1871,12 +1919,7 @@ namespace PLM
                         }
                         else
                         {
-
-                            WordFileName = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000") + ".docx";
-                            WordFileNoExt = Appname + appinfo.meeting_id.ToString("00000") + "-" + files.data.seq.ToString("000");
-
                             append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Downloaded File:" + WordFileName);
-
                         }
 
 
@@ -1899,6 +1942,8 @@ namespace PLM
                         }
 
                         // check autosave file, open autosave file if exists
+                        Console.WriteLine("Checking backup file : " + WorkPath + TempFileName);
+                        append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + "Checking backup file : " + WorkPath + TempFileName);
                         if (System.IO.File.Exists(WorkPath + TempFileName))
                         {
                             fileName = WorkPath + TempFileName;
@@ -4537,7 +4582,7 @@ namespace PLM
                 case '\u000B':
                 case '\u000C':
                 case '\u000D':
-                case '\u0020':
+                //case '\u0020': // space
                 case '\u0085':
                 case '\u00A0':
                 case '\u0180':
