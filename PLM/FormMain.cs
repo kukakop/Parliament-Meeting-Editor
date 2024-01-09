@@ -1018,6 +1018,7 @@ namespace PLM
 
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + result);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var file = jss.Deserialize<FILE_CONTENT>(result);
                 //var room = jss.Deserialize<dynamic>(result);
 
@@ -1067,6 +1068,7 @@ namespace PLM
 
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + result);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var versionInfo = jss.Deserialize<VERSIONINFO>(result);
 
                 CBVersion.Items.Clear();
@@ -1125,6 +1127,7 @@ namespace PLM
 
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + result);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
 
                 //append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + result);
@@ -1184,6 +1187,7 @@ namespace PLM
 
                 append_log(System.Reflection.MethodBase.GetCurrentMethod().Name + ":" + result);
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
                 /*
                 ListViewItem listV = default(ListViewItem);
@@ -1248,6 +1252,7 @@ namespace PLM
             {
                 string json = System.IO.File.ReadAllText(WorkPath + "config.json");
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 CONFIG conf = jss.Deserialize<CONFIG>(json);
 
                 obj = conf;
@@ -1288,6 +1293,7 @@ namespace PLM
                 string result = sr.ReadToEnd();
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var contentInfo = jss.Deserialize<CONTENTINFO>(result);
 
                 // update version list
@@ -2179,6 +2185,7 @@ namespace PLM
                 string result = sr.ReadToEnd();
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION>(result);
                 contentInfo.data[0].version = addtrans.version;
 
@@ -2340,6 +2347,7 @@ namespace PLM
 
 
                 JavaScriptSerializer jss = new JavaScriptSerializer();
+                jss.MaxJsonLength = Int32.MaxValue;
                 var addtrans = jss.Deserialize<ADDTRANSCRIPTION_FILE>(response.Content);
                 //append_log("response.success:" + addtrans.success);
                 //append_log("response.filepath:" + addtrans.filepath);
@@ -2484,7 +2492,7 @@ namespace PLM
 
                             Cursor.Current = Cursors.Default;
                             //MessageBox.Show("ดำเนินการเสร็จเรียบร้อย");
-                            NewMessage("ไม่สามารถเชื่ิอมต่อ server ได้");
+                            NewMessage("ไม่สามารถเชื่อมต่อ server ได้");
                         }
 
 
